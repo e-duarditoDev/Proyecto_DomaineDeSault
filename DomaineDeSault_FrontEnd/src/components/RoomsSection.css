@@ -1,0 +1,138 @@
+.rooms-section {
+  max-width: 1200px;
+  margin: 0.5rem auto;
+  padding: 1rem;
+  font-family: "Argesta", sans-serif;
+}
+
+.rooms-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #111;
+  position: relative;
+}
+
+.rooms-title::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: #000;
+  margin: 1rem auto 0 auto;
+}
+
+.rooms-grid {
+  display: grid;
+  margin-inline: 1rem;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas fijas */
+  gap: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .rooms-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .rooms-grid {
+    grid-template-columns: 1fr; /* 1 columna en móviles */
+  }
+}
+
+.room-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 40px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  position: relative; /* Para posicionar el botón dentro */
+  display: flex;
+  flex-direction: column;
+}
+
+.room-card:hover {
+  transform: translateY(-10px);
+}
+
+.room-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.room-img:hover {
+  transform: scale(1.05);
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.3);
+}
+
+.room-content {
+  flex: 1;
+  padding: 1.2rem;
+  padding-bottom: 4rem; /* deja espacio para el botón fijo */
+}
+
+.room-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: #111;
+  cursor: pointer;
+}
+
+.room-description {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 0.8rem;
+}
+
+.room-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: #222;
+}
+
+.room-features li {
+  margin-bottom: 0.4rem;
+}
+
+.room-price {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.room-btn {
+  background: #000;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+  width: calc(100% - 2.4rem); /* Respeta padding lateral */
+  position: absolute;
+  bottom: 1rem;
+  left: 1.2rem;
+}
+
+.room-btn:hover {
+  background: #444;
+}
+
+.feature-icon {
+  width: 30px;    /* ancho deseado */
+  height: 30px;   /* altura deseada */
+  padding-right: 10px;
+  object-fit: contain; /* para mantener proporciones */
+  vertical-align: middle; /* opcional, alinea con el texto */
+}

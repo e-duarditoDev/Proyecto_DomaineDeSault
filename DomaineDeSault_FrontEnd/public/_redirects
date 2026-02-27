@@ -1,0 +1,12 @@
+# Este archivo le dice a Netlify cómo manejar las rutas en una SPA (Single Page Application)
+# como React, donde las rutas NO existen físicamente en el servidor.
+
+# La regla de abajo significa:
+# - Cualquier ruta que el usuario visite (/*)
+# - debe redirigirse al archivo /index.html
+# - devolviendo un código 200 (OK), no una redirección real.
+# Esto permite que React Router gestione la navegación internamente,
+# evitando que Netlify devuelva un error 404 cuando se accede directamente
+# a rutas como /room/gite o /room/autrefois.
+
+ /*    /index.html    200

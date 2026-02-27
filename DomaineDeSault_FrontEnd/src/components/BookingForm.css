@@ -1,0 +1,150 @@
+/* Contenedor principal */
+.booking-form {
+  max-width: 1200px;
+  margin: 2rem auto;
+  background: #ffffff93;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  font-family: 'Argesta', sans-serif;
+  position: relative;
+}
+
+/* Controles en fila */
+.booking-controls {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  overflow-x: auto;
+  
+}
+
+/* Cada campo */
+.booking-controls label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1e1e1e;
+  min-width: 120px;
+}
+
+.booking-controls select,
+.booking-controls input {
+  margin-top: 0.3rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #bdbdbd;
+  font-size: 0.9rem;
+  background: #ffffffd0;
+  transition: border 0.2s;
+  scale:1;
+  transition: 200ms;
+}
+
+.booking-controls select:focus,
+.booking-controls input:focus {
+  
+  border: none;
+  cursor: pointer;
+  border: 1px solid #bdbdbd;
+  background-color: rgb(255, 255, 255);
+  color: #000000;
+  font-weight: 500;
+  scale: 1.03;
+
+  outline: none;
+  background: #fff;
+}
+
+.booking-controls select:not(:focus):hover,
+.booking-controls input:not(:focus):hover {
+  transition: 300ms;
+  border: none;
+  cursor: pointer;
+  border: 1px solid #bdbdbd;
+  background-color: rgb(255, 255, 255);
+  color: #000000;
+  font-weight: 500;
+  scale: 1.03;
+}
+
+
+
+/* Botón de búsqueda */
+.booking-search-btn {
+  align-self: stretch;
+  padding: 1.3rem 1.3rem;
+  font-weight: 700;
+  border: 1px solid #bdbdbd;
+  background: #ffffffd0;
+  cursor: pointer;
+  border-radius: 10px;
+  font-family: 'Argesta', sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  color: #000;
+}
+
+.booking-search-btn:hover {
+  background: #000;
+  color: #fff;
+  border: 1px solid #000000;
+}
+
+/* Calendario overlay */
+.calendar-overlay {
+  position: absolute;
+  overlay: auto;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  z-index: 50;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  padding: 1rem;
+}
+.books.check-in,
+.books.check-out {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+cursor: pointer
+}
+
+/* Tooltip noches */
+.day-with-tooltip {
+  position: relative;
+}
+
+.day-with-tooltip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2193b0;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/*Responsive: en móvil se apila */
+@media (max-width: 768px) {
+  .booking-controls {
+    flex-wrap: wrap;
+  }
+  .booking-search-btn {
+    font-family: 'Argesta', sans-serif;
+    width: 100%;
+    margin-top: 1rem;
+  }
+}

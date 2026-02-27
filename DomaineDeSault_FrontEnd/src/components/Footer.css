@@ -1,0 +1,97 @@
+/* ==== FOOTER GENERAL ==== */
+.footer {
+  background: #1a1a1a;
+  color: #eee;
+  padding: 3rem 2rem 1rem;
+  font-family: "Argesta", serif;
+}
+
+/* ==== CONTENEDOR DEL FOOTER ==== */
+.footer-container {
+  display: grid;                                /* Usamos grid para organizar las columnas */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  /* Las columnas se adaptan: mínimo 220px y luego expanden */
+  gap: 2rem;                                    /* Espaciado entre columnas */
+  margin-bottom: 2rem;                          /* Espacio inferior antes del borde */
+  
+}
+
+/* Footer sin margenes */
+
+/* ==== TITULOS DE LAS COLUMNAS ==== */
+.footer-column h6 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #fff;              /* Más blanco que el texto normal */
+  text-transform: uppercase; /* Mayúsculas para elegancia */
+  letter-spacing: 1px;       /* Espaciado entre letras */
+}
+
+/* ==== LISTAS EN EL FOOTER ==== */
+.footer-column ul {
+  list-style: none;  /* Quitamos los puntos */
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.6rem; /* Espaciado entre elementos */
+}
+
+/* ==== LINKS ==== */
+.footer-column a {
+  color: #ccc;                   /* Gris claro por defecto */
+  text-decoration: none;         /* Sin subrayado */
+  transition: color 0.2s ease;   /* Suaviza cambio de color al hover */
+}
+
+.footer-column a:hover {
+  color: #fff; 
+}
+
+/* ==== LOGOS DE PARTNERS ==== */
+.partners-logos {
+  display: grid;                          /* Grid de logos */
+  grid-template-columns: repeat(2, 1fr);  /* 2 columnas fijas */
+  gap: 1rem;                              /* Espacio entre logos */
+}
+
+.partners-logos img {
+  max-width: 100%;    
+  max-height: 60px;   
+  object-fit: contain;
+  margin: 0 auto;     
+  filter: grayscale(100%);  
+  transition: filter 0.3s ease;
+}
+
+.partners-logos img:hover {
+  filter: grayscale(0%); /* A color al hacer hover */
+}
+
+/* ==== FOOTER INFERIOR ==== */
+.footer-bottom {
+  border-top: 1px solid #333; /* Línea separadora */
+  padding-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #aaa;      /* Color del texto */
+}
+/* ==== ICONOS DE REDES SOCIALES ==== */
+.social-icons {
+  display: flex;
+  gap: 1rem;        /* Espacio entre los iconos */
+  margin-top: 0.5rem;
+}
+
+.social-icons img {
+  width: 64px;     
+  height: 64px;
+  filter: grayscale(100%); 
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons img:hover {
+  filter: grayscale(0%);   
+  transform: scale(1.1);   
+}

@@ -1,0 +1,3 @@
+section[id], div[id], form[id] {
+  scroll-margin-top: 80px; /* ajusta a la altura exacta del navbar */
+}

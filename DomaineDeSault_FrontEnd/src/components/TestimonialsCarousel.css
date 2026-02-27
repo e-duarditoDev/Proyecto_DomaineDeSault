@@ -1,0 +1,141 @@
+.reviews-section {
+  max-width: 1200px;
+  margin: 0.5rem auto;
+  padding: 1rem;
+  background: #fff;
+  text-align: center;
+  font-family: "Argesta", sans-serif;
+}
+
+.reviews-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 1.9rem;
+  margin-bottom: 3rem;
+  color: #111;
+  position: relative;
+}
+.reviews-title::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: #000;
+  margin: 1rem auto 0 auto;
+}
+/* Ratings */
+.ratings-summary {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.rating-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 1s ease;
+  text-decoration: none;
+  color: inherit;
+}
+.rating-icon {
+  width: 64px;
+  height: 64px;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.rating-card:hover .rating-icon {
+  filter: grayscale(0%);
+  transform: scale(1.1);
+}
+
+
+.rating-card strong {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.rating-card span {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.rating-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Carrusel */
+.testimonials-carousel {
+  margin-top: 2rem;
+}
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 240px;
+}
+
+.testimonial-card {
+  max-width: 700px;
+  padding: 2rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.5s ease;
+}
+
+.testimonial-text {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.testimonial-author {
+  display: block;
+  font-weight: bold;
+  color: #666;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #777;
+  transition: color 0.3s;
+}
+
+.nav-btn:hover {
+  color: #333;
+}
+
+.dots {
+  margin-top: 1rem;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 4px;
+  background: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dot.active {
+  background: #333;
+}

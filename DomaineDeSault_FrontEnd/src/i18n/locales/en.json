@@ -1,0 +1,431 @@
+{
+  "mainTitle": "Welcome to Domaine de Sault",
+  "welcome": "Your dream stay starts here",
+  "tittle": "Discover the charm of our rural houses in Auvergne, where comfort and nature meet.",
+  "nav": {
+    "book": "Book",
+    "lodging": "Rooms",
+    "accommodation": "Accommodation",
+    "review": "Reviews",
+    "location": "Location",
+    "contact": "Contact"
+  },
+
+  "accommodation": {
+    "menu": {
+      "commonAreas": "Common Areas",
+      "services": "Services",
+      "whatToDo": "What to Do",
+      "reviews": "Reviews"
+    },
+
+    "sections": [
+      {
+        "slug": "common-areas",
+        "title": "Common Areas",
+        "description": "Our shared spaces are designed to offer comfort, tranquility, and moments to connect with nature. Relax with a book in the cozy corners of the estate, enjoy a coffee in the summer kitchen, or admire the gardens from the balcony of the Maison des Oiseaux. Every corner invites serenity and lets you enjoy the beauty of Auvergne in perfect harmony.",
+        "images": ["/photos/Common Areas/esperaHorizontal_2.avif"]
+      },
+      {
+        "slug": "services",
+        "title": "Services",
+        "description": "Designed to make your stay comfortable and memorable, we offer high-quality services: Wi-Fi, gourmet breakfast, daily housekeeping, and personalized attention. Our wellness area includes a sauna, reading and game spaces, and a massage room led by professional therapists. Treatments help relieve tension, relax muscles, improve circulation, and promote restful sleep, including facial, back, leg, and foot massages.",
+        "images": ["/photos/Breakfast/desayunoC.png"]
+      },
+      {
+        "slug": "what-to-do",
+        "title": "What to Do",
+        "description": "Discover the richness of the Auvergne region with experiences for every taste. Enjoy hiking through forests and green landscapes, explore local culture, take cycling tours, or participate in sports activities. Nearby excursions, such as La Chaise-Dieu and the Romanesque churches, immerse you in the history and architectural beauty of the region.",
+        "images": ["/photos/Activities/LePuy.webp"]
+      }
+    ]
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español",
+    "de": "Deutsch"
+  },
+  "book.selected": "Selected:",
+  "book.checkAvailability": "Check availability",
+  "book.selectDate": "dd/mm/yyyy",
+  "book.nights": "Nights",
+  "book.checkIn": "Check-in",
+  "book.checkOut": "Check-out",
+  "book.rooms": "Rooms",
+  "book.adults": "Adults",
+  "book.children": "Children",
+  "book.search": "Search",
+  "book.promoCode": "Promo code",
+  "nights_one": "1 night",
+  "nights_other": "{{count}} nights",
+  "book.checkInLabel": "Arrival",
+  "book.checkOutLabel": "Departure",
+  "book.titleh2": "Book your stay at Domaine de Sault",
+  "rooms": {
+    "title": "Discover our rooms",
+    "button": "Book now",
+    "price": "Price:",
+    "list": {
+      "gite": {
+        "name": "Gîte Valentin",
+        "description": "Gîte Valentin is a standalone accommodation ideal for longer stays, with a fully equipped kitchen, cozy lounge and a private garden perfect for relaxing as a couple.",
+        "size": "20 m²",
+        "rating": "9.6",
+        "reviewsCount": 57,
+        "summary": "Gîte Valentin is an intimate and autonomous accommodation, perfect to enjoy the estate as if at home. Its spacious living area includes a fully equipped kitchen and cozy lounge around the pellet stove. The mezzanine bedroom features a 160 cm bed. Facilities include a shower, separate WC, equipped laundry, and a private garden sheltered from views. Linen provided and a crib available.",
+        "features": [
+          { "icon": "/icons/cama-doble.svg", "text": "Double bed" },
+          { "icon": "/icons/cocina.svg", "text": "Equipped kitchen" },
+          { "icon": "/icons/banio.svg", "text": "Private bathroom" },
+          {
+            "icon": "/icons/jardin-independiente.svg",
+            "text": "Private garden"
+          }
+        ],
+        "bathroom": [
+          "Shower",
+          "Free toiletries",
+          "Separate WC",
+          "Towels included",
+          "Sink",
+          "Natural light"
+        ],
+        "views": ["Views of private garden", "Views of nature"],
+        "amenities": [
+          "160 cm bed in mezzanine",
+          "Baby crib available",
+          "Fully equipped kitchen",
+          "Fridge",
+          "Dishwasher",
+          "Oven",
+          "Microwave",
+          "Steamer",
+          "Coffee machine",
+          "Electric kettle",
+          "Toaster",
+          "Corkscrew",
+          "Lounge with pellet stove",
+          "Television",
+          "Washing machine",
+          "Dryer",
+          "Vacuum",
+          "Quality bedding",
+          "Private garden",
+          "Outdoor furniture",
+          "Hammock",
+          "BBQ",
+          "Heating",
+          "Private parking",
+          "Non-smoking access"
+        ],
+        "price": "120€/night",
+        "image": "/photos/rooms/gite_valentin/salon.avif",
+        "images": [
+          "/photos/rooms/gite_valentin/salon.avif",
+          "/photos/rooms/gite_valentin/cocina y salon.avif",
+          "/photos/rooms/gite_valentin/escaleras.avif",
+          "/photos/rooms/gite_valentin/habitacion.avif",
+          "/photos/rooms/gite_valentin/salle de bain.avif",
+          "/photos/rooms/gite_valentin/le coin salon.avif",
+          "/photos/rooms/gite_valentin/puerta.avif"
+        ]
+      },
+      "autrefois": {
+        "name": "Autrefois",
+        "description": "Traditional Auvergne room with authentic fireplace, stone floor, independent entrance, and small terrace. A charming and characterful retreat.",
+        "size": "18 m²",
+        "rating": "9.2",
+        "reviewsCount": 38,
+        "summary": "Autrefois retains the essence of a traditional Auvergne interior: stone floor, old wooden partitions, large stone fireplace with wooden lintel and a small garden below the window. The cozy 140 cm lit clos, all wood, creates a perfect nest in summer and winter. Bathroom mixes traditional and modern amenities. Independent entrance and small terrace for a quiet, authentic experience.",
+        "features": [
+          { "icon": "/icons/cama-doble.svg", "text": "Double bed" },
+          { "icon": "/icons/jardin.svg", "text": "Garden view" }
+        ],
+        "bathroom": [
+          "Old-style sink",
+          "Shower",
+          "WC",
+          "Electric heating",
+          "Free toiletries",
+          "Towels included"
+        ],
+        "views": ["Garden view", "Terrace view"],
+        "amenities": [
+          "140 cm lit clos",
+          "Large stone fireplace",
+          "Wood stove",
+          "Old wooden partitions",
+          "Stone floor",
+          "Independent entrance",
+          "Small terrace",
+          "Linen provided",
+          "Outdoor furniture",
+          "Heating",
+          "Wardrobe",
+          "Desk",
+          "Seating area",
+          "Non-smoking room"
+        ],
+        "price": "100€/night",
+        "image": "/photos/rooms/autrefois/salon.png",
+        "images": [
+          "/photos/rooms/autrefois/autrefois_resultado2.avif",
+          "/photos/rooms/autrefois/banio_vertical_resultado2.avif",
+          "/photos/rooms/autrefois/banio1_resultado2.avif",
+          "/photos/rooms/autrefois/cama_autrefois_resultado2.avif",
+          "/photos/rooms/autrefois/cama2_autrefois_resultado2.avif",
+          "/photos/rooms/autrefois/ducha_vertical_resultado2.avif",
+          "/photos/rooms/autrefois/salon_resultado2.avif",
+          "/photos/rooms/autrefois/vater_resultado2.avif"
+        ]
+      },
+      "hubert": {
+        "name": "Le Grenier d'Hubert",
+        "description": "Domain suite, sunlit, with privileged views of the clearing and Monts du Forez. Spacious resting area, reading corner, and large bright bathroom.",
+        "size": "30 m²",
+        "rating": "9.5",
+        "reviewsCount": 41,
+        "summary": "Le Grenier d’Hubert is the brightest and most spacious suite, covering the first floor, with exceptional views of the clearing, garden, and Monts du Forez. Includes king bed, reading corner, and small lounge overlooking the swimming pool. Large luminous bathroom completes the peaceful and cozy atmosphere.",
+        "features": [
+          { "icon": "/icons/cama-king.svg", "text": "King bed" },
+          { "icon": "/icons/banio.svg", "text": "Private bathroom" },
+          { "icon": "/icons/campo.svg", "text": "Country view" }
+        ],
+        "bathroom": [
+          "Spacious private bathroom",
+          "Shower",
+          "WC",
+          "Free toiletries",
+          "Towels included",
+          "Sink",
+          "Natural light"
+        ],
+        "views": [
+          "View of clearing",
+          "View of garden",
+          "View of Monts du Forez",
+          "View of swimming pool"
+        ],
+        "amenities": [
+          "King size bed",
+          "Reading corner",
+          "Small lounge with views",
+          "Bright all afternoon",
+          "Quality bedding",
+          "Heating",
+          "Wardrobe",
+          "Desk",
+          "Seating area",
+          "Outdoor furniture",
+          "Panoramic view",
+          "Non-smoking room"
+        ],
+        "price": "110€/night",
+        "image": "/photos/rooms/hubert/cama_hubert_resultado.avif",
+        "images": [
+          "/photos/rooms/hubert/cama_hubert_resultado.avif",
+          "/photos/rooms/hubert/nombre_resultado.avif",
+          "/photos/rooms/hubert/ventana_2.avif",
+          "/photos/rooms/hubert/espejo_resultado.avif",
+          "/photos/rooms/hubert/banio_2.avif"
+        ]
+      },
+      "salome": {
+        "name": "Salomé",
+        "description": "Seventies and bohemian caravan surrounded by nature with wooden terrace. Full comfort for a quiet and unique stay.",
+        "size": "25 m²",
+        "rating": "9.3",
+        "reviewsCount": 29,
+        "summary": "Salomé is our seventies bohemian caravan, set in a natural garden overlooking the clearing. Isolated in a quiet corner, it offers an intimate, authentic nature experience without sacrificing comfort. Includes wooden terrace, hammock, double bed, and all necessary amenities.",
+        "features": [
+          { "icon": "/icons/cama-doble.svg", "text": "Double bed" },
+          { "icon": "/icons/banio.svg", "text": "Private bathroom" },
+          { "icon": "/icons/wifi.svg", "text": "Wi-Fi" }
+        ],
+        "bathroom": [
+          "Private bathroom",
+          "Shower",
+          "WC",
+          "Free toiletries",
+          "Towels included"
+        ],
+        "views": ["View of clearing", "View of natural garden"],
+        "amenities": [
+          "Double bed",
+          "Wooden terrace",
+          "Hammock",
+          "Heating",
+          "Quality bedding",
+          "Quiet independent area",
+          "Outdoor furniture",
+          "Wi-Fi",
+          "Electricity",
+          "Non-smoking room"
+        ],
+        "price": "115€/night",
+        "image": "/photos/rooms/salome/salome2_resultado.avif",
+        "images": [
+          "/photos/rooms/salome/salome2_resultado.avif",
+          "/photos/rooms/salome/cama1_resultado.avif",
+          "/photos/rooms/salome/caravana2_resultado.avif",
+          "/photos/rooms/salome/espejo_resultado.avif",
+          "/photos/rooms/salome/terraza-caravana_resultado.avif",
+          "/photos/rooms/salome/terraza2_resultado.avif"
+        ]
+      },
+      "adelaide": {
+        "name": "Adélaïde",
+        "description": "Bright room with small lounge, fireplace, and discreet bathroom. Exceptional views of the Monts du Forez.",
+        "size": "24 m²",
+        "rating": "9.4",
+        "reviewsCount": 43,
+        "summary": "Adélaïde is cozy and elegant, combining classic charm and modern comfort. King or twin beds, small seating corner, decorative fireplace, and bright bathroom with Italian shower and antique sink facing garden.",
+        "features": [
+          { "icon": "/icons/cama-doble.svg", "text": "Double bed" },
+          { "icon": "/icons/salon.svg", "text": "Lounge" },
+          { "icon": "/icons/banio.svg", "text": "Private bathroom" }
+        ],
+        "bathroom": [
+          "Free toiletries",
+          "WC",
+          "Italian shower",
+          "Slippers",
+          "Hair dryer",
+          "Toilet paper",
+          "Antique sink with garden view"
+        ],
+        "views": ["View of garden", "View of Monts du Forez", "Mountain view"],
+        "amenities": [
+          "180 cm bed or twin beds",
+          "Small seating corner",
+          "Decorative fireplace",
+          "Quality bedding",
+          "Electric kettle",
+          "Tea/coffee maker",
+          "Wardrobe",
+          "Outdoor furniture",
+          "Outdoor dining area",
+          "Heating",
+          "Tile/marble floor",
+          "Books, DVDs or music for kids",
+          "Board games and puzzles",
+          "Power outlet near bed",
+          "Towels included",
+          "Access via stairs",
+          "Non-smoking room"
+        ],
+        "price": "130€/night",
+        "image": "/photos/rooms/adelaide/adelaide_salon.avif",
+        "images": [
+          "/photos/rooms/adelaide/adelaide.avif",
+          "/photos/rooms/adelaide/adelaide_salon.avif",
+          "/photos/rooms/adelaide/cama.avif",
+          "/photos/rooms/adelaide/cama2.avif",
+          "/photos/rooms/adelaide/bano.avif"
+        ]
+      },
+      "oiseaux": {
+        "name": "Maison des Oiseaux",
+        "description": "Small refuge with amazing views of Monts du Forez, balcony to observe nature and stars.",
+        "features": [
+          { "icon": "/icons/cama-doble.svg", "text": "Double bed" },
+          { "icon": "/icons/balcon.svg", "text": "Balcony" },
+          { "icon": "/icons/wifi.svg", "text": "Wi-Fi" }
+        ],
+        "price": "91€/night",
+        "image": "/photos/rooms/oiseaux/cama_oiseaux_resultado.avif",
+        "size": "16 m²",
+        "rating": "9.4",
+        "reviewsCount": 43,
+        "summary": "The pool with a view and sauna are the standout features of this double room. The double room provides a private entrance, a tea and coffee maker, a balcony with garden views as well as a private bathroom featuring a shower. The unit offers 1 bed.",
+        "bathroom": [
+          "Free toiletries",
+          "Sauna",
+          "WC",
+          "Bath or shower",
+          "Slippers",
+          "Hair dryer",
+          "Toilet paper"
+        ],
+        "views": ["Balcony", "Garden view", "Mountain view"],
+        "amenities": [
+          "Desk",
+          "Wood or parquet floor",
+          "Upper floor access via stairs only",
+          "Outdoor furniture",
+          "Fan",
+          "Towels",
+          "Books, DVDs or music for kids",
+          "Board games/puzzles",
+          "Power outlet near bed",
+          "Tea/coffee maker",
+          "Bedding",
+          "Private entrance",
+          "Electric kettle",
+          "Heating",
+          "Wardrobe",
+          "Outdoor dining area",
+          "No smoking policy"
+        ],
+        "capacity": "2 adults",
+        "bed": "1 large double bed",
+        "cancellation": "Free cancellation before September 22, 2025",
+        "payment": "No payment until September 20, 2025",
+        "breakfast": "Breakfast included",
+        "availability": "Only 1 left",
+        "nights": "1 night, 2 adults",
+        "priceDetail": "€91 including taxes and fees",
+        "images": [
+          "/photos/rooms/oiseaux/cama_oiseaux_resultado.avif",
+          "/photos/rooms/oiseaux/cama_resultado.avif",
+          "/photos/rooms/oiseaux/cama-terraza_resultado.avif",
+          "/photos/rooms/oiseaux/cama-ventana_resultado.avif",
+          "/photos/rooms/oiseaux/terraza-oiseaux_resultado.avif",
+          "/photos/rooms/oiseaux/terraza2_resultado.avif",
+          "/photos/rooms/oiseaux/terraza3_resultado.avif",
+          "/photos/rooms/oiseaux/terraza4_resultado.avif"
+        ]
+      }
+    }
+  },
+  "reviews.title": "What our guests say",
+  "location.title": "Where we are",
+  "location.description": "Domaine du Sault is located in the heart of Auvergne, surrounded by nature, easily accessible by car and a few kilometers from Dore-l'Église.",
+  "contact.title": "Contact",
+  "footer": {
+    "navigation": "Navigation",
+    "contact": "Contact",
+    "more": "Follow us",
+    "partners": "Our partners"
+  },
+  "roomDetail": {
+    "showAll": "Show all photos",
+    "notFound": "Room not found.",
+    "back": "Back",
+    "size": "Size: {{size}}",
+    "rating": "Comfortable beds: {{rating}}, based on {{reviewsCount}} reviews",
+    "priceLabel": "Price",
+    "bathroom": "Bathroom",
+    "views": "View of:",
+    "amenities": "Amenities:",
+    "capacity": "Capacity",
+    "bed": "Bed",
+    "cancellation": "Cancellation policy",
+    "payment": "Payment",
+    "breakfast": "Breakfast",
+    "availability": "Availability",
+    "nights": "Stay",
+    "priceDetail": "Final price"
+  },
+  "lightbox": {
+    "close": "Close"
+  },
+  "contactForm": {
+    "name": "Name:",
+    "message": "Message:",
+    "messagePlaceholder": "Your message...",
+    "namePlaceholder": "John Smith",
+    "send": "Send"
+  }
+}

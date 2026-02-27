@@ -1,0 +1,79 @@
+body {
+  overflow-x: hidden;
+  width: 100%;
+  margin-left: 0;
+  margin-top: 75px;
+}
+
+ 
+.hero-slider {
+  position: relative;
+  margin: 0 auto;
+  font-family: 'Argesta', sans-serif;
+  width: 100%;
+  height: calc(100vh - 75px) ;
+  max-height: 1080px;
+  /* Centra el slider */
+
+  background-color: black;
+  box-shadow: 0 5px 20px rgba(56, 56, 56, 0.5);
+
+}
+
+
+.hero-slider img {
+  width: 100%;
+  height: 100%; /* Asegura que la imagen cubra todo el contenedor */
+  object-fit: cover; /* Muestra la imagen completa sin distorsión */
+  display: block;
+  margin: 0; /* Agrega un margen superior para bajar la imagen */
+  background: #000; /* Opcional: fondo negro para las bandas laterales */
+}
+
+.hero-text {
+  position: absolute;
+  top: 3rem;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 2px 4px rgba(58, 58, 58, 0.8);
+  z-index: 2;
+  width: 100%;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.hero-text h2 {
+  font-size: 1.8rem;
+  margin-top: 1rem;
+}
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4); /* opcional para contraste */
+  padding: 1rem 2rem;
+  border-radius: 10px;
+}
+
+.hero-booking-form {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+  overflow: visible;
+}
+
+@media (max-width: 768px) {
+  .hero-booking-form {
+    display: none;
+  }
+}
+

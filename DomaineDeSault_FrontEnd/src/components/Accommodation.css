@@ -1,0 +1,177 @@
+.accommodation-section {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: "Argesta", sans-serif;
+}
+
+.accommodation-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #111;
+  position: relative;
+}
+
+.accommodation-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #000;
+  margin: 1rem auto 0;
+}
+
+.accommodation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.accommodation-card {
+  display: flex;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.accommodation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Alternar la segunda tarjeta */
+.accommodation-card:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.accommodation-text {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.accommodation-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #111;
+  cursor: pointer; 
+}
+
+.accommodation-description {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.accommodation-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: fit-content;
+  transition: background 0.3s;
+}
+
+.accommodation-btn:hover {
+  background: #444;
+}
+
+.accommodation-img-wrapper {
+  flex: 1;
+  min-width: 50%;
+  overflow: hidden;
+}
+
+.accommodation-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+  cursor: pointer;
+}
+
+.accommodation-card:hover .accommodation-img {
+  transform: scale(1.05);
+}
+
+
+@media (max-width: 900px) {
+  .accommodation-section {
+    padding: 0.5rem;
+  }
+
+  .accommodation-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .accommodation-container {
+    gap: 2rem;
+  }
+
+  .accommodation-card,
+  .accommodation-card:nth-child(even) {
+    flex-direction: column;
+    border-radius: 14px;
+  }
+
+  .accommodation-img-wrapper {
+    min-height: 220px;
+  }
+
+  .accommodation-text {
+    padding: 1.5rem;
+  }
+
+  .accommodation-name {
+    font-size: 1.4rem;
+  }
+
+  .accommodation-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .accommodation-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem;
+  }
+}
+
+/* =========================
+   MOBILE PEQUEÑO (extra aire)
+   ========================= */
+
+@media (max-width: 600px) {
+  .accommodation-img-wrapper {
+    min-height: 260px;
+  }
+}
+
+/* =========================
+   DESACTIVAR HOVERS EN TÁCTIL
+   ========================= */
+
+@media (hover: none) {
+  .accommodation-card:hover {
+    transform: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .accommodation-card:hover .accommodation-img {
+    transform: none;
+  }
+}
