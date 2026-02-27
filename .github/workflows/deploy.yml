@@ -1,4 +1,4 @@
-name: CI/CD Domaine De Sault
+name: CI/CD DomaineDeSault
 
 on:
   push:
