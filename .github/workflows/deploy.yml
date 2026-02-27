@@ -64,6 +64,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "DomaineDeSault_APILoginManager/target/*.jar"
           target: "/opt/api-login"
+          strip_components: 2
 
       ############################################
       # COPY API REST TO EC2
@@ -76,6 +77,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "DomaineDeSault_APIRest/target/*.jar"
           target: "/opt/api-rest"
+          strip_components: 2
 
       ############################################
       # COPY FRONT TO EC2
