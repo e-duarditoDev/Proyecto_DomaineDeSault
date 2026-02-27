@@ -1,0 +1,112 @@
+name: CI/CD Domaine De Sault
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      ############################################
+      # BUILD API LOGIN
+      ############################################
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build API Login
+        run: |
+          cd DomaineDeSault_APILoginManager
+          mvn -B clean package -DskipTests
+
+      ############################################
+      # BUILD API REST
+      ############################################
+      - name: Build API Rest
+        run: |
+          cd DomaineDeSault_APIRest
+          mvn -B clean package -DskipTests
+
+      ############################################
+      # BUILD FRONT
+      ############################################
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Front dependencies
+        run: |
+          cd DomaineDeSault_FrontEnd
+          npm ci
+
+      - name: Build Front
+        run: |
+          cd DomaineDeSault_FrontEnd
+          npm run build
+
+      ############################################
+      # COPY API LOGIN TO EC2
+      ############################################
+      - name: Copy API Login to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "DomaineDeSault_APILoginManager/target/*.jar"
+          target: "/opt/apiLogin"
+
+      ############################################
+      # COPY API REST TO EC2
+      ############################################
+      - name: Copy API Rest to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "DomaineDeSault_APIRest/target/*.jar"
+          target: "/opt/apiRest"
+
+      ############################################
+      # COPY FRONT TO EC2
+      ############################################
+      - name: Copy Front to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "DomaineDeSault_FrontEnd/dist/*"
+          target: "/var/www/frontDomaine"
+
+      ############################################
+      # RESTART SERVICES
+      ############################################
+      - name: Restart services in EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /opt/apiLogin
+            latestLogin=$(ls -t *.jar | head -n 1)
+            mv -f "$latestLogin" app.jar
+            sudo systemctl restart apiLogin
+
+            cd /opt/apiRest
+            latestRest=$(ls -t *.jar | head -n 1)
+            mv -f "$latestRest" app.jar
+            sudo systemctl restart apiRest
+
+            sudo systemctl reload nginx
