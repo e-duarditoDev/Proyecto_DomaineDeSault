@@ -1,4 +1,4 @@
-name: CI/CD DomaineDeSault
+name: CI/CD Domaine De Sault
 
 on:
   push:
@@ -63,7 +63,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "DomaineDeSault_APILoginManager/target/*.jar"
-          target: "/opt/apiLogin"
+          target: "/opt/api-login"
 
       ############################################
       # COPY API REST TO EC2
@@ -75,7 +75,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "DomaineDeSault_APIRest/target/*.jar"
-          target: "/opt/apiRest"
+          target: "/opt/api-rest"
 
       ############################################
       # COPY FRONT TO EC2
@@ -99,14 +99,14 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /opt/apiLogin
+            cd /opt/api-login
             latestLogin=$(ls -t *.jar | head -n 1)
-            mv -f "$latestLogin" app.jar
-            sudo systemctl restart apiLogin
+            mv -f "$latestLogin" apiLogin.jar
+            sudo systemctl restart api-login
 
-            cd /opt/apiRest
+            cd /opt/api-rest
             latestRest=$(ls -t *.jar | head -n 1)
-            mv -f "$latestRest" app.jar
-            sudo systemctl restart apiRest
+            mv -f "$latestRest" apiRest.jar
+            sudo systemctl restart api-rest
 
             sudo systemctl reload nginx
