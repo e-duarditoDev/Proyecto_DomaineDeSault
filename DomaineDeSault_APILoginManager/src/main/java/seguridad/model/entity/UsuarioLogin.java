@@ -20,6 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,7 @@ import lombok.Setter;
 @Getter
 @Setter //evita generar el equal
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)//porque tiene ID autogenerado\
 @Table(name ="usuario_login")
 public class UsuarioLogin implements Serializable, UserDetails{
 
@@ -39,13 +41,18 @@ public class UsuarioLogin implements Serializable, UserDetails{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_login", nullable = false)
 	private Long idLogin;
-	@Column(nullable = false)
+	
+	@EqualsAndHashCode.Include //un email identifica la entidad
+	@Column(nullable = false, unique = true)
 	private String email;
+	
 	@Column(nullable = false)
 	private String password; 
+	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Rol rol;
+	
 	
 
 	@Override

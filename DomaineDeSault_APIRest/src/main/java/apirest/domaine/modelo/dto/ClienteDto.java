@@ -31,7 +31,6 @@ public class ClienteDto {
 		clienteDto.setPrimerApellido(cliente.getPrimerApellido());
 		clienteDto.setSegundoApellido(cliente.getSegundoApellido());
 		clienteDto.setTelefono(cliente.getTelefono());
-		clienteDto.setEmail(cliente.getEmail());
 		
 		
 		direccionDto.setCalle(cliente.getDireccion().getCalle());

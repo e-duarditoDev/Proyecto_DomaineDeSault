@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import apirest.domaine.modelo.entities.Cliente;
 import apirest.domaine.modelo.repository.ClienteRepository;
-import apirest.domaine.modelo.repository.UsuarioRepository;
 
 @Service
 public class ClienteServiceImplDataJpaMy8 implements ClienteService{
@@ -16,8 +15,6 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 	@Autowired
 	private ClienteRepository clienteRepo;
 	
-	@Autowired
-	private UsuarioRepository usuarioRepo;
 
 	@Override
 	public Cliente findById(Long atributoId) {

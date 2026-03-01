@@ -33,7 +33,6 @@ public class ClienteAltaDto {
 		
 		cliente.setDireccion(direccion);
 		cliente.setDocumentoIdentidad(dto.getDocumentoIdentidad());
-		cliente.setEmail(dto.getEmail());
 		cliente.setNombre(dto.getNombre());
 		cliente.setPrimerApellido(dto.getPrimerApellido());
 		cliente.setSegundoApellido(dto.getSegundoApellido());

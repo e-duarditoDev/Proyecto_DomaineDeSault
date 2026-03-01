@@ -1,15 +1,7 @@
 package apirest.domaine.modelo.entities;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import apirest.domaine.modelo.enumerados.EstadoUsuario;
-import apirest.domaine.modelo.enumerados.Rol;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,19 +27,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)//porque tiene ID autogenerado
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)// Usuario es la tabla padre, de la que heredan Cliente y Trabajador (espacificacion)
 @Table(name="usuario")
-public class Usuario implements Serializable, UserDetails{
+public class Usuario{
 
-	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "id_usuario")
 	private Long idUsuario;
 	
+	//se crea una FK desde workbench porque UsuarioLogin pertenece a la API Login
 	@Column(nullable = false, unique = true)
 	private Long idLogin;
 	
@@ -64,18 +54,8 @@ public class Usuario implements Serializable, UserDetails{
 	@Column(name="documento_identidad", unique = true, nullable = false)
 	private String documentoIdentidad;
 	
-	@EqualsAndHashCode.Include //un email identifica la entidad
-	@Column(unique = true, nullable = false)
-	private String email;
-	
-	@Column(nullable = false)
-	private String password;
-	
 	@Column(nullable = false)
 	private String telefono;
-	
-	@Enumerated(EnumType.STRING)
-	private Rol rol;
 	
 	@Enumerated(EnumType.STRING)
 	private EstadoUsuario estado;
@@ -90,17 +70,5 @@ public class Usuario implements Serializable, UserDetails{
 	@OneToOne(mappedBy = "usuario")
 	private ClienteBaja clienteBaja;
 
-	//SECURITY
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(
-				new SimpleGrantedAuthority("ROLE_"+rol.name())
-				);
-	}
-
-	@Override
-	public String getUsername() {
-		return this.email;
-	}
 	
 }
