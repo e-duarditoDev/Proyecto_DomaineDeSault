@@ -123,7 +123,13 @@
           "Accès non-fumeur"
         ],
         "price": "120€/nuit",
-        "image": "/photos/rooms/gite_valentin/salon.avif",
+        "capacity": "2 adultes",
+        "bed": "1 grand lit double",
+        "cancellation": "Annulation gratuite avant le 22 septembre 2025",
+        "payment": "Aucun paiement avant le 20 septembre 2025",
+        "breakfast": "Petit déjeuner inclus",
+        "availability": "Il ne nous en reste plus qu’1",
+        "priceDetail": "120€ taxes et frais compris",
         "images": [
           "/photos/rooms/gite_valentin/salon.avif",
           "/photos/rooms/gite_valentin/cocina y salon.avif",
@@ -172,7 +178,13 @@
           "Chambre non-fumeur"
         ],
         "price": "100€/nuit",
-        "image": "/photos/rooms/autrefois/salon.png",
+        "capacity": "2 adultes",
+        "bed": "1 grand lit double",
+        "cancellation": "Annulation gratuite avant le 22 septembre 2025",
+        "payment": "Aucun paiement avant le 20 septembre 2025",
+        "breakfast": "Petit déjeuner inclus",
+        "availability": "Il ne nous en reste plus qu’1",
+        "priceDetail": "100€ taxes et frais compris",
         "images": [
           "/photos/rooms/autrefois/autrefois_resultado2.avif",
           "/photos/rooms/autrefois/banio_vertical_resultado2.avif",
@@ -270,7 +282,13 @@
           "Chambre non-fumeur"
         ],
         "price": "115€/nuit",
-        "image": "/photos/rooms/salome/salome2_resultado.avif",
+        "capacity": "2 adultes",
+        "bed": "1 grand lit double",
+        "cancellation": "Annulation gratuite avant le 22 septembre 2025",
+        "payment": "Aucun paiement avant le 20 septembre 2025",
+        "breakfast": "Petit déjeuner inclus",
+        "availability": "Il ne nous en reste plus qu’1",
+        "priceDetail": "115€ taxes et frais compris",
         "images": [
           "/photos/rooms/salome/salome2_resultado.avif",
           "/photos/rooms/salome/cama1_resultado.avif",
@@ -327,7 +345,13 @@
           "Chambre non-fumeur"
         ],
         "price": "130€/nuit",
-        "image": "/photos/rooms/adelaide/adelaide_salon.avif",
+        "capacity": "2 adultes",
+        "bed": "1 grand lit double",
+        "cancellation": "Annulation gratuite avant le 22 septembre 2025",
+        "payment": "Aucun paiement avant le 20 septembre 2025",
+        "breakfast": "Petit déjeuner inclus",
+        "availability": "Il ne nous en reste plus qu’1",
+        "priceDetail": "130€ taxes et frais compris",
         "images": [
           "/photos/rooms/adelaide/adelaide.avif",
           "/photos/rooms/adelaide/adelaide_salon.avif",
@@ -386,7 +410,6 @@
         "payment": "Aucun paiement avant le 20 septembre 2025",
         "breakfast": "Petit déjeuner inclus",
         "availability": "Il ne nous en reste plus qu’1",
-        "nights": "1 nuit, 2 adultes",
         "priceDetail": "91€ taxes et frais compris",
         "images": [
           "/photos/rooms/oiseaux/cama_oiseaux_resultado.avif",
