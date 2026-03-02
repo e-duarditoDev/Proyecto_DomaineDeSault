@@ -7,6 +7,9 @@ import { useTranslation } from "react-i18next";
 import "./Navbar.css";
 // Importamos la hoja de estilos correspondiente a la barra de navegación.
 
+import { useNavigate } from "react-router-dom";
+// Para los botones de autenticacion y registro de usuario
+
 const flags = {
   fr: "/flags/fr.svg",
   en: "/flags/gb.svg",
@@ -49,6 +52,9 @@ const Navbar = () => {
     localStorage.setItem("i18nextLng", lng); // Guardamos la preferencia.
     setMenuOpen(false); // Cerramos el menú al cambiar de idioma.
   };
+
+  const navigate = useNavigate();
+  // Para lo botones de autenticacion y registro de usuario
 
   return (
     <nav className="navbar">
@@ -214,6 +220,8 @@ const Navbar = () => {
         </li>
       </ul>
 
+  <div className="auth-language-wrapper">
+
       {/* Selector de idioma */}
       <div className="language-switcher">
         {Object.entries(flags).map(([lng, src]) => (
@@ -227,6 +235,26 @@ const Navbar = () => {
           </button>
         ))}
       </div>
+
+      {/*Botones de acceso y resgistro*/}
+      <div className="auth-buttons d-flex gap-2 me-3">
+        <button
+          className="btn btn-outline-dark btn-sm"
+          onClick={() => navigate("/login")}
+        >
+          Acceder
+        </button>
+
+        <button
+          className="btn btn-dark btn-sm"
+          onClick={() => navigate("/register")}
+        >
+          Registrarse
+        </button>
+      </div>
+
+  </div>
+
     </nav>
   );
 };
