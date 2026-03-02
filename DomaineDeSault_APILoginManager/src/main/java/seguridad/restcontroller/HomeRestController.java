@@ -1,5 +1,8 @@
 package seguridad.restcontroller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,9 +48,14 @@ public class HomeRestController {
 		}
 		
 
-		String token = jwtSecurityService.generateToken(usuarioLogin.getEmail(), usuarioLogin.getAuthorities());
+		String token = jwtSecurityService.generateToken(
+				usuarioLogin.getEmail(), 
+				usuarioLogin.getAuthorities());
 		//System.out.println(token);
-		return ResponseEntity.ok(token);
+		Map<String, String> response = new HashMap<>();
+		response.put("token", token);
+		
+		return ResponseEntity.ok(response);
 		
 		}
 	

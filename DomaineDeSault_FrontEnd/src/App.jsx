@@ -16,6 +16,10 @@ import BookingForm from "./components/BookingForm";
 import Accommodation from "./components/Accommodation";
 import AccommodationDetails from "./components/AccomodationDetails";
 
+//componentes del login y registro
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
+
 function App() {
   const { i18n } = useTranslation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -55,9 +59,16 @@ function App() {
         />
         <Route path="/room/:roomId" element={<RoomDetail />} />
         <Route path="/accommodation/:section" element={<AccommodationDetails />} />
+         
+        {/* Rutas del auth */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
       </Routes>
     </Router>
+    
   );
+  
 }
 
 export default App;
