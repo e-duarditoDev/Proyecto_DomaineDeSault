@@ -123,7 +123,13 @@
           "Acceso para no fumadores"
         ],
         "price": "120€/noche",
-        "image": "/photos/rooms/gite_valentin/salon.avif",
+        "capacity": "2 adultos",
+        "bed": "1 cama doble grande",
+        "cancellation": "Cancelación gratis antes del 22 de septiembre de 2025",
+        "payment": "No pagues nada hasta el 20 de septiembre de 2025",
+        "breakfast": "Desayuno incluido",
+        "availability": "Nos queda 1",
+        "priceDetail": "€120 incluye impuestos y cargos",
         "images": [
           "/photos/rooms/gite_valentin/salon.avif",
           "/photos/rooms/gite_valentin/cocina y salon.avif",
@@ -172,7 +178,13 @@
           "Habitación para no fumadores"
         ],
         "price": "100€/noche",
-        "image": "/photos/rooms/autrefois/salon.png",
+        "capacity": "2 adultos",
+        "bed": "1 cama doble grande",
+        "cancellation": "Cancelación gratis antes del 22 de septiembre de 2025",
+        "payment": "No pagues nada hasta el 20 de septiembre de 2025",
+        "breakfast": "Desayuno incluido",
+        "availability": "Nos queda 1",
+        "priceDetail": "€100 incluye impuestos y cargos",
         "images": [
           "/photos/rooms/autrefois/autrefois_resultado2.avif",
           "/photos/rooms/autrefois/banio_vertical_resultado2.avif",
@@ -226,7 +238,13 @@
           "Habitación para no fumadores"
         ],
         "price": "110€/noche",
-        "image": "/photos/rooms/hubert/cama_hubert_resultado.avif",
+        "capacity": "2 adultos",
+        "bed": "1 cama doble grande",
+        "cancellation": "Cancelación gratis antes del 22 de septiembre de 2025",
+        "payment": "No pagues nada hasta el 20 de septiembre de 2025",
+        "breakfast": "Desayuno incluido",
+        "availability": "Nos queda 1",
+        "priceDetail": "€110 incluye impuestos y cargos",
         "images": [
           "/photos/rooms/hubert/cama_hubert_resultado.avif",
           "/photos/rooms/hubert/nombre_resultado.avif",
@@ -269,7 +287,13 @@
           "Habitación para no fumadores"
         ],
         "price": "115€/noche",
-        "image": "/photos/rooms/salome/salome2_resultado.avif",
+        "capacity": "2 adultos",
+        "bed": "1 cama doble grande",
+        "cancellation": "Cancelación gratis antes del 22 de septiembre de 2025",
+        "payment": "No pagues nada hasta el 20 de septiembre de 2025",
+        "breakfast": "Desayuno incluido",
+        "availability": "Nos queda 1",
+        "priceDetail": "€115 incluye impuestos y cargos",
         "images": [
           "/photos/rooms/salome/salome2_resultado.avif",
           "/photos/rooms/salome/cama1_resultado.avif",
@@ -326,7 +350,13 @@
           "Habitación para no fumadores"
         ],
         "price": "130€/noche",
-        "image": "/photos/rooms/adelaide/adelaide_salon.avif",
+        "capacity": "2 adultos",
+        "bed": "1 cama doble grande",
+        "cancellation": "Cancelación gratis antes del 22 de septiembre de 2025",
+        "payment": "No pagues nada hasta el 20 de septiembre de 2025",
+        "breakfast": "Desayuno incluido",
+        "availability": "Nos queda 1",
+        "priceDetail": "€130 incluye impuestos y cargos",
         "images": [
           "/photos/rooms/adelaide/adelaide.avif",
           "/photos/rooms/adelaide/adelaide_salon.avif",
@@ -344,12 +374,11 @@
           { "icon": "/icons/balcon.svg", "text": " Balcón" },
           { "icon": "/icons/wifi.svg", "text": " Wi-Fi" }
         ],
-        "price": "91€/noche",
-        "image": "/photos/rooms/oiseaux/cama_oiseaux_resultado.avif",
+        
         "size": "16 m²",
         "rating": "9.4",
         "reviewsCount": 43,
-        "summary": "The pool with a view and sauna are the standout features of this double room. The double room provides a private entrance, a tea and coffee maker, a balcony with garden views as well as a private bathroom featuring a shower. The unit offers 1 bed.",
+        "summary": "La piscina con vistas y la sauna son las características destacadas de esta habitación doble. La habitación posee entrada privada, tetera, cafetera y un balcon con vistas al jardín, asi como baño privado con ducha. La habitación tiene una cama",
         "bathroom": [
           "Artículos de aseo gratis",
           "Sauna",
@@ -379,13 +408,13 @@
           "Zona de comedor exterior",
           "Política de humo: no se puede fumar"
         ],
+        "price": "91€/noche",
         "capacity": "2 adultos",
         "bed": "1 cama doble grande",
         "cancellation": "Cancelación gratis antes del 22 de septiembre de 2025",
         "payment": "No pagues nada hasta el 20 de septiembre de 2025",
         "breakfast": "Desayuno incluido",
         "availability": "Nos queda 1",
-        "nights": "1 noche, 2 adultos",
         "priceDetail": "€91 incluye impuestos y cargos",
         "images": [
           "/photos/rooms/oiseaux/cama_oiseaux_resultado.avif",

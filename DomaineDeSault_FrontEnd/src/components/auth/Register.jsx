@@ -7,25 +7,41 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setMessage("");
     setLoading(true);
+    setSuccess("");
 
     try {
-      // ⛔ De momento simulamos registro.
+      // De momento simulamos registro.
       if (!email || !password) throw new Error("Rellena email y contraseña.");
+    //capturar lo que venga de la ruta auth/registro-mail de la API
+    const response = await fetch("/auth/registro-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      
+      body: JSON.stringify({email,password})
+    });
 
-      // Simulación: aviso de “te mandamos email”
-      setMessage(
-        "Te hemos enviado un email de verificación. Revisa tu bandeja y completa el registro."
-      );
+    const apiMessage = await response.text();
 
-      // Aquí luego irá tu fetch("/api/auth/register", ...)
+    if (!response.ok) {
+      throw new Error("Error en registro: "+apiMessage);
+    }
+
+    //mensaje de ok
+    setSuccess ("Por favor, revise su correo para confirmar la cuenta.")
+
+    //limpiar formulario
+    setEmail("");
+    setPassword("");
+
     } catch (err) {
       setError(err.message || "Error inesperado.");
     } finally {
@@ -39,9 +55,25 @@ const Register = () => {
         <h2>Registrarse</h2>
 
         {error && <div className="alert alert-danger">{error}</div>}
-        {message && <div className="alert alert-success">{message}</div>}
+        {success && <div className="alert alert-success">{success}</div>}
 
         <form onSubmit={handleSubmit}>
+          <label className="form-label">Name</label>
+          <input
+            className="form-control mb-3"
+            type="name"
+            //value={name}
+            //onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+          />
+          <label className="form-label">Surname</label>
+          <input
+            className="form-control mb-3"
+            type="surname"
+            //value={surname}
+            //onChange={(e) => setSurname(e.target.value)}
+            placeholder="Surname"
+          />
           <label className="form-label">Email</label>
           <input
             className="form-control mb-3"

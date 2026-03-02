@@ -7,8 +7,9 @@ import seguridad.model.entity.UsuarioLogin;
 
 
 
-public interface UsuarioService extends UserDetailsService {
+public interface UsuarioLoginService extends UserDetailsService {
 		
 	UsuarioLogin findByEmailAndPassword(String email, String contrasena);
-	UsuarioLogin insertOneCliente(UsuarioAltaDto usuAltaDto);
+	UsuarioLogin insertOneUsuario(UsuarioAltaDto usuAltaDto);
+	UsuarioLogin insertOneUsuarioSinEncriptacion(UsuarioAltaDto usuAltaDto);
 }

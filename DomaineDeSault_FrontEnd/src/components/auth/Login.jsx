@@ -17,16 +17,34 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // De momento solo simulamos. Luego conectamos API.
-      // Aquí irá tu fetch("/api/auth/login", ...)
-      if (!email || !password) throw new Error("Rellena email y contraseña.");
+      //llamada a la API Login
+      const response = await fetch("/auth/registro-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
 
-      // Simulación: guardamos un token falso (solo para probar flujo)
-      localStorage.setItem("token", "FAKE_TOKEN_DEV");
+      if (!response.ok) {
+        throw new Error("Credenciales incorrectas");
+      }
 
-      navigate("/"); // vuelve a Home
+      const data = await response.json();
+
+      // Guardar token JSON en localStorage
+      localStorage.setItem("token", data.token);
+
+      //aqui hay que recuperar el rol y mandar a un sitio u otro (cliente, trabajador)
+
+      //Devolver a home
+      navigate("/");
+
     } catch (err) {
-      setError(err.message || "Error inesperado.");
+      setError(err.message);
     } finally {
       setLoading(false);
     }
