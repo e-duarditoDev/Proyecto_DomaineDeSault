@@ -13,7 +13,7 @@ import seguridad.model.repository.UsuarioLoginRepository;
 
 
 @Service
-public class UsuarioServiceIpmDataJpaMy8 implements UsuarioService{ 
+public class UsuarioLoginServiceIpmDataJpaMy8 implements UsuarioLoginService{ 
 
 	@Autowired
 	private UsuarioLoginRepository usuRepo;
@@ -49,16 +49,25 @@ public class UsuarioServiceIpmDataJpaMy8 implements UsuarioService{
 		return null;
 	}
 	
+	//lo usa el Admin para registrar
 	@Override
-	public UsuarioLogin insertOneCliente (UsuarioAltaDto usuAltaDto) {
+	public UsuarioLogin insertOneUsuario (UsuarioAltaDto usuAltaDto) {
 		
 		UsuarioLogin usuario = UsuarioAltaDto.converToEntity(usuAltaDto);
 		
-		usuario.setRol(Rol.CLIENTE);
-		
-		usuario.setPassword(
+//		usuario.setRol(Rol.CLIENTE); //lo genero en el restController porque segun el metodo sera Cliente o Trabajador
+
+		usuario.setPassword( 
 				passwordEncoder.encode(usuario.getPassword())
 				);
+		
+		return usuRepo.save(usuario);
+	}
+
+	//lo usa el Cliente para registrarse
+	@Override
+	public UsuarioLogin insertOneUsuarioSinEncriptacion(UsuarioAltaDto usuAltaDto) {
+		UsuarioLogin usuario = UsuarioAltaDto.converToEntity(usuAltaDto);		
 		
 		return usuRepo.save(usuario);
 	}
