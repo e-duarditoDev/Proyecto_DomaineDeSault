@@ -120,7 +120,13 @@
           "Non-smoking access"
         ],
         "price": "120€/night",
-        "image": "/photos/rooms/gite_valentin/salon.avif",
+        "capacity": "2 adults",
+        "bed": "1 large double bed",
+        "cancellation": "Free cancellation up to 30 days before reserved date",
+        "payment": "No payment until 14 days earlier",
+        "breakfast": "Breakfast included",
+        "availability": "Only 1 left",
+        "priceDetail": "€120 including taxes and fees",
         "images": [
           "/photos/rooms/gite_valentin/salon.avif",
           "/photos/rooms/gite_valentin/cocina y salon.avif",
@@ -168,7 +174,13 @@
           "Non-smoking room"
         ],
         "price": "100€/night",
-        "image": "/photos/rooms/autrefois/salon.png",
+        "capacity": "2 adults",
+        "bed": "1 large double bed",
+        "cancellation": "Free cancellation up to 30 days before reserved date",
+        "payment": "No payment until 14 days earlier",
+        "breakfast": "Breakfast included",
+        "availability": "Only 1 left",
+        "priceDetail": "€108 including taxes and fees",
         "images": [
           "/photos/rooms/autrefois/autrefois_resultado2.avif",
           "/photos/rooms/autrefois/banio_vertical_resultado2.avif",
@@ -222,7 +234,13 @@
           "Non-smoking room"
         ],
         "price": "110€/night",
-        "image": "/photos/rooms/hubert/cama_hubert_resultado.avif",
+        "capacity": "2 adults",
+        "bed": "1 large double bed",
+        "cancellation": "Free cancellation up to 30 days before reserved date",
+        "payment": "No payment until 14 days earlier",
+        "breakfast": "Breakfast included",
+        "availability": "Only 1 left",
+        "priceDetail": "€108 including taxes and fees",
         "images": [
           "/photos/rooms/hubert/cama_hubert_resultado.avif",
           "/photos/rooms/hubert/nombre_resultado.avif",
@@ -263,8 +281,14 @@
           "Electricity",
           "Non-smoking room"
         ],
-        "price": "115€/night",
-        "image": "/photos/rooms/salome/salome2_resultado.avif",
+        "price":"115€/night",
+        "capacity": "2 adults",
+        "bed": "1 large double bed",
+        "cancellation": "Free cancellation up to 30 days before reserved date",
+        "payment": "No payment until 14 days earlier",
+        "breakfast": "Breakfast included",
+        "availability": "Only 1 left",
+        "priceDetail": "€108 including taxes and fees",
         "images": [
           "/photos/rooms/salome/salome2_resultado.avif",
           "/photos/rooms/salome/cama1_resultado.avif",
@@ -316,7 +340,13 @@
           "Non-smoking room"
         ],
         "price": "130€/night",
-        "image": "/photos/rooms/adelaide/adelaide_salon.avif",
+        "capacity": "2 adults",
+        "bed": "1 large double bed",
+        "cancellation": "Free cancellation up to 30 days before reserved date",
+        "payment": "No payment until 14 days earlier",
+        "breakfast": "Breakfast included",
+        "availability": "Only 1 left",
+        "priceDetail": "€108 including taxes and fees",
         "images": [
           "/photos/rooms/adelaide/adelaide.avif",
           "/photos/rooms/adelaide/adelaide_salon.avif",
@@ -333,8 +363,6 @@
           { "icon": "/icons/balcon.svg", "text": "Balcony" },
           { "icon": "/icons/wifi.svg", "text": "Wi-Fi" }
         ],
-        "price": "91€/night",
-        "image": "/photos/rooms/oiseaux/cama_oiseaux_resultado.avif",
         "size": "16 m²",
         "rating": "9.4",
         "reviewsCount": 43,
@@ -368,13 +396,13 @@
           "Outdoor dining area",
           "No smoking policy"
         ],
+        "price": "91€/night",
         "capacity": "2 adults",
         "bed": "1 large double bed",
-        "cancellation": "Free cancellation before September 22, 2025",
-        "payment": "No payment until September 20, 2025",
+        "cancellation": "Free cancellation up to 30 days before reserved date",
+        "payment": "No payment until 14 days earlier",
         "breakfast": "Breakfast included",
         "availability": "Only 1 left",
-        "nights": "1 night, 2 adults",
         "priceDetail": "€91 including taxes and fees",
         "images": [
           "/photos/rooms/oiseaux/cama_oiseaux_resultado.avif",

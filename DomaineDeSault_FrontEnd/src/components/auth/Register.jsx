@@ -17,7 +17,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      // ⛔ De momento simulamos registro.
+      // De momento simulamos registro.
       if (!email || !password) throw new Error("Rellena email y contraseña.");
 
       // Simulación: aviso de “te mandamos email”
@@ -42,6 +42,22 @@ const Register = () => {
         {message && <div className="alert alert-success">{message}</div>}
 
         <form onSubmit={handleSubmit}>
+          <label className="form-label">Name</label>
+          <input
+            className="form-control mb-3"
+            type="name"
+            //value={name}
+            //onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+          />
+          <label className="form-label">Surname</label>
+          <input
+            className="form-control mb-3"
+            type="surname"
+            //value={surname}
+            //onChange={(e) => setSurname(e.target.value)}
+            placeholder="Surname"
+          />
           <label className="form-label">Email</label>
           <input
             className="form-control mb-3"
