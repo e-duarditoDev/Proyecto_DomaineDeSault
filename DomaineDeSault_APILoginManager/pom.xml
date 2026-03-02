@@ -98,6 +98,19 @@
     <version>0.12.5</version>
     <scope>runtime</scope>
   </dependency>
+  
+  <!-- para el envio del mail de confirmacion con java mail-->
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+  </dependency>
+  
+  <!-- para el envio del mail de confirmacion con sendGrid-->
+<!--  <dependency>-->
+<!--  	<groupId>com.sendgrid</groupId>-->
+<!--  	<artifactId>sendgrid-java</artifactId>-->
+<!--  	<version>4.9.3</version>-->
+<!--  </dependency>-->
 		
 	</dependencies>
 	
