@@ -10,6 +10,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -42,6 +43,19 @@ const Register = () => {
     setEmail("");
     setPassword("");
 
+/*       setMessage(""); */
+      setLoading(true);
+
+ /*    try {
+      // De campos obligatorios
+      if (!email || !password) throw new Error("Rellena email y contraseña.");
+
+      // Mensaje exitoso
+      setMessage(
+        "Te hemos enviado un email de verificación. Revisa tu bandeja y completa el registro."
+      ); */
+
+      // Aquí luego irá tu fetch("/api/auth/register", ...)
     } catch (err) {
       setError(err.message || "Error inesperado.");
     } finally {
@@ -92,7 +106,7 @@ const Register = () => {
             placeholder="********"
           />
 
-          <button className="btn btn-dark w-100" disabled={loading}>
+          <button className="btn btn-outline-dark w-100" disabled={loading}>
             {loading ? "Creando cuenta..." : "Crear cuenta"}
           </button>
         </form>
