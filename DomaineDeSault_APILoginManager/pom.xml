@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>seguridad</groupId>
-	<artifactId>DomaineDeSalt_LoginManager</artifactId>
+	<artifactId>app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>DomaineDeSalt_LoginManager</name>
 	<description>API para la autenticacion del usuario.</description>

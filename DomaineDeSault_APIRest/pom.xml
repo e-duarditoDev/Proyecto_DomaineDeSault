@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>apirest.domaine</groupId>
-	<artifactId>DomaineDeSault_APIRest</artifactId>
+	<artifactId>app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>DomaineDeSault_APIRest</name>
 	<description>Proyecto grupal fin de ciclo. Web de reservas alojamiento rural.</description>
