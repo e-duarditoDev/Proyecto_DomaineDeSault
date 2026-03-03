@@ -123,7 +123,13 @@
           "Raucherfreier Zugang"
         ],
         "price": "120€/Nacht",
-        "image": "/photos/rooms/gite_valentin/salon.avif",
+        "capacity": "2 Erwachsene",
+        "bed": "1 großes Doppelbett",
+        "cancellation": "Kostenlose Stornierung bis 22. September 2025",
+        "payment": "Keine Zahlung vor dem 20. September 2025",
+        "breakfast": "Frühstück inklusive",
+        "availability": "Nur noch 1 verfügbar",
+        "priceDetail": "120€ inklusive Steuern und Gebühren",
         "images": [
           "/photos/rooms/gite_valentin/salon.avif",
           "/photos/rooms/gite_valentin/cocina y salon.avif",
@@ -172,7 +178,13 @@
           "Nichtraucherzimmer"
         ],
         "price": "100€/Nacht",
-        "image": "/photos/rooms/autrefois/salon.png",
+        "capacity": "2 Erwachsene",
+        "bed": "1 großes Doppelbett",
+        "cancellation": "Kostenlose Stornierung bis 22. September 2025",
+        "payment": "Keine Zahlung vor dem 20. September 2025",
+        "breakfast": "Frühstück inklusive",
+        "availability": "Nur noch 1 verfügbar",
+        "priceDetail": "100€ inklusive Steuern und Gebühren",
         "images": [
           "/photos/rooms/autrefois/autrefois_resultado2.avif",
           "/photos/rooms/autrefois/banio_vertical_resultado2.avif",
@@ -227,7 +239,13 @@
           "Nichtraucherzimmer"
         ],
         "price": "110€/Nacht",
-        "image": "/photos/rooms/hubert/cama_hubert_resultado.avif",
+        "capacity": "2 Erwachsene",
+        "bed": "1 großes Doppelbett",
+        "cancellation": "Kostenlose Stornierung bis 22. September 2025",
+        "payment": "Keine Zahlung vor dem 20. September 2025",
+        "breakfast": "Frühstück inklusive",
+        "availability": "Nur noch 1 verfügbar",
+        "priceDetail": "110€ inklusive Steuern und Gebühren",
         "images": [
           "/photos/rooms/hubert/cama_hubert_resultado.avif",
           "/photos/rooms/hubert/nombre_resultado.avif",
@@ -270,7 +288,13 @@
           "Nichtraucherzimmer"
         ],
         "price": "115€/Nacht",
-        "image": "/photos/rooms/salome/salome2_resultado.avif",
+        "capacity": "2 Erwachsene",
+        "bed": "1 großes Doppelbett",
+        "cancellation": "Kostenlose Stornierung bis 22. September 2025",
+        "payment": "Keine Zahlung vor dem 20. September 2025",
+        "breakfast": "Frühstück inklusive",
+        "availability": "Nur noch 1 verfügbar",
+        "priceDetail": "115€ inklusive Steuern und Gebühren",
         "images": [
           "/photos/rooms/salome/salome2_resultado.avif",
           "/photos/rooms/salome/cama1_resultado.avif",
@@ -323,7 +347,13 @@
           "Nichtraucherzimmer"
         ],
         "price": "130€/Nacht",
-        "image": "/photos/rooms/adelaide/adelaide_salon.avif",
+        "capacity": "2 Erwachsene",
+        "bed": "1 großes Doppelbett",
+        "cancellation": "Kostenlose Stornierung bis 22. September 2025",
+        "payment": "Keine Zahlung vor dem 20. September 2025",
+        "breakfast": "Frühstück inklusive",
+        "availability": "Nur noch 1 verfügbar",
+        "priceDetail": "130€ inklusive Steuern und Gebühren",
         "images": [
           "/photos/rooms/adelaide/adelaide.avif",
           "/photos/rooms/adelaide/adelaide_salon.avif",
@@ -382,7 +412,6 @@
         "payment": "Keine Zahlung vor dem 20. September 2025",
         "breakfast": "Frühstück inklusive",
         "availability": "Nur noch 1 verfügbar",
-        "nights": "1 Nacht, 2 Erwachsene",
         "priceDetail": "91€ inklusive Steuern und Gebühren",
         "images": [
           "/photos/rooms/oiseaux/cama_oiseaux_resultado.avif",
