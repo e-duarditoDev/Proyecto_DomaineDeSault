@@ -104,12 +104,12 @@ jobs:
           script: |
             cd /opt/api-login
             latestLogin=$(ls -t *.jar | head -n 1)
-            mv -f "$latestLogin" apiLogin.jar
+            mv -f "$latestLogin" app.jar
             sudo systemctl restart api-login
 
             cd /opt/api-rest
             latestRest=$(ls -t *.jar | head -n 1)
-            mv -f "$latestRest" apiRest.jar
+            mv -f "$latestRest" app.jar
             sudo systemctl restart api-rest
 
             sudo systemctl reload nginx

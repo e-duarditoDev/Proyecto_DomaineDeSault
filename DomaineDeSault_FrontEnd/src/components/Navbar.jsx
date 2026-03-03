@@ -247,6 +247,7 @@ const Navbar = () => {
 
         <button
           className="btn btn-outline-dark btn-sm"
+
           onClick={() => navigate("/register")}
         >
           Registrarse
