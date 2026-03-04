@@ -19,7 +19,7 @@ import apirest.domaine.modelo.entities.Cliente;
 import apirest.domaine.service.ClienteService;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/api/cliente")
 public class ClienteRestController {
 	
 	@Autowired
