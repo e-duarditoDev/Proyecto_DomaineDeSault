@@ -117,9 +117,11 @@ public class HomeRestController {
         //guardar datos en tabla verificacion_mail
         veriServ.insertOne(vm);
         
-        // Link de confirmación se envia al mail con el token en el header
-        String link = "http://localhost:8082/auth/alta-cliente?token=" + token;
-        //String link = "https://domainedesault.duckdns.org/auth/confirm?token=" + token;
+        // Link de confirmación se envia al mail con el token en el header, en local
+        //String link = "http://localhost:8082/auth/alta-cliente?token=" + token;
+        
+        //Link en produccion
+        String link = "https://domainedesault.duckdns.org/auth/alta-cliente?token=" + token;
         
         System.out.println("Enviando mail a: " + dto.getEmail());
         emailServ.sendEmailEs(dto.getEmail(), link);
@@ -129,7 +131,7 @@ public class HomeRestController {
 	}
 	
 	
-	@GetMapping("/alta-cliente")
+	@GetMapping("/alta-cliente")// GetMapping porque un clic sobre un link siempre es GET (excepcion convencional)
 	public ResponseEntity<?> altaCliente (@RequestParam String token){
 		
 		//buscar el token temporal en la tabla de verificacion_mail
