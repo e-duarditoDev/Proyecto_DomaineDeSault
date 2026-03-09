@@ -2,6 +2,7 @@ package seguridad.service;
 
 import java.util.Optional;
 
+
 import seguridad.model.entity.VerificacionMail;
 
 public interface VerificacionMailService extends IntCrudGenerico<VerificacionMail, Long> {

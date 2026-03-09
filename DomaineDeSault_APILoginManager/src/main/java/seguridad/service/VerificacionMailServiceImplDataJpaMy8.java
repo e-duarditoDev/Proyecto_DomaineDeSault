@@ -1,7 +1,7 @@
 package seguridad.service;
 
-import java.util.List;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +26,8 @@ public class VerificacionMailServiceImplDataJpaMy8 implements VerificacionMailSe
 	}
 	
 	@Override
-	public Optional<VerificacionMail> findByToken(String token) {
-		VerificacionMail vm = veriRepo.findByToken(token).orElse(null);
-		
-		return Optional.of(vm);
+	public Optional<VerificacionMail> findByToken(String token) {		
+		return veriRepo.findByToken(token); //si no lo encuentra devuelve null
 	}
 
 	@Override
@@ -58,9 +56,7 @@ public class VerificacionMailServiceImplDataJpaMy8 implements VerificacionMailSe
 	@Override
 	public int deleteOne(Long atributoId) {
 		veriRepo.deleteById(atributoId);
-		return 0;
+		return 1;
 	}
-
-
 
 }

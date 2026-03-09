@@ -23,7 +23,6 @@ import seguridad.model.dto.UsuarioLoginDto;
 import seguridad.model.entity.UsuarioLogin;
 import seguridad.model.entity.VerificacionMail;
 import seguridad.security.JwtSecurityService;
-import seguridad.security.SecurityConfig;
 import seguridad.service.EmailService;
 import seguridad.service.UsuarioLoginService;
 import seguridad.service.VerificacionMailService;
@@ -32,8 +31,6 @@ import seguridad.service.VerificacionMailService;
 @CrossOrigin(origins = "*")
 @RequestMapping("/auth")
 public class HomeRestController {
-
-    //private final SecurityConfig securityConfig;
 
 	@Autowired
 	private UsuarioLoginService userService;
@@ -49,12 +46,8 @@ public class HomeRestController {
 	
 	@Autowired
 	private EmailService emailServ;
-
-	/*
-	 * HomeRestController(SecurityConfig securityConfig) { this.securityConfig =
-	 * securityConfig; }
-	 */
 	
+
 //forma alternativa, sin @Autowired (en teoria mas robusta)
 //    private final VerificationTokenRepository verificationRepo;
 //    private final PasswordEncoder passwordEncoder;
@@ -66,10 +59,6 @@ public class HomeRestController {
 //        this.passwordEncoder = passwordEncoder;
 //    }
 
-	@GetMapping ("/")
-	ResponseEntity<?> home (){
-		return ResponseEntity.ok("Te doy la bienvenida.");
-	}
 	
 	
 	@PostMapping("/login")
@@ -78,7 +67,6 @@ public class HomeRestController {
 		UsuarioLogin usuarioLogin = userService.findByEmailAndPassword(
 				usuDto.getEmail(), usuDto.getPassword());
 
-		
 		if (usuarioLogin == null) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
 		}
@@ -87,7 +75,6 @@ public class HomeRestController {
 		String token = jwtSecurityService.generateToken(
 				usuarioLogin.getEmail(), 
 				usuarioLogin.getAuthorities());
-		//System.out.println(token)
 		
 		//construir un el JSON para React
 		Map<String, String> response = new HashMap<>();
@@ -102,7 +89,11 @@ public class HomeRestController {
 		
 		//Verificar si existe el usuario
 		if (veriServ.existsByEmail(dto.getEmail()))
-			return ResponseEntity.badRequest().body("Peticion en curso. Revisa tu email.");
+			return ResponseEntity.badRequest().body(" Peticion en curso. Revise su email.");
+		
+		if (userService.existsByEmail(dto.getEmail())) {
+			return ResponseEntity.badRequest().body(" Usuario ya registrado. Inicie sesion con su cuenta.");
+		}
 		
 		//Generar token aleatorio para el link del mail(no tiene que ver con el del usuario)
 		String token = UUID.randomUUID().toString();
@@ -117,11 +108,11 @@ public class HomeRestController {
         //guardar datos en tabla verificacion_mail
         veriServ.insertOne(vm);
         
-        // Link de confirmación se envia al mail con el token en el header, en local
-        //String link = "http://localhost:8082/auth/alta-cliente?token=" + token;
+//        // Link de confirmación en local
+//          String link = "http://localhost:5173/confirm-account?token=" + token;
         
-        //Link en produccion
-        String link = "https://domainedesault.duckdns.org/auth/alta-cliente?token=" + token;
+        //Link confirmacion en produccion
+        String link = "https://domainedesault.duckdns.org/confirm-account?token=" + token;
         
         System.out.println("Enviando mail a: " + dto.getEmail());
         emailServ.sendEmailEs(dto.getEmail(), link);
@@ -133,13 +124,25 @@ public class HomeRestController {
 	
 	@GetMapping("/alta-cliente")// GetMapping porque un clic sobre un link siempre es GET (excepcion convencional)
 	public ResponseEntity<?> altaCliente (@RequestParam String token){
+
 		
 		//buscar el token temporal en la tabla de verificacion_mail
 		VerificacionMail vm = veriServ.findByToken(token).orElse(null);
 		
-		if(vm == null)
-			return ResponseEntity.badRequest().body("Token incorrecto");
+		//System.out.println("1. TOKEN: "+vm.getToken());
 		
+		if(vm == null)
+			return ResponseEntity.badRequest().body("Token no valido.");
+		
+// ALTERNATIVA	
+//		Optional<VerificacionMail> vmOpt = veriServ.findByToken(token);
+//
+//		if (vmOpt.isEmpty())
+//		    return ResponseEntity.badRequest().body("Token incorrecto");
+//
+//		VerificacionMail vm = vmOpt.get();		
+		
+
 		//verificar expiracion token, si expirado limpia tabla
 		if (vm.getExpiracion().isBefore(LocalDateTime.now())) { //si la hora de registro es anterior
 			veriServ.deleteOne(vm.getId());
@@ -150,13 +153,16 @@ public class HomeRestController {
 		UsuarioAltaDto dto = new UsuarioAltaDto();
 		dto.setPassword(vm.getPassword());
 		dto.setEmail(vm.getEmail());
-		dto.setRol(Rol.CLIENTE); //segun el metodo por donde entre
+		dto.setRol(Rol.CLIENTE); //segun el endpoint por donde entre
 		
+
 		//Este insertOne ya no tiene el encoder porque ya la contrasegna viene encodeada de verificacio_mail
 		userService.insertOneUsuarioSinEncriptacion(dto);
 		
+		
 		//higiene de la tabla verificacion_token
 		veriServ.deleteOne(vm.getId());
+
 		
 		return ResponseEntity.ok("Cuenta creada con exito.");
 		

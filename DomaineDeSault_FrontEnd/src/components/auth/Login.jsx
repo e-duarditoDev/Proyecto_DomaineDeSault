@@ -17,8 +17,8 @@ const Login = () => {
     setLoading(true);
 
     try {
-      //llamada a la API Login
-      const response = await fetch("/auth/registro-email", {
+      //llamada a la API
+      const response = await fetch("/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -51,8 +51,22 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
+    <div className="auth-container bg-body-tertiary">
+
+      <div className="logo-auth position-absolute top-0 start-0 ms-4">
+        <a
+          href="/"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <img
+            src="/logo/logo domaine de salt transparente.png"
+            alt="Logo Domaine du Salt"
+            height="40"
+          />
+        </a>
+      </div>
+      
+      <div className="auth-card card shadow-lg p-4">
         <h2>Acceder</h2>
 
         {error && <div className="alert alert-danger">{error}</div>}

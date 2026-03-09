@@ -39,8 +39,8 @@ public class UsuarioLogin implements Serializable, UserDetails{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_login", nullable = false)
-	private Long idLogin;
+	@Column(name = "id_usuario", nullable = false)
+	private Long idUsuario;
 	
 	@EqualsAndHashCode.Include //un email identifica la entidad
 	@Column(nullable = false, unique = true)

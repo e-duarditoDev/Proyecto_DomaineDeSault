@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import enumerados.Rol;
 import seguridad.model.dto.UsuarioAltaDto;
 import seguridad.model.entity.UsuarioLogin;
 import seguridad.model.repository.UsuarioLoginRepository;
@@ -22,7 +21,7 @@ public class UsuarioLoginServiceIpmDataJpaMy8 implements UsuarioLoginService{
 	private PasswordEncoder passwordEncoder;
 
 
-	@Override 	//con esto se crea un usuario que viene de la bbdd, es de la UserDetailsService
+	@Override //se recupera un UsuarioLogin que viene de la bbdd
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 	    UsuarioLogin usuarioLogin = usuRepo.findByEmail(email);
 
@@ -36,7 +35,7 @@ public class UsuarioLoginServiceIpmDataJpaMy8 implements UsuarioLoginService{
 	}
 
 
-	@Override
+	@Override //para comprobar credenciales en Login
 	public UsuarioLogin findByEmailAndPassword(String email, String password) {
 		//Recuperar el usuario por email
 		UsuarioLogin usuarioLogin = usuRepo.findByEmail(email);
@@ -47,6 +46,11 @@ public class UsuarioLoginServiceIpmDataJpaMy8 implements UsuarioLoginService{
 		}
 		
 		return null;
+	}
+	
+	@Override //verifica si el usuario esta registrado en registro-mail
+	public boolean existsByEmail(String email) {
+		return usuRepo.existsByEmail(email);
 	}
 	
 	//lo usa el Admin para registrar
@@ -71,6 +75,9 @@ public class UsuarioLoginServiceIpmDataJpaMy8 implements UsuarioLoginService{
 		
 		return usuRepo.save(usuario);
 	}
+
+
+
 
 
 }
