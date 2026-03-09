@@ -33,13 +33,13 @@ import lombok.Setter;
 public class Usuario{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "id_usuario")
 	private Long idUsuario;
 	
-	//se crea una FK desde workbench porque UsuarioLogin pertenece a la API Login
-	@Column(nullable = false, unique = true)
-	private Long idLogin;
+//	//se crea una FK desde workbench porque UsuarioLogin pertenece a la API Login
+//	@Column(nullable = false, unique = true)
+//	private Long idLogin;
 	
 	@Column(nullable = false)
 	private String nombre;

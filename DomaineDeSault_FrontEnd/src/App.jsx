@@ -1,8 +1,9 @@
 // ..\Domaine-Du-Salt> npm run dev
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, matchPath } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+
 import Navbar from "./components/Navbar";
 import HeroSlider from "./components/HeroSlider";
 import RoomsSection from "./components/RoomsSection";
@@ -19,10 +20,37 @@ import AccommodationDetails from "./components/AccomodationDetails";
 //componentes del login y registro
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+import ConfirmAccount from "./components/auth/ConfirmAccount";
 
-function App() {
+//pagina no encontrada
+import NotFoundRedirect from "./components/NotFoundRedirect";
+
+
+function AppContent() {
   const { i18n } = useTranslation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  /* Ruta donde ocultar Navbar*/
+  const location = useLocation();
+
+  const knownRoutes = [
+    "/",
+    "/login",
+    "/register",
+    "/confirm-account",
+    "/room/:roomId",
+    "/accommodation/:section",
+  ];
+
+  const isKnownRoute = knownRoutes.some((route) =>
+    matchPath({ path: route, end: true }, location.pathname)
+  );
+
+  const hideLayout =
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname === "/confirm-account"||
+    !isKnownRoute;
 
   useEffect(() => {
     const handleResize = () => {
@@ -38,9 +66,12 @@ function App() {
   }, [i18n.language]);
 
   return (
-    <Router>
+    /*  <Router> */
+    <>
       <ScrollToTop />
-      <Navbar />
+      {!hideLayout && <Navbar />}
+      {/* <Navbar /> */}
+
       <Routes>
         <Route
           path="/"
@@ -59,16 +90,27 @@ function App() {
         />
         <Route path="/room/:roomId" element={<RoomDetail />} />
         <Route path="/accommodation/:section" element={<AccommodationDetails />} />
-         
+
         {/* Rutas del auth */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/confirm-account" element={<ConfirmAccount />} />
+        <Route path="*" element={<NotFoundRedirect />} />
 
       </Routes>
-    </Router>
-    
+
+      {/*  </Router> */}
+    </>
   );
-  
+
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
 }
 
 export default App;

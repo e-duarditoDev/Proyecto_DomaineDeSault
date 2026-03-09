@@ -5,11 +5,11 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
 
-//intermediario para comunicar con la API Login, auth coincide con la @RequestMappgin de la clase restController
+//intermediario para comunicar con la API Login (solo en local), /auth coincide con la @RequestMappgin de la clase restController
   server: {
   proxy: {
     '/auth': {
-      target: 'http://localhost:8082',
+      target: 'http://localhost:8082', //pruebas en local
       changeOrigin: true
     }
   }

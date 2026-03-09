@@ -41,8 +41,10 @@ public class SecurityConfig {
 				
 			//RUTAS PUBLICAS
 			//.requestMatchers(HttpMethod.GET, "/**").permitAll()
-			.requestMatchers( "/auth/**")
-			.permitAll()
+			.requestMatchers( HttpMethod.POST, "/auth/registro-email", "/auth/login").permitAll()
+			.requestMatchers( HttpMethod.GET, "/auth/alta-cliente").permitAll()
+
+			
 			
 			//CUALQUIER OTRA PETICION
 			.anyRequest().authenticated()

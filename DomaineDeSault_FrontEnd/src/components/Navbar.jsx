@@ -220,41 +220,44 @@ const Navbar = () => {
         </li>
       </ul>
 
-  <div className="auth-language-wrapper">
+      <div className="auth-language-wrapper">
 
-      {/* Selector de idioma */}
-      <div className="language-switcher">
-        {Object.entries(flags).map(([lng, src]) => (
+        {/* Selector de idioma */}
+        <div className="language-switcher">
+          {Object.entries(flags).map(([lng, src]) => (
+            <button
+              key={lng}
+              onClick={() => changeLanguage(lng)}
+              className={i18n.language === lng ? "active-lang" : ""}
+              title={t(`languages.${lng}`)}
+            >
+              <img src={src} alt={lng} width="32" height="20" />
+            </button>
+          ))}
+        </div>
+
+        {/* -------------------------- */}
+        {/* AUTENTICACION */}
+        {/* -------------------------- */}
+
+        {/*Botones de acceso y resgistro*/}
+        <div className="auth-buttons d-flex gap-2 me-3">
           <button
-            key={lng}
-            onClick={() => changeLanguage(lng)}
-            className={i18n.language === lng ? "active-lang" : ""}
-            title={t(`languages.${lng}`)}
+            className="btn btn-outline-dark btn-sm"
+            onClick={() => navigate("/login")}
           >
-            <img src={src} alt={lng} width="32" height="20" />
+            Iniciar Sesion
           </button>
-        ))}
+
+          <button
+            className="btn btn-outline-dark btn-sm"
+            onClick={() => navigate("/register")}
+          >
+            No tengo cuenta
+          </button>
+        </div>
+
       </div>
-
-      {/*Botones de acceso y resgistro*/}
-      <div className="auth-buttons d-flex gap-2 me-3">
-        <button
-          className="btn btn-outline-dark btn-sm"
-          onClick={() => navigate("/login")}
-        >
-          Acceder
-        </button>
-
-        <button
-          className="btn btn-outline-dark btn-sm"
-
-          onClick={() => navigate("/register")}
-        >
-          Registrarse
-        </button>
-      </div>
-
-  </div>
 
     </nav>
   );

@@ -10,6 +10,7 @@ import seguridad.model.entity.UsuarioLogin;
 public interface UsuarioLoginService extends UserDetailsService {
 		
 	UsuarioLogin findByEmailAndPassword(String email, String contrasena);
+	boolean existsByEmail(String email);
 	UsuarioLogin insertOneUsuario(UsuarioAltaDto usuAltaDto);
 	UsuarioLogin insertOneUsuarioSinEncriptacion(UsuarioAltaDto usuAltaDto);
 }

@@ -11,7 +11,8 @@ public class EmailServiceImplJpaMy8 implements EmailService{
 
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
+//METODO CON JAVAMAIL
 	@Override
 	public void sendEmailEs(String para, String link) {
 		
@@ -19,14 +20,14 @@ public class EmailServiceImplJpaMy8 implements EmailService{
 		correo.setTo(para);
 		correo.setSubject("Confirmacion cuenta Domaine De Sault");
 		correo.setText("Estimado cliente:\n"
-				+ "Gracias por si interes en registrarse en Domaine De Sault y disfrutar de las ventajas del club Domaine.\n"
+				+ "Gracias por su interes en registrarse en Domaine De Sault y disfrutar de las ventajas del club Domaine.\n"
 				+ "Por favor, pinche en el siguente link para completar el proceso: \n"
 				+link);
 		
 		mailSender.send(correo);
 		
 		
-		
+//METODO CON SENDGRID		
 //		 @Value("${sendgrid.api.key}")
 //		 private String apiKey;
 //		 
