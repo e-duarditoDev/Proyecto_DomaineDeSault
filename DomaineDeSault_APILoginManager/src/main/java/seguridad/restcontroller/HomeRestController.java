@@ -115,7 +115,7 @@ public class HomeRestController {
         //Link confirmacion en produccion
         String link = "https://domainedesault.duckdns.org/confirm-account?token=" + token;
         
-        System.out.println("Enviando mail a: " + dto.getEmail());
+//        System.out.println("Enviando mail a: " + dto.getEmail());
         emailServ.sendEmailEs(dto.getEmail(), link);
         
         
@@ -151,15 +151,15 @@ public class HomeRestController {
 		}
 		
 		//construir el dto final para alta cliente
-		UsuarioAltaDto dto = new UsuarioAltaDto();
-		dto.setPassword(vm.getPassword());
-		dto.setEmail(vm.getEmail());
-		dto.setRol(Rol.CLIENTE); //segun el endpoint por donde entre
+		UsuarioAltaDto altaDto = new UsuarioAltaDto();
+		altaDto.setPassword(vm.getPassword());
+		altaDto.setEmail(vm.getEmail());
+		altaDto.setRol(Rol.CLIENTE); //segun el endpoint por donde entre
+		altaDto.setAlta(vm.getAlta().toLocalDate());
 		
 
 		//Este insertOne ya no tiene el encoder porque ya la contrasegna viene encodeada de verificacio_mail
-		userService.insertOneUsuarioSinEncriptacion(dto);
-		
+		userService.insertOneUsuarioSinEncriptacion(altaDto);
 		
 		//higiene de la tabla verificacion_token
 		veriServ.deleteOne(vm.getId());

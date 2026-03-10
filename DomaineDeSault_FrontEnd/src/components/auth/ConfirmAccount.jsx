@@ -57,7 +57,7 @@ const ConfirmAccount = () => {
 
   return (
 
-    <div className="container d-flex flex-column justify-content-center align-items-center min-vh-50 shadow-lg bg-body-secondary rounded-3">
+    <div className="container d-flex flex-column justify-content-center align-items-center min-vh-50 shadow-lg bg-body-secondary rounded-3 w-50">
 
       {status === "loading" && <h3>Verificando cuenta...</h3>}
 
