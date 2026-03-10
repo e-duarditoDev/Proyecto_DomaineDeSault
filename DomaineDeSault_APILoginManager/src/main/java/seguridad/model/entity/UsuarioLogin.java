@@ -1,6 +1,7 @@
 package seguridad.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -53,12 +54,15 @@ public class UsuarioLogin implements Serializable, UserDetails{
 	@Column(nullable = false)
 	private Rol rol;
 	
+	@Column(nullable = false)
+	private LocalDate alta;
+	
 	
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return List.of(
-				new SimpleGrantedAuthority("ROLE_"+rol.name())//he tenido que meter ROLE_ porque no me cogia los roles
+				new SimpleGrantedAuthority("ROLE_"+rol.name())
 				);
 	}
 

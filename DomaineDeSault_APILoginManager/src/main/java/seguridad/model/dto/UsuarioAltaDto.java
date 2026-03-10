@@ -1,5 +1,7 @@
 package seguridad.model.dto;
 
+import java.time.LocalDate;
+
 import enumerados.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +17,7 @@ public class UsuarioAltaDto {
 	private String email; 
 	private String password;
 	private Rol rol;
+	private LocalDate alta;
 	
 	public static UsuarioLogin converToEntity (UsuarioAltaDto usuarioAlta ) {
 		UsuarioLogin usuLogin = new UsuarioLogin();
@@ -22,6 +25,7 @@ public class UsuarioAltaDto {
 		usuLogin.setEmail(usuarioAlta.getEmail());
 		usuLogin.setPassword(usuarioAlta.getPassword());
 		usuLogin.setRol(usuarioAlta.getRol());
+		usuLogin.setAlta(usuarioAlta.getAlta());
 		
 		return usuLogin;
 	}
