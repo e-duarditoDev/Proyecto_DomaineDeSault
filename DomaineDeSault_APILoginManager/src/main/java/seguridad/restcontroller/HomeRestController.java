@@ -103,9 +103,10 @@ public class HomeRestController {
         vm.setEmail(dto.getEmail());
         vm.setPassword(passwordEncoder.encode(dto.getPassword())); //encriptar password
         vm.setToken(token);
-        vm.setExpiracion(LocalDateTime.now().plusMinutes(10)); //caducidad del token del link 10 min, agnade 10 min a la hora actual
-		
-        //guardar datos en tabla verificacion_mail
+        vm.setAlta(LocalDateTime.now());
+        vm.setExpiracion(LocalDateTime.now().plusMinutes(10)); //agnade 10 min a la hora actual
+        //alta y expiracion son usados por el event de la BBDD para higiene de la tabla verificacion_mail
+        
         veriServ.insertOne(vm);
         
 //        // Link de confirmación en local
