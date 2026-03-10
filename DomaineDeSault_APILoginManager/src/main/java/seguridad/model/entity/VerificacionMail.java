@@ -37,6 +37,9 @@ public class VerificacionMail {
 	private String token;
 	
 	@Column(nullable = false)
+	private LocalDateTime alta;
+	
+	@Column(nullable = false)
 	private LocalDateTime expiracion;
 	
 }
