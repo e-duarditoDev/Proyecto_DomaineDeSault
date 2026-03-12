@@ -82,7 +82,7 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 	        throw new RuntimeException("Las fechas son obligatorias.");
 	    }
 
-	    if (!dto.getFechaSalida().isBefore(dto.getFechaEntrada())) {
+	    if (!dto.getFechaSalida().isAfter(dto.getFechaEntrada())) { //si afirmo isBefore pasa cuando las fechas son iguales
 	        throw new RuntimeException("La fecha de salida debe ser posterior a la fecha de entrada.");
 	    }
 	    
