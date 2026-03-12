@@ -1,6 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams, Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; //para redirigir hacia rutas
+<<<<<<< HEAD
+=======
+import "./Auth.css";
+>>>>>>> origin/main
 
 const ConfirmAccount = () => {
 
@@ -74,7 +78,11 @@ const ConfirmAccount = () => {
           <h3 className="text-danger">Error durante la verificacion.</h3>
           <h4 className="text-secondary">{message}</h4>
           <div className="d-flex mt-3">
+<<<<<<< HEAD
             <span className="text-secondary">Volviendo a inicio...&nbsp;&nbsp;</span><span className="spinner-border spinner-border-sm text-primary" role="status"></span>
+=======
+            <span className="text-secondary">Voviendo a home...&nbsp;&nbsp;</span><span className="spinner-border spinner-border-sm text-primary" role="status"></span>
+>>>>>>> origin/main
           </div>
         </>
       )}

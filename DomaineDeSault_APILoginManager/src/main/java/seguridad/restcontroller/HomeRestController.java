@@ -160,6 +160,10 @@ public class HomeRestController {
 
 		//Este insertOne ya no tiene el encoder porque ya la contrasegna viene encodeada de verificacio_mail
 		userService.insertOneUsuarioSinEncriptacion(altaDto);
+<<<<<<< HEAD
+=======
+		
+>>>>>>> origin/main
 		
 		//higiene de la tabla verificacion_token
 		veriServ.deleteOne(vm.getId());
