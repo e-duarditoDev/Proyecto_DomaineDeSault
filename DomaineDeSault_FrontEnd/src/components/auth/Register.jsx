@@ -102,7 +102,7 @@ const Register = () => {
         {success && <div className="alert alert-success">{success}</div>}
 
         <form onSubmit={handleSubmit}>
-      
+
           {/* DE DANIEL, EXPLICARLE LA LOGICA         
           
           <label className="form-label">Name</label> 
@@ -129,7 +129,6 @@ const Register = () => {
             <input
               id="email"
               className="form-control mb-3 py-2"
-              className="form-control mb-3 py-2"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -152,7 +151,6 @@ const Register = () => {
             />
             <button
               type="button"
-              className="btn btn-clear focus-ring py-1"
               className="btn btn-clear focus-ring py-1"
               onClick={() => setShowPassword(!showPassword)}
             >
@@ -181,7 +179,6 @@ const Register = () => {
             />
             <button
               type="button"
-              className="btn btn-clear focus-ring py-1"
               className="btn btn-clear focus-ring py-1"
               onClick={() => setShowConfirm(!showConfirm)}
             >
@@ -215,7 +212,6 @@ const Register = () => {
             </div>
           </div>
           <div className="text-center mb-4">
-          <div className="text-center mb-4">
             {strength > 0 && (
               <label htmlFor="progress-bar" className="text-secondary-emphasis">
                 {getStrengthLabel(strength)}
@@ -223,7 +219,6 @@ const Register = () => {
             )}
           </div>
 
-          <button className="btn btn-outline-dark w-100 py-2" disabled={loading}>
           <button className="btn btn-outline-dark w-100 py-2" disabled={loading}>
             {loading ? "Creando cuenta..." : "Crear cuenta"}
           </button>
