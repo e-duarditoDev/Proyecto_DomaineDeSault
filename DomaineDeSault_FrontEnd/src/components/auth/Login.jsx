@@ -66,11 +66,6 @@ const Login = () => {
           />
         </a>
       </div>
-<<<<<<< HEAD
-
-=======
-      
->>>>>>> origin/main
       <div className="auth-card card shadow-lg p-4">
         <h2>Acceder</h2>
 

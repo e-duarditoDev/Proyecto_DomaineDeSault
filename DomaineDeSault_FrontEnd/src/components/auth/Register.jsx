@@ -102,12 +102,8 @@ const Register = () => {
         {success && <div className="alert alert-success">{success}</div>}
 
         <form onSubmit={handleSubmit}>
-
-<<<<<<< HEAD
+      
           {/* DE DANIEL, EXPLICARLE LA LOGICA         
-=======
-          {/* DE DANIE, EXPLICARLE LA LOGICA         
->>>>>>> origin/main
           
           <label className="form-label">Name</label> 
           <input
@@ -132,11 +128,8 @@ const Register = () => {
           <div className="input-group mb-3">
             <input
               id="email"
-<<<<<<< HEAD
               className="form-control mb-3 py-2"
-=======
-              className="form-control mb-3 w-100"
->>>>>>> origin/main
+              className="form-control mb-3 py-2"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -159,11 +152,8 @@ const Register = () => {
             />
             <button
               type="button"
-<<<<<<< HEAD
               className="btn btn-clear focus-ring py-1"
-=======
-              className="btn btn-clear focus-ring"
->>>>>>> origin/main
+              className="btn btn-clear focus-ring py-1"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword
@@ -191,11 +181,8 @@ const Register = () => {
             />
             <button
               type="button"
-<<<<<<< HEAD
               className="btn btn-clear focus-ring py-1"
-=======
-              className="btn btn-clear focus-ring"
->>>>>>> origin/main
+              className="btn btn-clear focus-ring py-1"
               onClick={() => setShowConfirm(!showConfirm)}
             >
               {showConfirm
@@ -227,11 +214,8 @@ const Register = () => {
             >
             </div>
           </div>
-<<<<<<< HEAD
           <div className="text-center mb-4">
-=======
-          <div className="text-center">
->>>>>>> origin/main
+          <div className="text-center mb-4">
             {strength > 0 && (
               <label htmlFor="progress-bar" className="text-secondary-emphasis">
                 {getStrengthLabel(strength)}
@@ -239,11 +223,8 @@ const Register = () => {
             )}
           </div>
 
-<<<<<<< HEAD
           <button className="btn btn-outline-dark w-100 py-2" disabled={loading}>
-=======
-          <button className="btn btn-outline-dark w-100 mt-4" disabled={loading}>
->>>>>>> origin/main
+          <button className="btn btn-outline-dark w-100 py-2" disabled={loading}>
             {loading ? "Creando cuenta..." : "Crear cuenta"}
           </button>
         </form>
