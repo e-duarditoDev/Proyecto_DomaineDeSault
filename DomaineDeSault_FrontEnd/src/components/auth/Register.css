@@ -36,29 +36,9 @@
   opacity: 1;
 }
 
-.password-wrapper {
-  position: relative;
-}
-
-.password-toggle {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-}
-
-.password-toggle:hover {
-  opacity: 1;
-}
-
 .btn-clear:active {
   border-color: transparent !important;
 }
-
 
 .logo-auth img {
   height: 4.5rem; /* proporcional */

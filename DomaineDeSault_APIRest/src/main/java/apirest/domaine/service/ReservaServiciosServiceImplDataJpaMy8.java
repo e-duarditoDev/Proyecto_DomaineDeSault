@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 import apirest.domaine.modelo.entities.ReservaServicioId;
 import apirest.domaine.modelo.entities.ReservaServicio;
-import apirest.domaine.modelo.repository.ReservasServiciosRepository;
+import apirest.domaine.modelo.repository.ReservaServiciosRepository;
 
 @Service
-public class ReservasServiciosServiceImplDataJpaMy8 implements ReservasServiciosService{
+public class ReservaServiciosServiceImplDataJpaMy8 implements ReservaServiciosService{
 
 	@Autowired
-	private ReservasServiciosRepository reservasRepo;
+	private ReservaServiciosRepository reservasRepo;
 
 	@Override
 	public ReservaServicio findById(ReservaServicioId atributoId) {

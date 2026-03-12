@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./Auth.css";
+import "./Register.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -103,7 +103,7 @@ const Register = () => {
 
         <form onSubmit={handleSubmit}>
 
-          {/* DE DANIE, EXPLICARLE LA LOGICA         
+          {/* DE DANIEL, EXPLICARLE LA LOGICA         
           
           <label className="form-label">Name</label> 
           <input
@@ -128,7 +128,7 @@ const Register = () => {
           <div className="input-group mb-3">
             <input
               id="email"
-              className="form-control mb-3 w-100"
+              className="form-control mb-3 py-2"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -151,7 +151,7 @@ const Register = () => {
             />
             <button
               type="button"
-              className="btn btn-clear focus-ring"
+              className="btn btn-clear focus-ring py-1"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword
@@ -179,7 +179,7 @@ const Register = () => {
             />
             <button
               type="button"
-              className="btn btn-clear focus-ring"
+              className="btn btn-clear focus-ring py-1"
               onClick={() => setShowConfirm(!showConfirm)}
             >
               {showConfirm
@@ -211,7 +211,7 @@ const Register = () => {
             >
             </div>
           </div>
-          <div className="text-center">
+          <div className="text-center mb-4">
             {strength > 0 && (
               <label htmlFor="progress-bar" className="text-secondary-emphasis">
                 {getStrengthLabel(strength)}
@@ -219,7 +219,7 @@ const Register = () => {
             )}
           </div>
 
-          <button className="btn btn-outline-dark w-100 mt-4" disabled={loading}>
+          <button className="btn btn-outline-dark w-100 py-2" disabled={loading}>
             {loading ? "Creando cuenta..." : "Crear cuenta"}
           </button>
         </form>

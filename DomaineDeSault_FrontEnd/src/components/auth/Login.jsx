@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "./Auth.css";
+import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -65,34 +66,52 @@ const Login = () => {
           />
         </a>
       </div>
-      
+
       <div className="auth-card card shadow-lg p-4">
         <h2>Acceder</h2>
 
         {error && <div className="alert alert-danger">{error}</div>}
 
         <form onSubmit={handleSubmit}>
-          <label className="form-label">Email</label>
+
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
           <input
-            className="form-control mb-3"
+            className="form-control mb-3 py-2"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="tuemail@email.com"
+            placeholder="Introduce tu email"
           />
 
-          <label className="form-label">Contraseña</label>
-          <input
-            className="form-control mb-3"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="********"
-          />
+          <label htmlFor="password" className="form-label">
+            Contraseña
+          </label>
+          <div className="input-group mb-4">
+            <input
+              id="password"
+              className="form-control"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="********"
+            />
+            <button
+              type="button"
+              className="btn btn-clear focus-ring py-1"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword
+                ? <img className="eye-off" src="/icons/eye-open-svgrepo-com.svg" alt="Ocultar" />
+                : <img className="eye-on" src="/icons/eye-closed-svgrepo-com.svg" alt="Mostar" />}
+            </button>
+          </div>
 
-          <button className="btn btn-dark w-100" disabled={loading}>
+          <button className="btn btn-dark w-100 py-2" disabled={loading}>
             {loading ? "Accediendo..." : "Acceder"}
           </button>
+
         </form>
 
         <p className="auth-footer mt-3">
