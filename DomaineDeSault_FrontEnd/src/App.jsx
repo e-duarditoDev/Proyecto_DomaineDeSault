@@ -25,6 +25,9 @@ import ConfirmAccount from "./components/auth/ConfirmAccount";
 //pagina no encontrada
 import NotFoundRedirect from "./components/NotFoundRedirect";
 
+// Para la vista de reservas del cliente
+import MisReservas from "./components/client/MisReservas";
+
 
 function AppContent() {
   const { i18n } = useTranslation();
@@ -40,6 +43,7 @@ function AppContent() {
     "/confirm-account",
     "/room/:roomId",
     "/accommodation/:section",
+    "/mis-reservas",
   ];
 
   const isKnownRoute = knownRoutes.some((route) =>
@@ -96,6 +100,9 @@ function AppContent() {
         <Route path="/register" element={<Register />} />
         <Route path="/confirm-account" element={<ConfirmAccount />} />
         <Route path="*" element={<NotFoundRedirect />} />
+
+        {/* Rutas para el cliente autenticado */}
+        <Route path="/mis-reservas" element={<MisReservas />} />
 
       </Routes>
 

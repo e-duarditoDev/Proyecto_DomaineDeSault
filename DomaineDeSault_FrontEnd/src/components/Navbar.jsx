@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // Importamos React y el hook useState para manejar el estado dentro del componente.
 
 import { useTranslation } from "react-i18next";
@@ -7,8 +7,11 @@ import { useTranslation } from "react-i18next";
 import "./Navbar.css";
 // Importamos la hoja de estilos correspondiente a la barra de navegación.
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 // Para los botones de autenticacion y registro de usuario
+
+import { isAuthenticated, logout } from "../utils/auth";
+// Para las vistas de usuario autenticado
 
 const flags = {
   fr: "/flags/fr.svg",
@@ -55,6 +58,32 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   // Para lo botones de autenticacion y registro de usuario
+
+  const [authenticated, setAuthenticated] = useState(isAuthenticated());
+  // Estado para controlar si el usuario está autenticado o no.
+
+  const location = useLocation();
+  // Obtenemos la ubicación actual para poder actualizar el estado de autenticación
+
+  const handleLogout = () => {
+    logout();
+    setAuthenticated(false);
+    setMenuOpen(false);
+    setSubmenuOpen(null);
+    navigate("/");
+  };
+  // Función para cerrar sesión: elimina el token, actualiza el estado y redirige al inicio.
+
+  useEffect(() => {
+    setAuthenticated(isAuthenticated());
+  }, [location.pathname]);
+  // Cada vez que cambie la ruta, comprobamos si el usuario sigue autenticado.
+
+
+  useEffect(() => {
+    setAuthenticated(isAuthenticated());
+  }, []);
+  // Al montar el componente, comprobamos si el usuario está autenticado y actualizamos el estado.
 
   return (
     <nav className="navbar">
@@ -242,19 +271,42 @@ const Navbar = () => {
 
         {/*Botones de acceso y resgistro*/}
         <div className="auth-buttons d-flex gap-2 me-3">
-          <button
-            className="btn btn-outline-dark btn-sm"
-            onClick={() => navigate("/login")}
-          >
-            Iniciar Sesion
-          </button>
+          {!authenticated ? (
+            <>
+              <button
+                className="btn btn-outline-dark btn-sm"
+                onClick={() => navigate("/login")}
+              >
+                Iniciar Sesión
+              </button>
 
-          <button
-            className="btn btn-outline-dark btn-sm"
-            onClick={() => navigate("/register")}
-          >
-            No tengo cuenta
-          </button>
+              <button
+                className="btn btn-outline-dark btn-sm"
+                onClick={() => navigate("/register")}
+              >
+                No tengo cuenta
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className="btn btn-outline-dark btn-sm"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/mis-reservas");
+                }}
+              >
+                Mis reservas
+              </button>
+
+              <button
+                className="btn btn-dark btn-sm"
+                onClick={handleLogout}
+              >
+                Cerrar sesión
+              </button>
+            </>
+          )}
         </div>
 
       </div>
