@@ -57,7 +57,10 @@ public class Reserva implements Serializable{
 	@Column(name="fecha_salida", nullable = false)
 	private LocalDate fechaSalida;
 	
-	@Column(name="precio_total", nullable = false, precision = 4, scale = 2)
+	@Column(name = "numero_huespedes", nullable = false)
+	private int numHuespedes;
+	
+	@Column(name="precio_total", nullable = false, precision = 6, scale = 2)
 	private BigDecimal precioTotal;
 	
 	@Builder.Default

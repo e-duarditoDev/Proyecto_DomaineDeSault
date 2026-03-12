@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Entity
-@Table(name="SERVICIO")
+@Table(name="servicio")
 public class Servicio implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -30,12 +30,16 @@ public class Servicio implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_servicio")
 	private Long idServicio;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 50)
 	private String nombre;
-	@Column(length = 200)
+	@Column(length = 100)
 	private String descripcion;
 	@Column(nullable = false, precision = 7, scale = 3)
 	private BigDecimal precio;
+	@Column(nullable = false)
+	private int duracion;
+	@Column(nullable = false, name = "servicios_por_dia")
+	private int serviciosPorDia;
 	
 	@OneToMany(mappedBy = "servicio", orphanRemoval = true)
 	private List<ReservaServicio> reservaServicio;

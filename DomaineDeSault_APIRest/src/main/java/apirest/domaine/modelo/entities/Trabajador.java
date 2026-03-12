@@ -12,7 +12,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter //Data compara mas de lo necesario y genera problemas con el equalAndHashcode y el ToString, usar @getter y @setter
 @Entity
-@Table(name="trabajador")
+@Table(name="trabajador") //hibernate lo deduce pero asi queda mas explicito
 public class Trabajador extends Usuario{
 
 	private static final long serialVersionUID = 1L;

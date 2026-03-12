@@ -28,7 +28,7 @@ import lombok.Setter;
 @Setter
 @Builder
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)// Usuario es la tabla padre, de la que heredan Cliente y Trabajador (espacificacion)
+@Inheritance(strategy = InheritanceType.JOINED)// Usuario es la tabla padre, de la que heredan Cliente y Trabajador (espacificacion) usan el mismo idUsuario
 @Table(name="usuario")
 public class Usuario{
 
@@ -69,6 +69,4 @@ public class Usuario{
 	
 	@OneToOne(mappedBy = "usuario")
 	private ClienteBaja clienteBaja;
-
-	
 }

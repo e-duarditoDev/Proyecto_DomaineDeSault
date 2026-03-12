@@ -7,5 +7,6 @@ import apirest.domaine.modelo.entities.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 	boolean existsByDocumentoIdentidad(String documentoIdentidad);
 	Cliente findByDocumentoIdentidad(String documentoIdentidad);
+	
 
 }
