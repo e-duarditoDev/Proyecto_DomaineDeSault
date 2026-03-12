@@ -27,7 +27,7 @@ public class ReservaHabitacion implements Serializable{
 	@EmbeddedId
 	private ReservaHabitacionId reservaHabitacionId;
 	
-	//MapsId define este atributo como parte de la PK compuesta
+	//MapsId enlaza los id de la clave compuesta ReservaHabitacionId con los Id de Habitacion y Reserva
 	@MapsId("idHabitacion")
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_habitacion", nullable = false)

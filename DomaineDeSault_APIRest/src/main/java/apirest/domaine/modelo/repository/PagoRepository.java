@@ -6,4 +6,5 @@ import apirest.domaine.modelo.entities.Pago;
 
 public interface PagoRepository extends JpaRepository<Pago, Long>{
 
+	
 }

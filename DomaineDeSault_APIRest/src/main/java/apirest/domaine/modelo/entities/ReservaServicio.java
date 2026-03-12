@@ -40,7 +40,7 @@ public class ReservaServicio implements Serializable{
 	@JoinColumn(name="id_servicio", nullable = false)
 	private Servicio servicio;
 	
-	@Column(name="precio_total", precision = 4, scale = 2)
-	private BigDecimal precioTotal;
+//	@Column(name="precio_total", precision = 4, scale = 2)
+//	private BigDecimal precioTotal;
 	
 }

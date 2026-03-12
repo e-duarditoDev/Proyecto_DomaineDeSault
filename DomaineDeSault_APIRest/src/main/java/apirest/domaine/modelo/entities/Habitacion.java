@@ -56,6 +56,4 @@ public class Habitacion implements Serializable{
 	@Builder.Default
 	@Column(nullable = false)
 	private EstadoHabitacion estado = EstadoHabitacion.DISPONIBLE;
-	
-	
 }

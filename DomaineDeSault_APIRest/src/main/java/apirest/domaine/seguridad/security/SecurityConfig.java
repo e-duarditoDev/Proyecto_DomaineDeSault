@@ -74,10 +74,10 @@ public class SecurityConfig {
 	        		.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html/**").permitAll()
 					
 					//CLIENTES
-					.requestMatchers(HttpMethod.GET, "/cliente/**").hasRole("CLIENTE")
+					.requestMatchers(HttpMethod.GET, "/api/cliente/**").hasRole("CLIENTE")
 					
 					//TRABAJADORES
-					.requestMatchers(HttpMethod.GET, "/trabajador/**").hasRole("TRABAJADOR")
+					.requestMatchers(HttpMethod.GET, "/api/trabajador/**").hasRole("TRABAJADOR")
 					
 					//ADMIN
 					

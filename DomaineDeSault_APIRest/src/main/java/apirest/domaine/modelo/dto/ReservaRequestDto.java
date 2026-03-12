@@ -11,14 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class ReservaDto {
+public class ReservaRequestDto {
 
-	private Long idReserva;
-	private Long idCliente;
 	private Long idHabitacion;
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
-	private double precioTotal;
-	private String estado;
+	private int numHuespedes;
+	private String accion; //detectar que boton ha pulsado el usuario (aceptar o pagar)
 	
 }

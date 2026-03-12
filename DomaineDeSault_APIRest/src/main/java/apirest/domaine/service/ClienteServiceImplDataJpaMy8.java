@@ -32,7 +32,7 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 		if(clienteRepo.existsByDocumentoIdentidad(entidad.getDocumentoIdentidad()))
 			throw new IllegalStateException("El cliente ya esta dado de alta");
 		
-		entidad.setFechaRegistro(LocalDate.now());
+		entidad.setFechaAlta(LocalDate.now());
 		
 			return clienteRepo.save(entidad);
 	}
