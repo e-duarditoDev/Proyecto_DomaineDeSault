@@ -75,6 +75,7 @@ const ConfirmAccount = () => {
           <h4 className="text-secondary">{message}</h4>
           <div className="d-flex mt-3">
             <span className="text-secondary">Volviendo a inicio...&nbsp;&nbsp;</span><span className="spinner-border spinner-border-sm text-primary" role="status"></span>
+            <span className="text-secondary">Volviendo a inicio...&nbsp;&nbsp;</span><span className="spinner-border spinner-border-sm text-primary" role="status"></span>
           </div>
         </>
       )}
