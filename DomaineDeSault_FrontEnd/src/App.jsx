@@ -28,6 +28,9 @@ import NotFoundRedirect from "./components/NotFoundRedirect";
 // Para la vista de reservas del cliente
 import MisReservas from "./components/client/MisReservas";
 
+// Para la vista de datos del cliente
+import MisDatos from "./components/client/MisDatos";
+
 
 function AppContent() {
   const { i18n } = useTranslation();
@@ -44,18 +47,21 @@ function AppContent() {
     "/room/:roomId",
     "/accommodation/:section",
     "/mis-reservas",
+    "/mis-datos"
   ];
-
+  // Verificar si la ruta actual coincide con alguna de las rutas conocidas
   const isKnownRoute = knownRoutes.some((route) =>
     matchPath({ path: route, end: true }, location.pathname)
   );
 
+  // Ocultar el Navbar en las rutas de login, registro, confirmación de cuenta y rutas no conocidas
   const hideLayout =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
     location.pathname === "/confirm-account"||
     !isKnownRoute;
 
+  // Detectar cambios en el tamaño de la ventana para actualizar el estado de isMobile
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -103,6 +109,7 @@ function AppContent() {
 
         {/* Rutas para el cliente autenticado */}
         <Route path="/mis-reservas" element={<MisReservas />} />
+        <Route path="/mis-datos" element={<MisDatos />} />
 
       </Routes>
 
