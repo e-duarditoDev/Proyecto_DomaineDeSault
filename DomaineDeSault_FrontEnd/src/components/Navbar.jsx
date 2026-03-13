@@ -247,7 +247,38 @@ const Navbar = () => {
             {t("nav.contact")}
           </a>
         </li>
+
+        {authenticated && (
+          <>
+            <li>
+              <a
+                className="client-link"
+                href="/mis-reservas"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMenuOpen(false);
+                  navigate("/mis-reservas");
+                }}
+              >
+                Mis reservas
+              </a>
+            </li>
+            <li>
+              <a
+                className="client-link"
+                href="/mis-datos"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMenuOpen(false);
+                  navigate("/mis-datos");
+                }}
+              >
+                Mis datos
+              </a>
+            </li>
+          </>)}
       </ul>
+
 
       <div className="auth-language-wrapper">
 
@@ -270,7 +301,7 @@ const Navbar = () => {
         {/* -------------------------- */}
 
         {/*Botones de acceso y resgistro*/}
-        <div className="auth-buttons d-flex gap-2 me-3">
+        <div className="auth-buttons d-flex gap-3 me-3">
           {!authenticated ? (
             <>
               <button
@@ -289,7 +320,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <button
+              {/*               <button
                 className="btn btn-outline-dark btn-sm"
                 onClick={() => {
                   setMenuOpen(false);
@@ -297,7 +328,7 @@ const Navbar = () => {
                 }}
               >
                 Mis reservas
-              </button>
+              </button> */}
 
               <button
                 className="btn btn-dark btn-sm"

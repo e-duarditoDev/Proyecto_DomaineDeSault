@@ -206,6 +206,28 @@
     display: none;
   }
 
+/* ---------------- LINKS CLIENTE ---------------- */
+.client-link {
+  position: relative;
+  font-weight: 600 !important;
+  letter-spacing: 0.03em;
+}
+
+.client-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 1px;
+  background-color: #005a99;
+  transition: width 0.25s ease;
+}
+
+.client-link:hover::after {
+  width: 100%;
+}
+
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 768px) {
 
