@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -66,6 +67,9 @@ public class HomeRestController {
 		
 		UsuarioLogin usuarioLogin = userService.findByEmailAndPassword(
 				usuDto.getEmail(), usuDto.getPassword());
+		
+		
+		//if (ResponseEntity.status(500))
 
 		if (usuarioLogin == null) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");

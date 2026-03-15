@@ -1,0 +1,142 @@
+.room-reservation-page {
+  padding: 110px 1rem 2rem;
+  background: #f7f5f2;
+  min-height: 100vh;
+}
+
+.room-reservation-card {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  font-family: "Argesta", serif;
+}
+
+.reservation-back-btn {
+  border: none;
+  background: transparent;
+  color: #444;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.reservation-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.reservation-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #1f1f1f;
+}
+
+.reservation-subtitle {
+  margin-top: 0.4rem;
+  color: #777;
+}
+
+.reservation-room-image {
+  width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.reservation-form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.reservation-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.reservation-form-grid input,
+.reservation-form-grid select {
+  border: 1px solid #d8d8d8;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  background: #fafafa;
+}
+
+.reservation-calendar {
+  margin-bottom: 1.5rem;
+}
+
+.reservation-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.reservation-total-box {
+  text-align: right;
+  background: #111;
+  color: #fff;
+  padding: 1rem 1.2rem;
+  border-radius: 14px;
+  min-width: 180px;
+}
+
+.reservation-total-box span {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.reservation-total-box strong {
+  font-size: 1.6rem;
+}
+
+.reservation-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .reservation-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reservation-room-image {
+    width: 100%;
+    height: 200px;
+  }
+
+  .reservation-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reservation-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .reservation-total-box {
+    width: 100%;
+    text-align: left;
+  }
+
+  .reservation-actions {
+    flex-direction: column;
+  }
+}

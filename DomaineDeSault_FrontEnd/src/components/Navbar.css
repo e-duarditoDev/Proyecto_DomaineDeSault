@@ -209,8 +209,9 @@
 /* ---------------- LINKS CLIENTE ---------------- */
 .client-link {
   position: relative;
-  font-weight: 600 !important;
+  font-weight: 400 !important;
   letter-spacing: 0.03em;
+  color: #237dd1 !important;
 }
 
 .client-link::after {
@@ -220,8 +221,9 @@
   bottom: -3px;
   width: 0;
   height: 1px;
-  background-color: #005a99;
+  background-color: #237dd1 ;
   transition: width 0.25s ease;
+  color: #3b1c4d !important;
 }
 
 .client-link:hover::after {

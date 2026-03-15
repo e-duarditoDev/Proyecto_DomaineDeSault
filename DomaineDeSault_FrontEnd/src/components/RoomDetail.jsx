@@ -58,6 +58,7 @@ const RoomDetail = () => {
     touchStartX.current = null;
   };
 
+
   // Render condicional fuera de Hooks
   if (!room) return <p className="not-found">{t("roomDetail.notFound")}</p>;
 
@@ -222,13 +223,7 @@ const RoomDetail = () => {
       {/* Botón de reserva */}
       <button
         className="reserve-btn"
-        onClick={() => {
-          navigate("/");
-          setTimeout(() => {
-            const bookingForm = document.getElementById("booking-form");
-            if (bookingForm) bookingForm.scrollIntoView({ behavior: "smooth" });
-          }, 100);
-        }}
+        onClick={() => navigate(`/room/${roomId}/reserva`)}
       >
         {t("rooms.button")}
       </button>
