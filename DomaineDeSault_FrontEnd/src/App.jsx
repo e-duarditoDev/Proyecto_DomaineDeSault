@@ -31,6 +31,12 @@ import MisReservas from "./components/client/MisReservas";
 // Para la vista de datos del cliente
 import MisDatos from "./components/client/MisDatos";
 
+// Para la vista de reserva de habitación
+import RoomReservation from "./components/reservas/RoomReservation";
+
+// Ruta protegida para las páginas que requieren autenticación
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+
 
 function AppContent() {
   const { i18n } = useTranslation();
@@ -47,7 +53,8 @@ function AppContent() {
     "/room/:roomId",
     "/accommodation/:section",
     "/mis-reservas",
-    "/mis-datos"
+    "/mis-datos",
+    "/room/:roomId/reserva",
   ];
   // Verificar si la ruta actual coincide con alguna de las rutas conocidas
   const isKnownRoute = knownRoutes.some((route) =>
@@ -58,7 +65,7 @@ function AppContent() {
   const hideLayout =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
-    location.pathname === "/confirm-account"||
+    location.pathname === "/confirm-account" ||
     !isKnownRoute;
 
   // Detectar cambios en el tamaño de la ventana para actualizar el estado de isMobile
@@ -105,11 +112,24 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/confirm-account" element={<ConfirmAccount />} />
-        <Route path="*" element={<NotFoundRedirect />} />
 
         {/* Rutas para el cliente autenticado */}
         <Route path="/mis-reservas" element={<MisReservas />} />
         <Route path="/mis-datos" element={<MisDatos />} />
+
+        {/* Rutas para la reserva de habitación */}
+        <Route
+          path="/room/:roomId/reserva"
+          element={
+            <ProtectedRoute>
+              <RoomReservation />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Ruta para páginas no encontradas, siempre al final*/}
+        <Route path="*" element={<NotFoundRedirect />} />
+
 
       </Routes>
 
