@@ -2,6 +2,8 @@ package apirest.domaine.modelo.dto;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,9 +16,12 @@ import lombok.NoArgsConstructor;
 public class ReservaRequestDto {
 
 	private Long idHabitacion;
+	@JsonFormat(pattern = "yyyy-MM-dd")//para dar formato a la fecha viene de React
 	private LocalDate fechaEntrada;
+	@JsonFormat(pattern = "yyyy-MM-dd")//para dar formato a la fecha viene de React
 	private LocalDate fechaSalida;
 	private int numHuespedes;
 	private String accion; //detectar que boton ha pulsado el usuario (aceptar o pagar)
+	
 	
 }

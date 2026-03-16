@@ -25,21 +25,22 @@ public class VerificacionMail {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
 	
-	@Column(nullable = false, unique = true, length = 255)
+	@Column(name = "email", nullable = false, unique = true, length = 255)
 	private String email;
 	
-	@Column(nullable = false, length = 255)
+	@Column(name = "password",nullable = false, length = 255)
 	private String password;
 	
-	@Column(nullable = false, unique = true, length = 255)
+	@Column(name = "token",nullable = false, unique = true, length = 255)
 	private String token;
 	
-	@Column(nullable = false)
+	@Column(name = "alta",nullable = false)
 	private LocalDateTime alta;
 	
-	@Column(nullable = false)
+	@Column(name = "expiracion",nullable = false)
 	private LocalDateTime expiracion;
 	
 }

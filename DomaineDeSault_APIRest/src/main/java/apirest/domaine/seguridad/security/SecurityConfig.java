@@ -15,17 +15,23 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-
+import apirest.domaine.modelo.repository.UsuarioRepository;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private final UsuarioRepository usuarioRepository;
 	
 	
 	@Value("${jwt.secret}")// @Value de la dependencia [..] beans.factory.annotation.Value NO la del Lombok
-	private String secret;// mismo secret que en el loginManager
+	private String secret;
+
+    SecurityConfig(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }// mismo secret que en el loginManager
 	
 	@Bean
 	public JwtDecoder jwtDecoder() {
@@ -69,12 +75,13 @@ public class SecurityConfig {
 					
 					//PUBLICAS 
 	            	.requestMatchers("/auth/**").permitAll()
+//					.requestMatchers("/api/reserva/**").permitAll()
 	            	
 					//DOCUMENTATION SWAGGER
 	        		.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html/**").permitAll()
 					
 					//CLIENTES
-					.requestMatchers(HttpMethod.GET, "/api/cliente/**").hasRole("CLIENTE")
+					.requestMatchers("/api/reserva/**").hasRole("CLIENTE")
 					
 					//TRABAJADORES
 					.requestMatchers(HttpMethod.GET, "/api/trabajador/**").hasRole("TRABAJADOR")

@@ -11,7 +11,7 @@ import apirest.domaine.modelo.enumerados.EstadoReserva;
 public interface ReservaRepository extends JpaRepository<Reserva, Long>{
 		
 		//Optional es la mejor forma de devolver un objeto que puede ser null
-		Optional <Reserva> findByClienteIdUsuarioAndFechaEntradaAndFechaSalidaAndEstadoReserva ( 
+		Optional <Reserva> findByClienteIdUsuarioAndFechaEntradaAndFechaSalidaAndEstado ( 
 				Long idCliente,
 				LocalDate fechaEntrada,
 				LocalDate fechaSalida,

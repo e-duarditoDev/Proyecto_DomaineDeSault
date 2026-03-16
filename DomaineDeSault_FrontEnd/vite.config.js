@@ -9,7 +9,11 @@ export default defineConfig({
   server: {
   proxy: {
     '/auth': {
-      target: 'http://localhost:8082', //pruebas en local
+      target: 'http://localhost:8082', //pruebas en local y conexion remota a EC2
+      changeOrigin: true
+    },
+    '/api/reserva': {
+      target: 'http://localhost:8081',
       changeOrigin: true
     }
   }

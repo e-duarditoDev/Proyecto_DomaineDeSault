@@ -59,9 +59,17 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 	@Override
 	public Cliente findByDocumentoIdentidad(String documentoIdentidad) {
 		if (clienteRepo.findByDocumentoIdentidad(documentoIdentidad)==null)
-			throw new IllegalStateException("No se encuentra cliente con este documento.");
+			throw new RuntimeException("No se encuentra cliente con este documento.");
 		
 		return clienteRepo.findByDocumentoIdentidad(documentoIdentidad);
+	}
+
+	@Override
+	public Long findByUsuario_UsuarioLoginEmail(String email) {
+		if (clienteRepo.findByUsuario_UsuarioLoginEmail(email)==null)
+			throw new RuntimeException ("No se encuentra cliente con este documento.");
+		
+		return clienteRepo.findByUsuario_UsuarioLoginEmail(email);
 	}
 
 	
