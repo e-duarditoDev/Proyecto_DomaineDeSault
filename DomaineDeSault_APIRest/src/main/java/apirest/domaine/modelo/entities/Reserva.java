@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name="reserva")
 public class Reserva implements Serializable{
-	
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -66,7 +66,7 @@ public class Reserva implements Serializable{
 	@Builder.Default
 	@Enumerated(EnumType.STRING)
 	@Column(name="estado_reserva", nullable = false)
-	private EstadoReserva estadoReserva = EstadoReserva.PENDIENTE;
+	private EstadoReserva estado = EstadoReserva.PENDIENTE;
 	
 	
 }

@@ -44,17 +44,17 @@ public class UsuarioLogin implements Serializable, UserDetails{
 	private Long idUsuario;
 	
 	@EqualsAndHashCode.Include //un email identifica la entidad
-	@Column(nullable = false, unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
-	@Column(nullable = false)
+	@Column(name="password", nullable = false)
 	private String password; 
 	
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Column(name = "rol", nullable = false)
 	private Rol rol;
 	
-	@Column(nullable = false)
+	@Column(name = "alta", nullable = false)
 	private LocalDate alta;
 	
 	

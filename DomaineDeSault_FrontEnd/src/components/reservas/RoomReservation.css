@@ -18,9 +18,50 @@
   border: none;
   background: transparent;
   color: #444;
-  margin-bottom: 1rem;
   cursor: pointer;
+  position: relative;
+  font-weight: 400 !important;
+  font-size: large;
+  letter-spacing: 0.03em;
 }
+
+.reservation-back-btn:hover {
+  transition: 0.3s ease-in;
+  color: #0077cc;
+}
+
+/* Contenedor para que las imágenes ocupen el mismo espacio */
+.icon-container {
+  position: relative;
+  width: 22px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-icon {
+  position: absolute;
+  width: 100%;
+  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+
+/* Estado invisible */
+.back-icon.hidden {
+  opacity: 0;
+}
+
+/* Estado visible */
+.back-icon.visible {
+  opacity: 1;
+}
+
+/* Efecto de movimiento extra al hacer hover */
+.reservation-back-btn:hover .back-icon {
+  transition: 0.3s ease-in;
+  transform: translateX(-3px);
+}
+
 
 .reservation-header {
   display: flex;
@@ -42,8 +83,8 @@
 }
 
 .reservation-room-image {
-  width: 220px;
-  height: 140px;
+  width: 300px;
+  height: 210px;
   object-fit: cover;
   border-radius: 16px;
 }

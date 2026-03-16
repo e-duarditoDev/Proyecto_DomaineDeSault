@@ -25,6 +25,9 @@ const RoomReservation = () => {
   const currentLang = i18n.language.split("-")[0];
   const currentLocale = localesMap[currentLang] || enGB;
 
+  // Estado para controlar el hover del botón de retroceso
+  const [isHovered, setIsHovered] = useState(false);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (formRef.current && !formRef.current.contains(event.target)) {
@@ -67,32 +70,76 @@ const RoomReservation = () => {
     return <p className="text-center mt-5 pt-5">Habitación no encontrada.</p>;
   }
 
+  if (!room) {
+    return <p className="text-center mt-5 pt-5">Habitación no encontrada.</p>;
+  }
+
+  // Función para enviar la reserva al backend
+  const enviarReserva = async (accion) => {
+    const token = localStorage.getItem("token"); // Recuperamos token
+
+    const reservaRequestDto = {
+      idHabitacion: 1,//parseInt(roomId), // Aseguramos que sea numérico
+      numHuespedes: guests,
+      fechaEntrada: startDate.toISOString().split('T')[0],
+      fechaSalida: endDate.toISOString().split('T')[0],
+      accion: accion
+    };
+
+    try {
+      // Ajusta la URL "/api/reserva/reservar-habitacion" a la que tengas configurada en tu Spring Boot
+      const response = await fetch("/api/reserva/reservar-habitacion", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(reservaRequestDto)
+      });
+
+      if (!response.ok) {
+        // Si Spring devuelve una excepción, la capturamos aquí
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Error al procesar la reserva");
+      }
+
+      // Si todo va bien
+      alert(`Reserva ${accion === 'PAGAR' ? 'pagada' : 'guardada'} con éxito`);
+      navigate("/mis-reservas"); // Redirigimos a la ruta del cliente
+
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
 
   const handleGuardar = () => {
-    console.log("Guardar reserva pendiente", {
-      roomId,
-      guests,
-      fechaEntrada: startDate,
-      fechaSalida: endDate,
-      accion: "ACEPTAR",
-    });
+    enviarReserva("GUARDAR");
   };
 
   const handlePagar = () => {
-    console.log("Pagar reserva", {
-      roomId,
-      guests,
-      fechaEntrada: startDate,
-      fechaSalida: endDate,
-      accion: "PAGAR",
-    });
+    enviarReserva("PAGAR");
   };
 
   return (
     <div className="room-reservation-page">
       <div className="room-reservation-card" ref={formRef}>
-        <button className="reservation-back-btn" onClick={() => navigate(`/room/${roomId}`)}>
-          ← Volver a la habitación
+        <button
+          className="reservation-back-btn d-flex flex-row align-items-center gap-2"
+          onClick={() => navigate(`/room/${roomId}`)}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="icon-container">
+            <img src="/icons/left-arrow-previous-black.svg"
+              className={`back-icon ${isHovered ? 'hidden' : 'visible'}`}
+              alt="flecha atras negra" />
+
+            <img src="/icons/left-arrow-previous-blue.svg"
+              className={`back-icon ${isHovered ? 'visible' : 'hidden'}`}
+              alt="flecha atras azul" />
+          </div>
+          Atras
         </button>
 
         <div className="reservation-header">
@@ -113,7 +160,7 @@ const RoomReservation = () => {
         <div className="reservation-form-grid">
           <label>
             Fecha de entrada
-            <input
+            <input className="form-control"
               type="text"
               readOnly
               value={startDate ? startDate.toLocaleDateString(currentLang) : "Selecciona fecha"}
@@ -123,7 +170,7 @@ const RoomReservation = () => {
 
           <label>
             Fecha de salida
-            <input
+            <input className="form-control"
               type="text"
               readOnly
               value={endDate ? endDate.toLocaleDateString(currentLang) : "Selecciona fecha"}
@@ -133,7 +180,7 @@ const RoomReservation = () => {
 
           <label>
             Huéspedes
-            <select value={guests} onChange={(e) => setGuests(Number(e.target.value))}>
+            <select value={guests} onChange={(e) => setGuests(Number(e.target.value))} className="form-switch py-3 focus-ring">
               {Array.from({ length: capacity }, (_, i) => i + 1).map((n) => (
                 <option key={n} value={n}>
                   {n}
@@ -144,7 +191,7 @@ const RoomReservation = () => {
 
           <label>
             Noches
-            <input type="text" readOnly value={nights} />
+            <input type="text" readOnly value={nights} className="form-control" />
           </label>
         </div>
 
@@ -168,19 +215,21 @@ const RoomReservation = () => {
         <div className="reservation-summary">
           <div>
             <p><strong>Capacidad máxima:</strong> {capacity} huésped(es)</p>
+            {/* Aquí se muestra el precio por noche, que se obtiene del objeto de la habitación */}
             <p><strong>Precio/noche:</strong> €{pricePerNight.toFixed(2)}</p>
           </div>
 
           <div className="reservation-total-box">
             <span>Total</span>
-            <strong>€{totalPrice.toFixed(2)}</strong>
+            {/* Aquí se muestra el precio total de la reserva */}
+            <strong>{totalPrice.toFixed(2)} €</strong>
           </div>
         </div>
 
         <div className="reservation-actions">
           <button
             type="button"
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-dark"
             onClick={() => navigate(`/room/${roomId}`)}
           >
             Cancelar
@@ -197,7 +246,7 @@ const RoomReservation = () => {
 
           <button
             type="button"
-            className="btn btn-dark"
+            className="btn btn-dark px-4"
             onClick={handlePagar}
             disabled={!startDate || !endDate}
           >

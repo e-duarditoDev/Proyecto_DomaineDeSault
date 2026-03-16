@@ -30,6 +30,15 @@ const Login = () => {
         })
       });
 
+      // Validaciones
+      if (!email || !password) {
+        throw new Error("Por favor, completa todos los campos.");
+      }
+
+      if (response.status.toString().startsWith("5")) {
+        throw new Error("Error del servidor. Por favor, inténtalo de nuevo más tarde.");
+      }
+
       if (!response.ok) {
         throw new Error("Credenciales incorrectas");
       }
