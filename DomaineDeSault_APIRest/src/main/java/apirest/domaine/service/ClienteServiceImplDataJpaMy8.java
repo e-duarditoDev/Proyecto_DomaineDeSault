@@ -67,7 +67,7 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 	@Override
 	public Long findByUsuario_UsuarioLoginEmail(String email) {
 		if (clienteRepo.findByUsuario_UsuarioLoginEmail(email)==null)
-			throw new RuntimeException ("No se encuentra cliente con este documento.");
+			throw new RuntimeException ("Para hacer una reserva, vaya al espacio cliente y cumplimente sus datos.");
 		
 		return clienteRepo.findByUsuario_UsuarioLoginEmail(email);
 	}
