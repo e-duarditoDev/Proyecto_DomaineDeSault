@@ -6,38 +6,74 @@ import "react-datepicker/dist/react-datepicker.css";
 import { es, fr, enGB, de } from "date-fns/locale";
 import "./RoomReservation.css";
 
+
 const RoomReservation = () => {
   const { t, i18n } = useTranslation();
-  const { roomId } = useParams();
+  const { roomName: roomName } = useParams();//lo coge de la url, se referencia en el app.jsx
   const navigate = useNavigate();
 
-  const roomsObj = t("rooms.list", { returnObjects: true }) || {};
-  const room = roomsObj[roomId];
-
+  // ESTADOS
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
   const [showCalendar, setShowCalendar] = useState(false);
   const [guests, setGuests] = useState(1);
+  const [habitacionData, setHabitacionData] = useState(null);
+
+  // Estado para controlar el hover del botón de retroceso
+  const [isHovered, setIsHovered] = useState(false);
+  // Estado para el popup (Añádelo al principio del componente)
+  const [popup, setPopup] = useState({ show: false, message: "", isError: false });
 
   const formRef = useRef(null);
+
+  // TRADUCCIONES Y LOGICA DE NEGOCIO
+  const roomsObj = t("rooms.list", { returnObjects: true }) || {};
+  const room = roomsObj[roomName];
 
   const localesMap = { es, fr, en: enGB, de };
   const currentLang = i18n.language.split("-")[0];
   const currentLocale = localesMap[currentLang] || enGB;
 
-  // Estado para controlar el hover del botón de retroceso
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
+
+/*     // Función para cerrar el calendario al hacer clic fuera de él
     const handleClickOutside = (event) => {
       if (formRef.current && !formRef.current.contains(event.target)) {
         setShowCalendar(false);
       }
+    }; */
+
+    // Función para cargar la información de la habitación desde el backend
+    const fetchHabitacionInfo = async () => {
+      try {
+        const response = await fetch(`/api/habitacion/info/${roomName}`);
+        
+        if (!response.ok) throw new Error("No encontrada");
+        const data = await response.json();
+        setHabitacionData(data);
+      } catch (error) {
+        console.error("Error cargando info:", error);
+      }
     };
+    
+    // Solo cargar info si se tiene un nombre valido, evita llamadas innecesarias a la API
+    if (roomName) {
+      fetchHabitacionInfo();
+    }
+
+    // Lógica del click (separada)
+  const handleClickOutside = (event) => {
+    if (formRef.current && !formRef.current.contains(event.target)) {
+      setShowCalendar(false);
+    }
+  };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+
+  }, [roomName]);// Se ejecuta al montar el componente y cada vez que cambia el roomName
+
 
 
   const parseCapacity = (capacityText) => {
@@ -66,20 +102,21 @@ const RoomReservation = () => {
     return nights > 0 ? pricePerNight * nights : 0;
   }, [nights, pricePerNight]);
 
-  if (!room) {
-    return <p className="text-center mt-5 pt-5">Habitación no encontrada.</p>;
-  }
+  // FUNCIONES DE ACCION
 
-  if (!room) {
-    return <p className="text-center mt-5 pt-5">Habitación no encontrada.</p>;
-  }
-
-  // Función para enviar la reserva al backend
+  // Función para enviar la reserva (puedes colocarla dentro del componente)
   const enviarReserva = async (accion) => {
-    const token = localStorage.getItem("token"); // Recuperamos token
+    const token = localStorage.getItem("token");
+
+    /*  // Validación previa en cliente antes de enviar. El calendario impide se ejecute
+        if (!startDate || !endDate) {
+          setModal({ show: true, message: "Por favor, selecciona las fechas.", isError: true });
+          return;
+        } */
 
     const reservaRequestDto = {
-      idHabitacion: 1,//parseInt(roomId), // Aseguramos que sea numérico
+      // Usar el estado de habitacionData QUE RELLENÓ EL USEEFFECT
+      idHabitacion: parseInt(habitacionData?.idHabitacion), // Aseguramos que sea numérico
       numHuespedes: guests,
       fechaEntrada: startDate.toISOString().split('T')[0],
       fechaSalida: endDate.toISOString().split('T')[0],
@@ -87,7 +124,6 @@ const RoomReservation = () => {
     };
 
     try {
-      // Ajusta la URL "/api/reserva/reservar-habitacion" a la que tengas configurada en tu Spring Boot
       const response = await fetch("/api/reserva/reservar-habitacion", {
         method: "POST",
         headers: {
@@ -97,21 +133,34 @@ const RoomReservation = () => {
         body: JSON.stringify(reservaRequestDto)
       });
 
+      // Captura el mensaje del backend
+      const responseText = await response.text();
+
       if (!response.ok) {
-        // Si Spring devuelve una excepción, la capturamos aquí
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "Error al procesar la reserva");
+        // Mensaje del back || Mensaje genérico
+        setPopup({
+          show: true,
+          message: responseText || "Ha ocurrido un error.",
+          isError: true
+        });
+        return;
       }
 
-      // Si todo va bien
-      alert(`Reserva ${accion === 'PAGAR' ? 'pagada' : 'guardada'} con éxito`);
-      navigate("/mis-reservas"); // Redirigimos a la ruta del cliente
+      // Si la respuesta es OK (200/201)
+      setPopup({
+        show: true,
+        message: responseText || `Reserva ${accion === 'PAGAR' ? 'pagada' : 'guardada'} con éxito.`,
+        isError: false
+      });
 
     } catch (error) {
-      alert(error.message);
+      setPopup({
+        show: true,
+        message: "Error de conexión: " + error.message,
+        isError: true
+      });
     }
   };
-
 
   const handleGuardar = () => {
     enviarReserva("GUARDAR");
@@ -121,12 +170,25 @@ const RoomReservation = () => {
     enviarReserva("PAGAR");
   };
 
+  // Función para manejar el cierre y la navegación
+  const manejarCierrePopup = () => {
+    const exito = !popup.isError;
+    setPopup({ ...popup, show: false });
+    if (exito) {
+      navigate("/");
+    }
+  };
+
+  if (!room) {
+    return <p className="text-center mt-5 pt-5">Habitación no encontrada.</p>;
+  }
+
   return (
     <div className="room-reservation-page">
       <div className="room-reservation-card" ref={formRef}>
         <button
           className="reservation-back-btn d-flex flex-row align-items-center gap-2"
-          onClick={() => navigate(`/room/${roomId}`)}
+          onClick={() => navigate(`/room/${roomName}`)}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -230,7 +292,7 @@ const RoomReservation = () => {
           <button
             type="button"
             className="btn btn-outline-dark"
-            onClick={() => navigate(`/room/${roomId}`)}
+            onClick={() => navigate(`/room/${roomName}`)}
           >
             Cancelar
           </button>
@@ -254,6 +316,27 @@ const RoomReservation = () => {
           </button>
         </div>
       </div>
+
+      {popup.show && (
+        <div className="card d-flex justify-content-center align-items-center vw-100 vh-100 fixed-top">
+          <div className="bg-white rounded-4 shadow border-black w-25 d-flex justify-content-center align-items-center flex-column">
+            <div className={`reserva-popup-header ${popup.isError ? 'bg-danger' : 'bg-success'} w-100 ps-3 rounded-top-3 py-3`}>
+  {/*             <img className="m-1"
+                src={popup.isError ? "/icons/yellow-exclamation-mark.svg" : "/icons/success-check.svg"}
+                alt={popup.isError ? "Error" : "Éxito"}
+                style={{ width: "20px", height: "20px" }} // Ajusta el tamaño a tu gusto
+              /> */}
+            </div>
+            <div className="text-center p-3 bg-body-tertiary w-100">
+              <h3>{popup.isError ? 'Atención' : 'Confirmación'}</h3>
+              <p>{popup.message}</p>
+              <button className="btn btn-outline-dark" onClick={manejarCierrePopup}>
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
