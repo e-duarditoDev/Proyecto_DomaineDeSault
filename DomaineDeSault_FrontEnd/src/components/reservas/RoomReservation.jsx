@@ -5,11 +5,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { es, fr, enGB, de } from "date-fns/locale";
 import "./RoomReservation.css";
+import { logout } from "../../utils/auth"; //Importa la función de logout para el cierre de sesión expirado el token
 
 
 const RoomReservation = () => {
   const { t, i18n } = useTranslation();
-  const { roomName: roomName } = useParams();//lo coge de la url, se referencia en el app.jsx
+  const { idHabitacion } = useParams();//lo coge de la url, se referencia en el app.jsx
   const navigate = useNavigate();
 
   // ESTADOS
@@ -27,8 +28,8 @@ const RoomReservation = () => {
   const formRef = useRef(null);
 
   // TRADUCCIONES Y LOGICA DE NEGOCIO
-  const roomsObj = t("rooms.list", { returnObjects: true }) || {};
-  const room = roomsObj[roomName];
+  //const roomsObj = t("rooms.list", { returnObjects: true }) || {}; eliminar?
+  //const room = roomsObj[roomName]; eliminar?
 
   const localesMap = { es, fr, en: enGB, de };
   const currentLang = i18n.language.split("-")[0];
@@ -37,37 +38,47 @@ const RoomReservation = () => {
 
   useEffect(() => {
 
-/*     // Función para cerrar el calendario al hacer clic fuera de él
-    const handleClickOutside = (event) => {
-      if (formRef.current && !formRef.current.contains(event.target)) {
-        setShowCalendar(false);
-      }
-    }; */
-
     // Función para cargar la información de la habitación desde el backend
     const fetchHabitacionInfo = async () => {
       try {
-        const response = await fetch(`/api/habitacion/info/${roomName}`);
-        
-        if (!response.ok) throw new Error("No encontrada");
+        const token = localStorage.getItem("token");// Obtener el token del almacenamiento local
+        const response = await fetch(`/api/habitacion/info/${idHabitacion}`, {// Esta ruta coincide con la de tu backend
+          headers: {
+            "Authorization": `Bearer ${token}`// Incluir el token en la cabecera de autorización
+          }
+        });
+
+        if (!habitacionData?.idHabitacion) {
+          setPopup({
+            show: true,
+            message: "No se pudo recuperar la habitación. Recarga la página e inténtalo de nuevo.",
+            isError: true
+          });
+          return;
+        }
+
+        if (!response.ok)
+          throw new Error("No encontrada");
+
         const data = await response.json();
+
         setHabitacionData(data);
       } catch (error) {
         console.error("Error cargando info:", error);
       }
     };
-    
+
     // Solo cargar info si se tiene un nombre valido, evita llamadas innecesarias a la API
     if (roomName) {
       fetchHabitacionInfo();
     }
 
-    // Lógica del click (separada)
-  const handleClickOutside = (event) => {
-    if (formRef.current && !formRef.current.contains(event.target)) {
-      setShowCalendar(false);
-    }
-  };
+    // Lógica del click de cerrar el calendario separada
+    const handleClickOutside = (event) => {
+      if (formRef.current && !formRef.current.contains(event.target)) {
+        setShowCalendar(false);
+      }
+    };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -132,6 +143,13 @@ const RoomReservation = () => {
         },
         body: JSON.stringify(reservaRequestDto)
       });
+
+      // Sesión expirada: logout automático
+      if (response.status === 401) {
+        logout();
+        navigate("/login");
+        return;
+      }
 
       // Captura el mensaje del backend
       const responseText = await response.text();
@@ -321,7 +339,7 @@ const RoomReservation = () => {
         <div className="card d-flex justify-content-center align-items-center vw-100 vh-100 fixed-top">
           <div className="bg-white rounded-4 shadow border-black w-25 d-flex justify-content-center align-items-center flex-column">
             <div className={`reserva-popup-header ${popup.isError ? 'bg-danger' : 'bg-success'} w-100 ps-3 rounded-top-3 py-3`}>
-  {/*             <img className="m-1"
+              {/*             <img className="m-1"
                 src={popup.isError ? "/icons/yellow-exclamation-mark.svg" : "/icons/success-check.svg"}
                 alt={popup.isError ? "Error" : "Éxito"}
                 style={{ width: "20px", height: "20px" }} // Ajusta el tamaño a tu gusto

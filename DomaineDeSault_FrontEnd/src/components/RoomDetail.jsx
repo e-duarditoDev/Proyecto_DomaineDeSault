@@ -5,14 +5,21 @@ import { useState, useEffect, useRef } from "react";
 import "./RoomDetail.css";
 
 const RoomDetail = () => {
+  //Hooks para traducción, navegación y estado local de la habitación y el índice del lightbox.
   const { t } = useTranslation();
   const { roomId } = useParams();
   const navigate = useNavigate();
 
-  const roomsObj = t("rooms.list", { returnObjects: true }) || {};
-  const room = roomsObj[roomId];
-
+  // Estado para almacenar los datos de la habitación cargados desde el backend y el índice de la imagen en el lightbox.
+  const [habitacionBackend, setHabitacionBackend] = useState(null);
   const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  // Obtenemos la habitación actual desde las traducciones usando el roomId de la URL.
+  const roomsObj = t("rooms.list", { returnObjects: true }) || {};
+  const roomKeys = Object.keys(roomsObj);
+  const roomIndex = Number(roomId) - 1;
+  const roomKey = roomKeys[roomIndex];
+  const room = roomsObj[roomKey];
 
   // refs para swipe móvil
   const touchStartX = useRef(null);
@@ -38,6 +45,29 @@ const RoomDetail = () => {
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, [lightboxIndex, images.length, room]);
+
+  // Cargamos los datos de la habitación desde el backend para obtener información actualizada y el ID real.
+  useEffect(() => {
+    const cargarHabitacion = async () => {
+      try {
+        const response = await fetch(`/api/habitacion/${roomId}`);
+
+        if (!response.ok) {
+          throw new Error("No se pudo cargar la habitación");
+        }
+
+        const data = await response.json();
+        setHabitacionBackend(data);
+      } catch (error) {
+        console.error("Error cargando habitación:", error);
+      }
+    };
+
+    if (roomId) {
+      cargarHabitacion();
+    }
+  }, [roomId]);
+
 
   // SWIPE MÓVIL
   const handleTouchStart = (e) => {
@@ -70,7 +100,7 @@ const RoomDetail = () => {
       </button>
 
       {/* Título */}
-      <h1 className="room-title">{room.name}</h1>
+      <h1 className="room-title">{habitacionBackend?.nombre || room.name}</h1>
 
       {/* Galería tipo Airbnb */}
       {images.length > 0 && (
@@ -108,11 +138,20 @@ const RoomDetail = () => {
 
         <p className="room-summary">{room.summary || room.description}</p>
 
-        {room.price && (
+        {habitacionBackend?.precioNoche ? (
           <p className="info-line room-price">
             <SvgPrice />
-            <strong>{t("roomDetail.priceLabel")}:</strong> {room.price}
+            <strong>{t("roomDetail.priceLabel")}:</strong>{" "}
+            {habitacionBackend.precioNoche}
+            {room.price ? room.price.replace(/^\d+/, "") : ""}
           </p>
+        ) : (
+          room.price && (
+            <p className="info-line room-price">
+              <SvgPrice />
+              <strong>{t("roomDetail.priceLabel")}:</strong> {room.price}
+            </p>
+          )
         )}
       </div>
 
