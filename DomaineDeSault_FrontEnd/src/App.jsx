@@ -119,7 +119,7 @@ function AppContent() {
 
         {/* Rutas para la reserva de habitación */}
         <Route
-          path="/room/:roomName/reserva"
+          path="/room/:idHabitacion/reserva"
           element={
             <ProtectedRoute>
               <RoomReservation />

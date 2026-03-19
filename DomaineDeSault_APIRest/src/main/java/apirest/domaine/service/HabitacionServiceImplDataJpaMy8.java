@@ -16,6 +16,9 @@ public class HabitacionServiceImplDataJpaMy8 implements HabitacionService{
 
 	@Override
 	public Habitacion findById(Long atributoId) {
+		if(atributoId == null  || atributoId <= 0)
+			throw new RuntimeException("ID de la habitacion no valido.");
+		
 		return habitacionRepo.findById(atributoId).orElse(null);
 	}
 

@@ -76,12 +76,14 @@ public class SecurityConfig {
 					//PUBLICAS 
 	            	.requestMatchers("/auth/**").permitAll()
 //					.requestMatchers("/api/reserva/**").permitAll()
+	            	.requestMatchers(HttpMethod.GET, "/api/habitacion/todas/**").permitAll()
 	            	
 					//DOCUMENTATION SWAGGER
 	        		.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html/**").permitAll()
 					
 					//CLIENTES
 					.requestMatchers("/api/reserva/**").hasRole("CLIENTE")
+					.requestMatchers("/api/habitacion/**").hasRole("CLIENTE")
 					
 					//TRABAJADORES
 					.requestMatchers(HttpMethod.GET, "/api/trabajador/**").hasRole("TRABAJADOR")
