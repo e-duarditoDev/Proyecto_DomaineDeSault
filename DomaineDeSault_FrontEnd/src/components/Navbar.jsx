@@ -36,18 +36,26 @@ const Navbar = () => {
   // Comprobamos si la pantalla es de tamaño móvil para ajustar el comportamiento del menú.
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-  // Lista de habitaciones con claves y nombres traducidos.
-  const rooms = [
-    { key: "gite", name: t("rooms.list.gite.name", "Gîte Valentin") },
-    { key: "autrefois", name: t("rooms.list.autrefois.name", "Autrefois") },
-    { key: "hubert", name: t("rooms.list.hubert.name", "Le Grenier d'Hubert") },
-    { key: "salome", name: t("rooms.list.salome.name", "Salomé") },
-    { key: "adelaide", name: t("rooms.list.adelaide.name", "Adélaïde") },
-    {
-      key: "oiseaux",
-      name: t("rooms.list.oiseaux.name", "Maison des Oiseaux"),
-    },
-  ];
+  // Lista de habitaciones con claves y nombres traducidos. borrar
+  /*   const rooms = [
+      { key: "gite", name: t("rooms.list.gite.name", "Gîte Valentin") },
+      { key: "autrefois", name: t("rooms.list.autrefois.name", "Autrefois") },
+      { key: "hubert", name: t("rooms.list.hubert.name", "Le Grenier d'Hubert") },
+      { key: "salome", name: t("rooms.list.salome.name", "Salomé") },
+      { key: "adelaide", name: t("rooms.list.adelaide.name", "Adélaïde") },
+      {
+        key: "oiseaux",
+        name: t("rooms.list.oiseaux.name", "Maison des Oiseaux"),
+      },
+    ]; */
+
+  const roomsObject = t("rooms.list", { returnObjects: true }) || {};
+  const roomKeys = Object.keys(roomsObject);
+
+  const rooms = roomKeys.map((key, index) => ({
+    id: index + 1,
+    name: roomsObject[key]?.name || key,
+  }));
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng); // Cambiamos el idioma activo.
@@ -61,6 +69,7 @@ const Navbar = () => {
   const [authenticated, setAuthenticated] = useState(isAuthenticated());
   // Estado para controlar si el usuario está autenticado o no.
   
+
 
   const location = useLocation();
   // Obtenemos la ubicación actual para poder actualizar el estado de autenticación
@@ -155,8 +164,9 @@ const Navbar = () => {
             <ul className="dropdown-menu open">
               {rooms.map((room) => (
                 <li key={room.key}>
+                  {/* Enlace a la página de cada habitación, con cierre del menú al hacer clic. */}
                   <a
-                    href={`/room/${room.key}`}
+                    href={`/room/${room.id}`}// Cambia a usar el ID para la ruta
                     onClick={() => {
                       setMenuOpen(false);
                       setSubmenuOpen(null);
