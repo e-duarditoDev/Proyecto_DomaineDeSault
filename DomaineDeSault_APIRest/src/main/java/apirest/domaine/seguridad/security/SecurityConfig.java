@@ -75,7 +75,6 @@ public class SecurityConfig {
 					
 					//PUBLICAS 
 	            	.requestMatchers("/auth/**").permitAll()
-//					.requestMatchers("/api/reserva/**").permitAll()
 	            	.requestMatchers(HttpMethod.GET, "/api/habitacion/todas/**").permitAll()
 	            	
 					//DOCUMENTATION SWAGGER

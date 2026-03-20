@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from "react";
 // Importamos React y el hook useState para manejar el estado dentro del componente.
+import React, { useState, useEffect } from "react";
 
-import { useTranslation } from "react-i18next";
 // Importamos useTranslation para poder traducir los textos según el idioma activo.
+import { useTranslation } from "react-i18next";
 
-import "./Navbar.css";
 // Importamos la hoja de estilos correspondiente a la barra de navegación.
+import "./Navbar.css";
 
-import { useNavigate, Link, useLocation } from "react-router-dom";
 // Para los botones de autenticacion y registro de usuario
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
-import { isAuthenticated, logout } from "../utils/auth";
 // Para las vistas de usuario autenticado
+import { isAuthenticated, logout } from "../utils/auth";
 
+// Mapeo de códigos de idioma a las rutas de las banderas correspondientes.
 const flags = {
   fr: "/flags/fr.svg",
   en: "/flags/gb.svg",
   es: "/flags/es.svg",
   de: "/flags/de.svg",
 };
-// Definimos un objeto con las rutas de las banderas que usaremos para cambiar de idioma.
 
+// Definimos el componente funcional Navbar.
 const Navbar = () => {
-  // Definimos el componente funcional Navbar.
 
+  // Obtenemos la función t para traducir textos y el objeto i18n para gestionar el idioma.
   const { t, i18n } = useTranslation();
-  // Usamos el hook useTranslation para obtener la función t (para traducir)
-  // y el objeto i18n (para cambiar o consultar el idioma actual).
 
-  const [menuOpen, setMenuOpen] = useState(false);
   // Estado para controlar si el menú principal está abierto o cerrado.
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const [submenuOpen, setSubmenuOpen] = useState(null);
   // Estado para controlar qué submenú está abierto (null, "rooms", "alojamiento").
+  const [submenuOpen, setSubmenuOpen] = useState(null);
 
+  // Comprobamos si la pantalla es de tamaño móvil para ajustar el comportamiento del menú.
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
-  // Comprobamos si es la versión móvil.
 
+  // Lista de habitaciones con claves y nombres traducidos.
   const rooms = [
     { key: "gite", name: t("rooms.list.gite.name", "Gîte Valentin") },
     { key: "autrefois", name: t("rooms.list.autrefois.name", "Autrefois") },
@@ -48,7 +48,6 @@ const Navbar = () => {
       name: t("rooms.list.oiseaux.name", "Maison des Oiseaux"),
     },
   ];
-  // Lista de habitaciones con claves y nombres traducidos.
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng); // Cambiamos el idioma activo.
@@ -56,11 +55,12 @@ const Navbar = () => {
     setMenuOpen(false); // Cerramos el menú al cambiar de idioma.
   };
 
+  // Para la navegación programática (redirecciones).
   const navigate = useNavigate();
-  // Para lo botones de autenticacion y registro de usuario
 
   const [authenticated, setAuthenticated] = useState(isAuthenticated());
   // Estado para controlar si el usuario está autenticado o no.
+  
 
   const location = useLocation();
   // Obtenemos la ubicación actual para poder actualizar el estado de autenticación
@@ -345,6 +345,7 @@ const Navbar = () => {
     </nav>
   );
 };
+
 
 export default Navbar;
 // Exportamos el componente para poder usarlo en otras partes de la aplicación.
