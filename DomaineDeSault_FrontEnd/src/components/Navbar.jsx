@@ -68,6 +68,7 @@ const Navbar = () => {
 
   const [authenticated, setAuthenticated] = useState(isAuthenticated());
   // Estado para controlar si el usuario está autenticado o no.
+  
 
 
   const location = useLocation();
