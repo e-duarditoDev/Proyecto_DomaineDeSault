@@ -155,7 +155,6 @@ const RoomReservation = () => {
       const responseText = await response.text();
 
       if (!response.ok) {
-        // Mensaje del back || Mensaje genérico
         setPopup({
           show: true,
           message: responseText || "Ha ocurrido un error.",
