@@ -462,11 +462,43 @@
   "lightbox": {
     "close": "Cerrar"
   },
+
   "contactForm": {
     "name": "Nombre: ",
     "message": "Mensaje: ",
     "messagePlaceholder": "Vuestro mensaje...",
     "namePlaceholder": "Juan Gómez",
     "send": "Enviar"
+  },
+
+  "roomReservation": {
+  "title": "Configura tu reserva",
+  "checkIn": "Fecha de entrada",
+  "checkOut": "Fecha de salida",
+  "selectDate": "Selecciona fecha",
+  "guests": "huésped/es",
+  "nights": "Noches",
+  "maxCapacity": "Capacidad máxima:",
+  "pricePerNight": "Precio/noche:",
+  "total": "Total",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "pay": "Pagar",
+  "loadingRoom": "Cargando habitación...",
+  "back": "Atrás",
+  "warning": "Atención",
+  "confirmation": "Confirmación",
+  "continue": "Continuar",
+  "popup": {
+    "roomNotFound": "No se pudo recuperar la habitación.",
+    "selectDates": "Por favor, selecciona las fechas de entrada y salida.",
+    "loadRoomError": "Error al cargar la información de la habitación.",
+    "connectionError": "Error de conexión:",
+    "unexpectedError": "Ha ocurrido un error inesperado.",
+    "sessionExpired": "La sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    "saveSuccess": "Reserva guardada con éxito.",
+    "paySuccess": "Reserva pagada con éxito."
   }
+}
+
 }

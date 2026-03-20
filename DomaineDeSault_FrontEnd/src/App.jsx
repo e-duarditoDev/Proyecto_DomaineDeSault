@@ -54,7 +54,7 @@ function AppContent() {
     "/accommodation/:section",
     "/mis-reservas",
     "/mis-datos",
-    "/room/:roomId/reserva",
+    "/room/:idHabitacion/reserva",
   ];
   // Verificar si la ruta actual coincide con alguna de las rutas conocidas
   const isKnownRoute = knownRoutes.some((route) =>
