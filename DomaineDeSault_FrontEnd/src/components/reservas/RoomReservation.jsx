@@ -83,6 +83,7 @@ const RoomReservation = () => {
         }
 
         const data = await response.json();
+
         setHabitacionData(data);
 
       } catch (error) {// Manejo de errores de conexión u otros errores inesperados
