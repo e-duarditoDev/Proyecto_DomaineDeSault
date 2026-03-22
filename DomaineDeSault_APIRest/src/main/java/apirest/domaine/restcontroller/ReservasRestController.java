@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 
 import apirest.domaine.modelo.dto.ReservaRequestDto;
+import apirest.domaine.modelo.repository.UsuarioLoginProjection;
 import apirest.domaine.service.ClienteService;
 import apirest.domaine.service.ReservaHabitacionesService;
 import apirest.domaine.service.ReservaService;
 import apirest.domaine.service.ReservaServiciosService;
+import apirest.domaine.service.UsuarioLoginService;
 
 @RestController
 @RequestMapping("/api/reserva")
@@ -25,6 +27,9 @@ public class ReservasRestController {
 	
 	@Autowired
 	private ReservaService resServ;
+	
+	@Autowired
+	private UsuarioLoginService usuLoginServ;
 	
 	@Autowired
 	private ReservaServiciosService resServiciosServ;
@@ -45,7 +50,8 @@ public class ReservasRestController {
 			String email = auth.getName();
 			
 			//Recuperar el idCliente
-			Long idCliente = clienteServ.findByUsuario_UsuarioLoginEmail(email);
+			UsuarioLoginProjection usuarioLogin = usuLoginServ.findByEmail(email);
+			Long idCliente = usuarioLogin.getIdUsuario();
 			 			
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(resServ.crearReserva(reservaDto, idCliente));

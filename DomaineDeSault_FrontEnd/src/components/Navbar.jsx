@@ -71,6 +71,7 @@ const Navbar = () => {
   
 
 
+
   const location = useLocation();
   // Obtenemos la ubicación actual para poder actualizar el estado de autenticación
 
@@ -355,6 +356,7 @@ const Navbar = () => {
     </nav>
   );
 };
+
 
 
 export default Navbar;

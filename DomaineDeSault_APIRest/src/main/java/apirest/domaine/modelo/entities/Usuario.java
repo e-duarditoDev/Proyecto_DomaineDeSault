@@ -7,8 +7,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -28,13 +26,13 @@ import lombok.Setter;
 @Setter
 @Builder
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Inheritance(strategy = InheritanceType.JOINED)// Usuario es la tabla padre, de la que heredan Cliente y Trabajador (espacificacion) usan el mismo idUsuario
 @Table(name="usuario")
 public class Usuario{
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name= "id_usuario")
+	@Column(name= "id_usuario") //viene de UsuarioLogin
 	private Long idUsuario;
 	
 //	//se crea una FK desde workbench porque UsuarioLogin pertenece a la API Login
@@ -56,6 +54,7 @@ public class Usuario{
 	
 	@Column(nullable = false)
 	private String telefono;
+	
 	
 	@Enumerated(EnumType.STRING)
 	private EstadoUsuario estado;

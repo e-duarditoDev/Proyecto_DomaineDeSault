@@ -4,6 +4,6 @@ import apirest.domaine.modelo.entities.Cliente;
 
 public interface ClienteService extends IntCrudGenerico<Cliente, Long>{
 	Cliente findByDocumentoIdentidad(String documentoIdentidad);
-	Long findByUsuario_UsuarioLoginEmail(String email);
-
+	boolean perfilCompleto (Long idUsuario);
+	Cliente misDatos (Long idUsuario);
 }

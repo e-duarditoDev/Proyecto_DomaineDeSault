@@ -83,6 +83,7 @@ public class SecurityConfig {
 					//CLIENTES
 					.requestMatchers("/api/reserva/**").hasRole("CLIENTE")
 					.requestMatchers("/api/habitacion/**").hasRole("CLIENTE")
+					.requestMatchers("/api/cliente/**").hasRole("CLIENTE")
 					
 					//TRABAJADORES
 					.requestMatchers(HttpMethod.GET, "/api/trabajador/**").hasRole("TRABAJADOR")
