@@ -414,6 +414,8 @@ const SvgMoon = () => (
     <path d="M12 2a9 9 0 100 18A7 7 0 0112 2z" />
   </svg>
 );
+
+
 const SvgCoin = () => (
   <svg viewBox="0 0 24 24">
     <circle cx="12" cy="12" r="10" />

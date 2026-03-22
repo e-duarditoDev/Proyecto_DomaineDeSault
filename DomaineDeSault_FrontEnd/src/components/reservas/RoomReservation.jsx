@@ -6,7 +6,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { es, fr, enGB, de } from "date-fns/locale";
 import "./RoomReservation.css";
 import { logout } from "../../utils/auth"; //Importa la función de logout para el cierre de sesión expirado el token
-import { logout } from "../../utils/auth"; //Importa la función de logout para el cierre de sesión expirado el token
 
 
 const RoomReservation = () => {
@@ -450,5 +449,7 @@ const RoomReservation = () => {
     </div>
   );
 };
+
+
 
 export default RoomReservation;

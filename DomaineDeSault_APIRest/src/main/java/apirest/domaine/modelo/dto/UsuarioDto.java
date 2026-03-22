@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class ClienteAltaDto {
+public class UsuarioDto {
 
 	private String documentoIdentidad;
 	private String nombre;
@@ -22,7 +22,7 @@ public class ClienteAltaDto {
 	private DireccionDto direccion;
 	
 	
-	public static Cliente convertToEntity (ClienteAltaDto dto) {
+	public static Cliente convertToEntity (UsuarioDto dto) {
 		Direccion direccion = new Direccion();
 		Cliente cliente = new Cliente();
 		

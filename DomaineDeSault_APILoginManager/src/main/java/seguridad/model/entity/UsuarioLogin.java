@@ -30,7 +30,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter //evita generar el equal
+@Setter //evita generar el equal para todos los atributos como hace @Data
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)//porque tiene ID autogenerado\
 @Table(name ="usuario_login")
@@ -54,11 +54,10 @@ public class UsuarioLogin implements Serializable, UserDetails{
 	@Column(name = "rol", nullable = false)
 	private Rol rol;
 	
-	@Column(name = "alta", nullable = false)
-	private LocalDate alta;
+	@Column(name = "fecha_alta", nullable = false)
+	private LocalDate fechaAlta;
 	
 	
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return List.of(
@@ -75,6 +74,5 @@ public class UsuarioLogin implements Serializable, UserDetails{
 	public String getUsername() {
 		return this.email;
 	}
-	
 
 }

@@ -12,11 +12,14 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter //No ponemos Data porque genera problemas de comparacion y comportamientos raros
 @Builder
 @Entity
 @Table(name="direccion")
@@ -34,7 +37,7 @@ public class Direccion implements Serializable{
 	@Column(nullable = false)
 	private String numero;
 	@Column(name="codigo_postal")
-	private int codigoPostal;
+	private Integer codigoPostal; //Integer porque si viene vacion es null, si int seria 0 que no seria CP valido
 	@Column(nullable = false)
 	private String provincia;
 	@Column(nullable = false)

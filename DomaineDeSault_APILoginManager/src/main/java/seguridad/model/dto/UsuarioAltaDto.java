@@ -25,7 +25,7 @@ public class UsuarioAltaDto {
 		usuLogin.setEmail(usuarioAlta.getEmail());
 		usuLogin.setPassword(usuarioAlta.getPassword());
 		usuLogin.setRol(usuarioAlta.getRol());
-		usuLogin.setAlta(usuarioAlta.getAlta());
+		usuLogin.setFechaAlta(usuarioAlta.getAlta());
 		
 		return usuLogin;
 	}

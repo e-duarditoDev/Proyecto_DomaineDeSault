@@ -358,5 +358,6 @@ const Navbar = () => {
 };
 
 
+
 export default Navbar;
 // Exportamos el componente para poder usarlo en otras partes de la aplicación.
