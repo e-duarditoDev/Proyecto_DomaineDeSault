@@ -2,6 +2,7 @@ package apirest.domaine.modelo.dto;
 
 
 import apirest.domaine.modelo.entities.Direccion;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,11 +14,19 @@ import lombok.NoArgsConstructor;
 @Data
 public class DireccionDto {
 
-	private String calle;
-	private String numero;
-	private Integer codigoPostal;
-	private String provincia; 
-	private String localidad;
+    @NotBlank(message = "La calle es obligatoria.")
+    private String calle;
+
+    @NotBlank(message = "El número es obligatorio.")
+    private String numero;
+
+    private Integer codigoPostal;// no es vital para cumplir con reglas del negocio
+
+    @NotBlank(message = "La provincia es obligatoria.")
+    private String provincia;
+
+    @NotBlank(message = "La localidad es obligatoria.")
+    private String localidad;
 	
 	
 //	public static DireccionDto convertToDto (Direccion direccion) {
