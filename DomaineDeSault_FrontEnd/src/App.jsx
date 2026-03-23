@@ -127,6 +127,15 @@ function AppContent() {
           }
         />
 
+        <Route
+          path="/mis-datos"
+          element={
+            <ProtectedRoute>
+              <MisDatos />
+            </ProtectedRoute>
+          }
+        />
+
         {/* Ruta para páginas no encontradas, siempre al final*/}
         <Route path="*" element={<NotFoundRedirect />} />
 
