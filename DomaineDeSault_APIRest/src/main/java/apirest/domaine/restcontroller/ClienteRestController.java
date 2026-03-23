@@ -23,6 +23,7 @@ import apirest.domaine.modelo.repository.UsuarioLoginProjection;
 import apirest.domaine.service.ClienteService;
 
 import apirest.domaine.service.UsuarioLoginService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/cliente")
@@ -83,7 +84,8 @@ public class ClienteRestController {
 	}
 	
 	@PostMapping("/alta-cliente")
-	public ResponseEntity<?> inserOne(@RequestBody ClienteDto clienteDto, Authentication auth){
+	//se coloca @Valid para activar las validaciones del ClienteDto, devuelve http 400
+	public ResponseEntity<?> inserOne(@Valid @RequestBody ClienteDto clienteDto, Authentication auth){
 		
 		if(clienteDto == null)
 			throw new RuntimeException("El cliente no puede ser nulo.");
@@ -105,7 +107,7 @@ public class ClienteRestController {
 	}
 	
 	@PutMapping("/mis-datos")
-	public ResponseEntity<?> guardarMisDatos(@RequestBody ClienteDto clienteDto, Authentication auth) {
+	public ResponseEntity<?> guardarMisDatos(@Valid @RequestBody ClienteDto clienteDto, Authentication auth) {
 
 	    if (clienteDto == null) {
 	        throw new RuntimeException("El cliente no puede ser nulo.");

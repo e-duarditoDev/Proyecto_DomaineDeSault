@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import apirest.domaine.modelo.entities.Cliente;
 import apirest.domaine.modelo.entities.Direccion;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,14 +18,29 @@ import lombok.NoArgsConstructor;
 @Data
 public class ClienteDto {
 
-	private Long idUsuario;
+	private Long idUsuario;//viene del usuario_login
+	
+	@NotBlank(message = "El documento de identidad es obligatorio.")
 	private String documentoIdentidad;
+
+	@NotBlank(message = "El nombre es obligatorio.")
 	private String nombre;
+
+	@NotBlank(message = "El primer apellido es obligatorio.")
 	private String primerApellido;
-	private String segundoApellido;
-	private String telefono;
-	private DireccionDto direccionDto;
-	private LocalDate fechaAlta;
+	
+	private String segundoApellido;//sin validacion porque hay personas tiene 1 apellido
+	
+	@NotBlank(message = "El teléfono es obligatorio.")
+    private String telefono;
+
+    @NotNull(message = "La dirección es obligatoria.")
+    @Valid //Spring comprueba los campos internos de direccion, si no solo comprueba el objeto direccion.
+    private DireccionDto direccionDto;
+    
+	private LocalDate fechaAlta;// viene del usuario_login
+	
+	//NOTA: Para que las validaciones tengan efecto hay que poner la etiqueta @Valid en el restController reciben un ClienteDto
 	
 	public static ClienteDto convertToDto (Cliente cliente) {
 		ClienteDto clienteDto = new ClienteDto();
