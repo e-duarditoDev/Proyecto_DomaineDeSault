@@ -18,7 +18,12 @@ const Login = () => {
     setLoading(true);
 
     try {
-      //llamada a la API
+      //Evita hacer la peticion a la API si faltan campos
+      if (!email || !password) {
+        throw new Error("Por favor, completa todos los campos.");
+      }
+
+      //llamada a la API para autenticarse
       const response = await fetch("/auth/login", {
         method: "POST",
         headers: {
@@ -30,11 +35,7 @@ const Login = () => {
         })
       });
 
-      // Validaciones
-      if (!email || !password) {
-        throw new Error("Por favor, completa todos los campos.");
-      }
-
+      // Manejo de errores
       if (response.status.toString().startsWith("5")) {
         throw new Error("Error del servidor. Por favor, inténtalo de nuevo más tarde.");
       }
@@ -43,15 +44,33 @@ const Login = () => {
         throw new Error("Credenciales incorrectas");
       }
 
+      // Capturar y guardar token JSON en localStorage
       const data = await response.json();
-
-      // Guardar token JSON en localStorage
       localStorage.setItem("token", data.token);
+
+      // Comprobar si el perfil del cliente está completo
+      const perfilResponse = await fetch("/api/cliente/perfil-completo", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${data.token}`
+        }
+      });
+
+      //Si la API tiene algun error
+      if (!perfilResponse.ok) {
+        throw new Error("No se pudo comprobar el perfil del usuario.");
+      }
+
+      const perfilCompleto = await perfilResponse.json();
 
       //aqui hay que recuperar el rol y mandar a un sitio u otro (cliente, trabajador)
 
-      //Devolver a home
-      navigate("/");
+      //Redirigir segun este o no cumplimentado los datos del usuario
+      if (perfilCompleto) {
+        navigate("/");
+      } else {
+        navigate("/mis-datos");
+      }
 
     } catch (err) {
       setError(err.message);
