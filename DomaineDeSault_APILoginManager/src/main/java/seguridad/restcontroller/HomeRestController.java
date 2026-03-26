@@ -120,6 +120,7 @@ public class HomeRestController {
         //Link confirmacion en produccion
         String link = "https://domainedesault.duckdns.org/confirm-account?token=" + token;
         
+        
 //        System.out.println("Enviando mail a: " + dto.getEmail());
         emailServ.sendEmailEs(dto.getEmail(), link);
         
