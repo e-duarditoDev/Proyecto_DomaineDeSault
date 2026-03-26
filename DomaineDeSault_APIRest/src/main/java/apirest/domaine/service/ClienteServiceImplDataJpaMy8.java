@@ -4,16 +4,26 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import apirest.domaine.modelo.entities.Cliente;
+import apirest.domaine.modelo.enumerados.EstadoReserva;
 import apirest.domaine.modelo.enumerados.EstadoUsuario;
 import apirest.domaine.modelo.repository.ClienteRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 @Service
 public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 
 	@Autowired
 	private ClienteRepository clienteRepo;
+	
+	//para que save() lo trate como una entidad nueva, porque al asignarle un id manual en el rest
+	//del usuarioLogin, problema que hibernate lo trata como un update porque al interpreta que al 
+	//tener un id, existe. em va para el insertOne()
+	@PersistenceContext
+	private EntityManager em;
 
 	@Override
 	public Cliente findById(Long atributoId) {
@@ -31,6 +41,7 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 	}
 
 	@Override
+	@Transactional //necesita esto para poder usar el EntityManager
 	public Cliente insertOne(Cliente entidad) {
 		
 		if (entidad == null)
@@ -46,7 +57,9 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 		
 		entidad.setEstado(EstadoUsuario.ACTIVO);
 		
-			return clienteRepo.save(entidad);
+		em.persist(entidad); //EntityManager
+		
+		return clienteRepo.save(entidad);
 			
 	}
 
