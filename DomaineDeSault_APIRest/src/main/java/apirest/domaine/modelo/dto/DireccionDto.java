@@ -13,19 +13,21 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class DireccionDto {
+	
+	private Long idDireccion;
 
-    @NotBlank(message = "La calle es obligatoria.")
+    @NotBlank(message = "Indique la calle.")
     private String calle;
 
-    @NotBlank(message = "El número es obligatorio.")
+    @NotBlank(message = "Indique un numero de vivienda.")
     private String numero;
 
     private Integer codigoPostal;// no es vital para cumplir con reglas del negocio
 
-    @NotBlank(message = "La provincia es obligatoria.")
+    @NotBlank(message = "Indique una provincia.")
     private String provincia;
 
-    @NotBlank(message = "La localidad es obligatoria.")
+    @NotBlank(message = "Indique una localidad.")
     private String localidad;
 	
 	
@@ -40,11 +42,25 @@ public class DireccionDto {
 //		
 //		return direccionDto;
 //	}
+//	
 	
+	public static DireccionDto convertToDto (Direccion direccion) {
+		DireccionDto direccionDto = new DireccionDto();
+		
+		direccionDto.setIdDireccion(direccion.getIdDireccion());
+		direccionDto.setCalle(direccion.getCalle());
+		direccionDto.setCodigoPostal(direccion.getCodigoPostal());
+		direccionDto.setLocalidad(direccion.getLocalidad());
+		direccionDto.setNumero(direccion.getNumero());
+		direccionDto.setProvincia(direccion.getProvincia());
+		
+		return direccionDto;
+	}
 	
 	public static Direccion convertToEntity (DireccionDto dto) {
 		Direccion direccion = new Direccion();
 		
+		direccion.setIdDireccion(dto.getIdDireccion());
 		direccion.setCalle(dto.getCalle());
 		direccion.setCodigoPostal(dto.getCodigoPostal());
 		direccion.setLocalidad(dto.getLocalidad());

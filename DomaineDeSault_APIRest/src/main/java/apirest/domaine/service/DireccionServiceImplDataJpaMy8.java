@@ -20,7 +20,7 @@ public class DireccionServiceImplDataJpaMy8 implements DireccionService{
 	@Override
 	public Direccion findById(Long atributoId) {
 		if (atributoId == null || atributoId <= 0)
-			throw new RuntimeException("El Id es incorrecto.");
+			throw new RuntimeException("El Id de la direccion es incorrecto.");
 		
 		Direccion direccion = direccRepo.findById(atributoId).orElse(null);
 		

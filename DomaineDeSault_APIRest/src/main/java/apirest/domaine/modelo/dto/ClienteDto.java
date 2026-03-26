@@ -19,22 +19,22 @@ import lombok.NoArgsConstructor;
 public class ClienteDto {
 
 	private Long idUsuario;//viene del usuario_login
-	
-	@NotBlank(message = "El documento de identidad es obligatorio.")
+		
+	@NotBlank(message = "Indique un documento de identidad valido.")
 	private String documentoIdentidad;
 
-	@NotBlank(message = "El nombre es obligatorio.")
+	@NotBlank(message = "Indique un nombre.")
 	private String nombre;
 
-	@NotBlank(message = "El primer apellido es obligatorio.")
+	@NotBlank(message = "Indique un primer apellido.")
 	private String primerApellido;
 	
 	private String segundoApellido;//sin validacion porque hay personas tiene 1 apellido
 	
-	@NotBlank(message = "El teléfono es obligatorio.")
+	@NotBlank(message = "Indique un telefono.") //NotBlank para String
     private String telefono;
 
-    @NotNull(message = "La dirección es obligatoria.")
+    @NotNull(message = "Indique una direccion.") //NotNull para numeros
     @Valid //Spring comprueba los campos internos de direccion, si no solo comprueba el objeto direccion.
     private DireccionDto direccionDto;
     
@@ -46,7 +46,7 @@ public class ClienteDto {
 		ClienteDto clienteDto = new ClienteDto();
 		DireccionDto direccionDto = new DireccionDto();
 		
-		
+		direccionDto.setIdDireccion(cliente.getDireccion().getIdDireccion());
 		direccionDto.setCalle(cliente.getDireccion().getCalle());
 		direccionDto.setCodigoPostal(cliente.getDireccion().getCodigoPostal());
 		direccionDto.setLocalidad(cliente.getDireccion().getLocalidad());
@@ -69,6 +69,7 @@ public class ClienteDto {
 		Cliente cliente = new Cliente();
 		Direccion direccion = new Direccion();
 		
+		direccion.setIdDireccion(dto.getDireccionDto().getIdDireccion());
 		direccion.setCalle(dto.getDireccionDto().getCalle());
 		direccion.setCodigoPostal(dto.getDireccionDto().getCodigoPostal());
 		direccion.setLocalidad(dto.getDireccionDto().getLocalidad());

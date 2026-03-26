@@ -27,7 +27,7 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_categoria")
 	private Long idCategoria;
-	@Column(unique = true, nullable = false)
+	@Column(unique = true, nullable = false, length = 30)
 	private String nombre;
 	@Column(name = "salario_base", nullable = false, precision = 8, scale = 3)
 	private BigDecimal salarioBase;

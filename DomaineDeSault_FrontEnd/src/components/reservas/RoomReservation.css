@@ -151,6 +151,19 @@
   margin-top: 2rem;
 }
 
+.text-grey {
+  transition: 300ms ease-out;
+  color: #b0b0b0;
+}
+
+.text-grey:hover{
+  transition: 300ms ease-in;
+  color: black !important; 
+  font-weight: 400;
+}
+
+
+
 @media (max-width: 768px) {
   .reservation-header {
     flex-direction: column;

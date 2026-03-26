@@ -300,15 +300,15 @@ const RoomReservation = () => {
           onMouseLeave={() => setIsHovered(false)}
         >
           <div className="icon-container">
-            <img src="/icons/left-arrow-previous-black.svg"
+            <img src="/icons/lean-left-arrow-grey.svg"
               className={`back-icon ${isHovered ? 'hidden' : 'visible'}`}
-              alt="flecha atras negra" />
+              alt="flecha atras gris" />
 
-            <img src="/icons/left-arrow-previous-blue.svg"
+            <img src="/icons/lean-left-arrow-black.svg"
               className={`back-icon ${isHovered ? 'visible' : 'hidden'}`}
-              alt="flecha atras azul" />
+              alt="flecha atras negra" />
           </div>
-          {t("roomReservation.back")}
+          <span className="text-grey">{t("roomReservation.back")}</span>
         </button>
 
         <div className="reservation-header">

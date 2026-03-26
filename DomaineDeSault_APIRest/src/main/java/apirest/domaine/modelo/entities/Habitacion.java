@@ -34,7 +34,7 @@ public class Habitacion implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_habitacion")
 	private Long idHabitacion;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 50)
 	private String nombre;
 	@Column(nullable = false)
 	private int capacidad; 
