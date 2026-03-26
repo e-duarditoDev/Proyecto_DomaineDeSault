@@ -53,8 +53,7 @@
   "book.checkIn": "Jour d’arrivée",
   "book.checkOut": "Jour de départ",
   "book.rooms": "Chambres",
-  "book.adults": "Adultes",
-  "book.children": "Enfants",
+  "book.guests": "Hôtes",
   "book.search": "Rechercher",
   "book.promoCode": "Code promotionnel",
   "nights_one": "1 nuit",
@@ -463,5 +462,35 @@
     "messagePlaceholder": "Votre message...",
     "namePlaceholder": "Jean Martin",
     "send": "Envoyer"
+  },
+
+  "roomReservation": {
+    "title": "Configurez votre réservation",
+    "checkIn": "Date d'arrivée",
+    "checkOut": "Date de départ",
+    "selectDate": "Sélectionnez la date",
+    "guests": "invité(s)",
+    "nights": "Nuits",
+    "maxCapacity": "Capacité maximale :",
+    "pricePerNight": "Prix/nuit :",
+    "total": "Total",
+    "cancel": "Annuler",
+    "save": "Sauvegarder",
+    "pay": "Payer",
+    "loadingRoom": "Chargement de la chambre...",
+    "back": "Retour",
+    "warning": "Attention",
+    "confirmation": "Confirmation",
+    "continue": "Continuer",
+    "popup": {
+      "roomNotFound": "La chambre n'a pas pu être récupérée.",
+      "selectDates": "Veuillez sélectionner les dates d'arrivée et de départ.",
+      "loadRoomError": "Erreur lors du chargement des informations de la chambre.",
+      "connectionError": "Erreur de connexion :",
+      "unexpectedError": "Une erreur inattendue s'est produite.",
+      "sessionExpired": "La session a expiré. Veuillez vous reconnecter.",
+      "saveSuccess": "Réservation enregistrée avec succès.",
+      "paySuccess": "Réservation payée avec succès."
+    }
   }
 }
