@@ -35,8 +35,8 @@ const BookingForm = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   // Estado que controla si el calendario está visible o no.
 
-  const [adults, setAdults] = useState(1);
-  // Estado que guarda el número de adultos seleccionados.
+  const [guests, setGuests] = useState(1);
+  // Estado que guarda el número de huéspedes seleccionados.
 
   const [children, setChildren] = useState(0);
   // Estado que guarda el número de niños seleccionados.
@@ -78,7 +78,7 @@ const BookingForm = () => {
   const handleSearch = () => {
     // Función que se ejecuta al pulsar el botón de búsqueda.
     alert(
-      `Buscando: ${startDate?.toLocaleDateString()} - ${endDate?.toLocaleDateString()}, ${rooms} habitaciones, ${adults} adultos, ${children} niños}`
+      `Buscando: ${startDate?.toLocaleDateString()} - ${endDate?.toLocaleDateString()}, ${rooms} habitaciones, ${guests} huéspedes}`
     );
     // Mostramos un mensaje con la información seleccionada (a modo de prueba).
   };
@@ -179,14 +179,14 @@ const BookingForm = () => {
           </select>
         </label>
 
-        {/* Número de adultos */}
+        {/* Número de huéspedes */}
         <label>
-          {t("book.adults")}
+          {t("book.guests")}
           <select
-            value={adults}
-            onChange={(e) => setAdults(Number(e.target.value))}
+            value={guests}
+            onChange={(e) => setGuests(Number(e.target.value))}
           >
-            {/* Generamos 5 opciones de 1 a 5 adultos */}
+            {/* Generamos 5 opciones de 1 a 5 huéspedes */}
             {[...Array(5)].map((_, i) => (
               <option key={i + 1} value={i + 1}>
                 {i + 1}
@@ -196,20 +196,20 @@ const BookingForm = () => {
         </label>
 
         {/* Número de niños */}
-        <label>
+        {/*<label>
           {t("book.children")}
           <select
             value={children}
             onChange={(e) => setChildren(Number(e.target.value))}
-          >
+          >*/}
             {/* Generamos 5 opciones de 0 a 4 niños */}
-            {[...Array(5)].map((_, i) => (
+            {/*{[...Array(5)].map((_, i) => (
               <option key={i} value={i}>
                 {i}
               </option>
             ))}
           </select>
-        </label>
+        </label>*/}
 
         {/* Código promocional */}
         {/* <label>
