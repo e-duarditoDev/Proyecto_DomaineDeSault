@@ -53,8 +53,7 @@
   "book.checkIn": "Anreisetag",
   "book.checkOut": "Abreisetag",
   "book.rooms": "Zimmer",
-  "book.adults": "Erwachsene",
-  "book.children": "Kinder",
+  "book.guests": "Gäste",
   "book.search": "Suchen",
   "book.promoCode": "Promocode",
   "nights_one": "1 Nacht",
@@ -465,5 +464,35 @@
     "messagePlaceholder": "Ihre Nachricht...",
     "namePlaceholder": "Max Mustermann",
     "send": "Senden"
+  },
+
+  "roomReservation": {
+    "title": "Konfigurieren Sie Ihre Reservierung",
+    "checkIn": "Anreisedatum",
+    "checkOut": "Abreisedatum",
+    "selectDate": "Datum auswählen",
+    "guests": "Gast/Gäste",
+    "nights": "Nächte",
+    "maxCapacity": "Maximale Kapazität:",
+    "pricePerNight": "Preis/Nacht:",
+    "total": "Gesamt",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "pay": "Bezahlen",
+    "loadingRoom": "Zimmer wird geladen...",
+    "back": "Zurück",
+    "warning": "Warnung",
+    "confirmation": "Bestätigung",
+    "continue": "Fortfahren",
+    "popup": {
+      "roomNotFound": "Das Zimmer konnte nicht abgerufen werden.",
+      "selectDates": "Bitte wählen Sie An- und Abreisedaten aus.",
+      "loadRoomError": "Fehler beim Laden der Zimmerinformationen.",
+      "connectionError": "Verbindungsfehler:",
+      "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten.",
+      "sessionExpired": "Die Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+      "saveSuccess": "Reservierung erfolgreich gespeichert.",
+      "paySuccess": "Reservierung erfolgreich bezahlt."
+    }
   }
 }

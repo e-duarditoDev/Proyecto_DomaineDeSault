@@ -53,8 +53,7 @@
   "book.checkIn": "Check-in",
   "book.checkOut": "Check-out",
   "book.rooms": "Rooms",
-  "book.adults": "Adults",
-  "book.children": "Children",
+  "book.guests": "Huéspedes",
   "book.search": "Search",
   "book.promoCode": "Promo code",
   "nights_one": "1 night",
@@ -455,5 +454,35 @@
     "messagePlaceholder": "Your message...",
     "namePlaceholder": "John Smith",
     "send": "Send"
+  },
+
+  "roomReservation": {
+    "title": "Configure your reservation",
+    "checkIn": "Check-in date",
+    "checkOut": "Check-out date",
+    "selectDate": "Select date",
+    "guests": "guest(s)",
+    "nights": "Nights",
+    "maxCapacity": "Maximum capacity:",
+    "pricePerNight": "Price/night:",
+    "total": "Total",
+    "cancel": "Cancel",
+    "save": "Save",
+    "pay": "Pay",
+    "loadingRoom": "Loading room...",
+    "back": "Back",
+    "warning": "Warning",
+    "confirmation": "Confirmation",
+    "continue": "Continue",
+    "popup": {
+      "roomNotFound": "The room could not be retrieved.",
+      "selectDates": "Please select check-in and check-out dates.",
+      "loadRoomError": "Error loading room information.",
+      "connectionError": "Connection error:",
+      "unexpectedError": "An unexpected error occurred.",
+      "sessionExpired": "The session has expired. Please log in again.",
+      "saveSuccess": "Reservation saved successfully.",
+      "paySuccess": "Reservation paid successfully."
+    }
   }
 }
