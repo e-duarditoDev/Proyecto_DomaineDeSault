@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import apirest.domaine.modelo.dto.ClienteDto;
-
+import apirest.domaine.modelo.dto.DireccionDto;
 import apirest.domaine.modelo.entities.Cliente;
-
+import apirest.domaine.modelo.entities.Direccion;
+import apirest.domaine.modelo.enumerados.EstadoUsuario;
+import apirest.domaine.modelo.repository.ClienteRepository;
 import apirest.domaine.modelo.repository.UsuarioLoginProjection;
 import apirest.domaine.service.ClienteService;
-
+import apirest.domaine.service.DireccionService;
 import apirest.domaine.service.UsuarioLoginService;
 import jakarta.validation.Valid;
 
@@ -35,6 +37,9 @@ public class ClienteRestController {
 	
 	@Autowired
 	private UsuarioLoginService usuarioLogiServ;
+	
+	@Autowired
+	private DireccionService direccServ;
 
 	
 	
@@ -83,30 +88,31 @@ public class ClienteRestController {
 		
 	}
 	
-	@PostMapping("/alta-cliente")
-	//se coloca @Valid para activar las validaciones del ClienteDto, devuelve http 400
-	public ResponseEntity<?> inserOne(@Valid @RequestBody ClienteDto clienteDto, Authentication auth){
-		
-		if(clienteDto == null)
-			throw new RuntimeException("El cliente no puede ser nulo.");
-		
-		if(auth == null || auth.getName().isBlank() || auth.getName() == null)
-			throw new RuntimeException("No se ha podido recuperar el email.");
-				
-		UsuarioLoginProjection usuarioLogin = usuarioLogiServ.findByEmail(auth.getName());
-		
-		clienteDto.setIdUsuario(usuarioLogin.getIdUsuario());
-		clienteDto.setFechaAlta(usuarioLogin.getFechaAlta());
-		
-		Cliente cliente = ClienteDto.convertToEntity(clienteDto);
-
-		
-		clienteServ.insertOne(cliente);
-		
-		return ResponseEntity.ok().build();
-	}
+//	@PostMapping("/alta-cliente")
+//	//se coloca @Valid para activar las validaciones del ClienteDto, devuelve http 400
+//	public ResponseEntity<?> inserOne(@Valid @RequestBody ClienteDto clienteDto, Authentication auth){
+//		
+//		if(clienteDto == null)
+//			throw new RuntimeException("El cliente no puede ser nulo.");
+//		
+//		if(auth == null || auth.getName().isBlank() || auth.getName() == null)
+//			throw new RuntimeException("No se ha podido recuperar el email.");
+//				
+//		UsuarioLoginProjection usuarioLogin = usuarioLogiServ.findByEmail(auth.getName());
+//		
+//		clienteDto.setIdUsuario(usuarioLogin.getIdUsuario());
+//		clienteDto.setFechaAlta(usuarioLogin.getFechaAlta());
+//		
+//		Cliente cliente = ClienteDto.convertToEntity(clienteDto);
+//
+//		
+//		clienteServ.insertOne(cliente);
+//		
+//		return ResponseEntity.ok().build();
+//	}
 	
 	@PutMapping("/mis-datos")
+	//se coloca @Valid para activar las validaciones del ClienteDto, devuelve http 400
 	public ResponseEntity<?> guardarMisDatos(@Valid @RequestBody ClienteDto clienteDto, Authentication auth) {
 
 	    if (clienteDto == null) {
@@ -114,18 +120,41 @@ public class ClienteRestController {
 	    }
 
 	    if (auth == null || auth.getName() == null || auth.getName().isBlank()) {
-	        throw new RuntimeException("No se han podido recuperar datos del usuario.");
+	        throw new RuntimeException("Intente volver a iniciar sesion o registrese.");
 	    }
 
 	    UsuarioLoginProjection usuarioLogin = usuarioLogiServ.findByEmail(auth.getName());
+	    
+    	// Rescatamos el idDireccion de cliente existente, para sobreescribirla
+	    //todo esto vino por un bug, ya que sin esto el idDireccion viene null del clienteDto
+	   	Cliente clienteTemp = clienteServ.findById(usuarioLogin.getIdUsuario());
+	   	
+	   	if (clienteTemp != null) {
+	   		Direccion direccion = direccServ.findById(clienteTemp.getDireccion().getIdDireccion());
+	   		
+	   		DireccionDto direccionDto = new DireccionDto ();
+	   		direccionDto = clienteDto.getDireccionDto();
+	   		direccionDto.setIdDireccion(direccion.getIdDireccion());
+	   		
+	   		System.out.println("Direccion: "+ direccionDto);
+	   		
+	   		clienteDto.setDireccionDto(direccionDto);
+	   	}
+    	
 
 	    Cliente cliente = ClienteDto.convertToEntity(clienteDto);
+	    
 	    cliente.setIdUsuario(usuarioLogin.getIdUsuario());
 	    cliente.setFechaAlta(usuarioLogin.getFechaAlta());
 
-	    // con esto hacermos lo que se conoce con upSert (update + insert)
+	    // Con esto hacemos lo que se conoce como upSert (update + insert)
 	    if (clienteServ.perfilCompleto(usuarioLogin.getIdUsuario())) {
+	    	
+//	    	//Testing
+//	    	System.out.println("El id de direccion: "+cliente.getDireccion().getIdDireccion());
+	    	
 	        clienteServ.updateOne(cliente);
+	        
 	    } else {
 	        clienteServ.insertOne(cliente);
 	    }

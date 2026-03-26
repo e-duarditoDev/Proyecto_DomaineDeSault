@@ -21,9 +21,6 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 			throw new RuntimeException("El Id es incorrecto.");
 		
 		Cliente cliente = clienteRepo.findById(atributoId).orElse(null);
-		
-		if (cliente == null)
-			throw new RuntimeException("No se han podido recuperar datos del usuario.");
 			
 		return clienteRepo.findById(atributoId).orElse(null);
 	}
@@ -63,6 +60,7 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 	    if (entidad.getIdUsuario() == null || entidad.getIdUsuario() <= 0) {
 	        throw new RuntimeException("El Id de usuario es obligatorio.");
 	    }
+	    
 				
 		return clienteRepo.save(entidad);
 	}

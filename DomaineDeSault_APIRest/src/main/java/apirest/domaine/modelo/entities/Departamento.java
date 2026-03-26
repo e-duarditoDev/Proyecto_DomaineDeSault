@@ -26,7 +26,7 @@ public class Departamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_departamento")
 	private Long idDepartamento;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 30)
 	private String nombre;
 	@OneToMany(mappedBy = "departamento")//OneToMany siempre devuelve coleccion
 	private List<Trabajador>trabajadores;

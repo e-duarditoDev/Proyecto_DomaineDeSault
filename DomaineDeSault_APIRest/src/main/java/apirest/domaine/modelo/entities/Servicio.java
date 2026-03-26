@@ -30,7 +30,7 @@ public class Servicio implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_servicio")
 	private Long idServicio;
-	@Column(nullable = false, unique = true, length = 50)
+	@Column(nullable = false, unique = true)
 	private String nombre;
 	@Column(length = 100)
 	private String descripcion;

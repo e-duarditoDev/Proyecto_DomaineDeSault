@@ -32,15 +32,15 @@ public class Direccion implements Serializable{
 	@Column(name="id_direccion")
 	private Long idDireccion;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 80)
 	private String calle;
-	@Column(nullable = false)
+	@Column(nullable = false, length = 10)
 	private String numero;
 	@Column(name="codigo_postal")
 	private Integer codigoPostal; //Integer porque si viene vacion es null, si int seria 0 que no seria CP valido
-	@Column(nullable = false)
+	@Column(nullable = false, length = 30)
 	private String provincia;
-	@Column(nullable = false)
+	@Column(nullable = false, length = 30)
 	private String localidad;
 	
 //	@OneToOne (mappedBy = "direccion")

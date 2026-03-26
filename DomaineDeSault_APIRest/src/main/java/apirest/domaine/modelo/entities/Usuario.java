@@ -39,20 +39,20 @@ public class Usuario{
 //	@Column(nullable = false, unique = true)
 //	private Long idLogin;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 30)
 	private String nombre;
 	
-	@Column(name="primer_apellido", nullable = false)
+	@Column(name="primer_apellido", nullable = false, length = 50)
 	private String primerApellido;
 	
-	@Column(name="segundo_apellido")//hay personas que solo tienen un apellido
+	@Column(name="segundo_apellido", length = 50)//hay personas que solo tienen un apellido
 	private String segundoApellido;
 	
 	@EqualsAndHashCode.Include //un documento indentidica la entidad
-	@Column(name="documento_identidad", unique = true, nullable = false)
+	@Column(name="documento_identidad", unique = true, nullable = false, length = 15)
 	private String documentoIdentidad;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 18)
 	private String telefono;
 	
 	

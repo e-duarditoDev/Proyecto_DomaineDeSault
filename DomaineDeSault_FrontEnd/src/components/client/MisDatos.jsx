@@ -23,11 +23,16 @@ const MisDatos = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [infoMessage, setInfoMessage] = useState("");
+
 
   useEffect(() => {
     const cargarMisDatos = async () => {
       setError("");
       try {
+        setError("");
+        setInfoMessage("");
+
         const token = localStorage.getItem("token");
 
         const response = await fetch("/api/cliente/mis-datos", {
@@ -46,34 +51,81 @@ const MisDatos = () => {
           throw new Error(errorText || "No se pudieron cargar tus datos.");
         }
 
-        const data = await response.json();
+        const responseText = await response.text();//return ResponseEntity.ok().body(null); fecth lo trata como cuerpo vacio no como null
+        const data = responseText.trim() ? JSON.parse(responseText) : null;
 
-        // Si backend devuelve null, dejamos el formulario vacío
-        if (data) {
-          setFormData({
-            documentoIdentidad: data.documentoIdentidad || "",
-            nombre: data.nombre || "",
-            primerApellido: data.primerApellido || "",
-            segundoApellido: data.segundoApellido || "",
-            telefono: data.telefono || "",
-            direccionDto: {
-              calle: data.direccionDto?.calle || "",
-              numero: data.direccionDto?.numero || "",
-              codigoPostal: data.direccionDto?.codigoPostal ?? "",
-              provincia: data.direccionDto?.provincia || "",
-              localidad: data.direccionDto?.localidad || ""
-            }
-          });
+        // Caso 1: primer acceso, backend devuelve null
+        if (data == null) {
+          setInfoMessage("Bienvenido/a. Completa tus datos para para realizar una reserva.");
+          return;
         }
+
+        const newFormData = {
+          documentoIdentidad: data.documentoIdentidad || "",
+          nombre: data.nombre || "",
+          primerApellido: data.primerApellido || "",
+          segundoApellido: data.segundoApellido || "",
+          telefono: data.telefono || "",
+          direccionDto: {
+            calle: data.direccionDto?.calle || "",
+            numero: data.direccionDto?.numero || "",
+            codigoPostal: data.direccionDto?.codigoPostal ?? "",
+            provincia: data.direccionDto?.provincia || "",
+            localidad: data.direccionDto?.localidad || ""
+          }
+        };
+
+        setFormData(newFormData);
+
+        // Caso 2: existe objeto pero viene vacío del bakcend
+        const formularioVacio =
+          !newFormData.documentoIdentidad &&
+          !newFormData.nombre &&
+          !newFormData.primerApellido &&
+          !newFormData.segundoApellido &&
+          !newFormData.telefono &&
+          !newFormData.direccionDto.calle &&
+          !newFormData.direccionDto.numero &&
+          !newFormData.direccionDto.codigoPostal &&
+          !newFormData.direccionDto.provincia &&
+          !newFormData.direccionDto.localidad;
+
+        if (formularioVacio) {
+          setInfoMessage("Bienvenido. Completa tus datos para continuar.");
+        }
+
+        /*     // Si backend devuelve null, dejamos el formulario vacío
+            if (data) {
+              setFormData({
+                documentoIdentidad: data.documentoIdentidad || "",
+                nombre: data.nombre || "",
+                primerApellido: data.primerApellido || "",
+                segundoApellido: data.segundoApellido || "",
+                telefono: data.telefono || "",
+                direccionDto: {
+                  calle: data.direccionDto?.calle || "",
+                  numero: data.direccionDto?.numero || "",
+                  codigoPostal: data.direccionDto?.codigoPostal ?? "",
+                  provincia: data.direccionDto?.provincia || "",
+                  localidad: data.direccionDto?.localidad || ""
+                }
+              });
+            } */
+
+            
+
+
       } catch (err) {
-        setError(err.message);
+        setError(err.message || "Error al cargar los datos.");
       } finally {
         setLoading(false);
       }
+
     };
 
     cargarMisDatos();
   }, []);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -168,16 +220,23 @@ const MisDatos = () => {
   }
 
   return (
-    <div className="container" style={{ marginTop: "120px", maxWidth: "900px" }}>
+    <div className="container w-50 pb-4 pt-5 mb-2">
       <div className="card shadow-sm p-4">
         <h2 className="mb-4">Mis datos</h2>
 
-        <p className="text-muted">
-          Completa tus datos personales para poder guardar y pagar reservas.
-        </p>
-
-        {error && <div className="alert alert-danger">{error}</div>}
-        {success && <div className="alert alert-success">{success}</div>}
+        {infoMessage && (
+          <div className="alert alert-primary text-center fs-5 fw-semibold">
+            {infoMessage}
+          </div>
+        )}
+        {error &&
+          <div className="alert alert-danger">
+            {error}
+          </div>}
+        {success &&
+          <div className="alert alert-success">
+            {success}
+          </div>}
 
         <form onSubmit={handleSubmit}>
           <div className="row">
@@ -189,6 +248,10 @@ const MisDatos = () => {
                 className="form-control"
                 value={formData.nombre}
                 onChange={handleChange}
+                maxLength={30}
+                pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+                title="El nombre solo puede contener letras."
+                required
               />
             </div>
 
@@ -200,6 +263,10 @@ const MisDatos = () => {
                 className="form-control"
                 value={formData.primerApellido}
                 onChange={handleChange}
+                maxLength={50}
+                pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+                title="El nombre solo puede contener letras."
+                required
               />
             </div>
 
@@ -211,6 +278,9 @@ const MisDatos = () => {
                 className="form-control"
                 value={formData.segundoApellido}
                 onChange={handleChange}
+                maxLength={50}
+                pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+                title="El nombre solo puede contener letras."
               />
             </div>
 
@@ -222,6 +292,9 @@ const MisDatos = () => {
                 className="form-control"
                 value={formData.documentoIdentidad}
                 onChange={handleChange}
+                maxLength={15}
+                //no metemos pattern porque nos complica validar un dni frances, aleman, espanol, nies de cada pais, pasaportes, una locura
+                required
               />
             </div>
 
@@ -233,6 +306,11 @@ const MisDatos = () => {
                 className="form-control"
                 value={formData.telefono}
                 onChange={handleChange}
+                maxLength={18}
+                minLength={9}
+                pattern="^\+?\d+$"
+                title="Introduzca un telefono valido. Si tiene prefijo internacional, anteponga + y el prefijo nacional antes del numero de telefono."
+                required
               />
             </div>
           </div>
@@ -250,6 +328,11 @@ const MisDatos = () => {
                 className="form-control"
                 value={formData.direccionDto.calle}
                 onChange={handleDireccionChange}
+                maxLength={80}
+                minLength={2}
+                pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+                title="Solo se permiten letras."
+                required
               />
             </div>
 
@@ -261,17 +344,25 @@ const MisDatos = () => {
                 className="form-control"
                 value={formData.direccionDto.numero}
                 onChange={handleDireccionChange}
+                maxLength={10}
+                pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s]+$"
+                title="Indique el numero de vivienda con letras y/o numeros."
+                required
               />
             </div>
 
             <div className="col-md-3 mb-3">
               <label className="form-label">Código postal</label>
               <input
-                type="number"
+                type="text"
                 name="codigoPostal"
                 className="form-control"
                 value={formData.direccionDto.codigoPostal}
                 onChange={handleDireccionChange}
+                maxLength={10}
+                minLength={5}
+                pattern="^\d+$"
+                required
               />
             </div>
 
@@ -283,6 +374,9 @@ const MisDatos = () => {
                 className="form-control"
                 value={formData.direccionDto.provincia}
                 onChange={handleDireccionChange}
+                maxLength={30}
+                pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+                required
               />
             </div>
 
@@ -294,11 +388,14 @@ const MisDatos = () => {
                 className="form-control"
                 value={formData.direccionDto.localidad}
                 onChange={handleDireccionChange}
+                maxLength={30}
+                pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+                required
               />
             </div>
           </div>
 
-          <div className="d-flex gap-2 mt-3">
+          <div className="d-flex gap-3 mt-3 justify-content-end flex-md-row flex-column">
             <button
               type="button"
               className="btn btn-outline-dark px-4"
