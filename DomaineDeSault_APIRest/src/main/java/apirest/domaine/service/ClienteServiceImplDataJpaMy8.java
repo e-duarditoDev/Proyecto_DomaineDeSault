@@ -22,16 +22,14 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 	//para que save() lo trate como una entidad nueva, porque al asignarle un id manual en el rest
 	//del usuarioLogin, problema que hibernate lo trata como un update porque al interpreta que al 
 	//tener un id, existe. em va para el insertOne()
-	@PersistenceContext
+	@PersistenceContext // de Jakarta.persistance.PersistanceContext
 	private EntityManager em;
 
 	@Override
 	public Cliente findById(Long atributoId) {
 		if (atributoId == null || atributoId <= 0)
 			throw new RuntimeException("El Id es incorrecto.");
-		
-		Cliente cliente = clienteRepo.findById(atributoId).orElse(null);
-			
+					
 		return clienteRepo.findById(atributoId).orElse(null);
 	}
 
@@ -53,11 +51,19 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 		
 		if(clienteRepo.existsById(entidad.getIdUsuario()))
 			throw new RuntimeException ("El cliente ya esta registrado.");
-	
-		
+			
 		entidad.setEstado(EstadoUsuario.ACTIVO);
 		
 		em.persist(entidad); //EntityManager
+		
+		//Pasar a mayusculas antes de guardar en bbdd
+		entidad.getDireccion().setCalle(entidad.getDireccion().getCalle().toUpperCase());
+		entidad.getDireccion().setLocalidad(entidad.getDireccion().getLocalidad().toUpperCase());
+		entidad.getDireccion().setProvincia(entidad.getDireccion().getProvincia().toUpperCase());
+		entidad.setDocumentoIdentidad(entidad.getDocumentoIdentidad().toUpperCase());
+		entidad.setNombre(entidad.getNombre().toUpperCase());
+		entidad.setPrimerApellido(entidad.getPrimerApellido().toUpperCase());
+		entidad.setSegundoApellido(entidad.getSegundoApellido().toUpperCase());
 		
 		return clienteRepo.save(entidad);
 			
@@ -74,7 +80,15 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 	        throw new RuntimeException("El Id de usuario es obligatorio.");
 	    }
 	    
-				
+		//Pasar a mayusculas antes de guardar en bbdd
+		entidad.getDireccion().setCalle(entidad.getDireccion().getCalle().toUpperCase());
+		entidad.getDireccion().setLocalidad(entidad.getDireccion().getLocalidad().toUpperCase());
+		entidad.getDireccion().setProvincia(entidad.getDireccion().getProvincia().toUpperCase());
+		entidad.setDocumentoIdentidad(entidad.getDocumentoIdentidad().toUpperCase());
+		entidad.setNombre(entidad.getNombre().toUpperCase());
+		entidad.setPrimerApellido(entidad.getPrimerApellido().toUpperCase());
+		entidad.setSegundoApellido(entidad.getSegundoApellido().toUpperCase());
+	    		
 		return clienteRepo.save(entidad);
 	}
 

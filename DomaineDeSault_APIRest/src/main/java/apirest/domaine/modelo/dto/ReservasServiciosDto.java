@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class Reservas_ServiciosDto {
+public class ReservasServiciosDto {
 
 	private Long idReserva;
 	private Long idServicio;

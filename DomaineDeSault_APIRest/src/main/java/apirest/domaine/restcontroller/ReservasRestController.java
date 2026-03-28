@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 
 import apirest.domaine.modelo.dto.ReservaRequestDto;
+import apirest.domaine.modelo.entities.Reserva;
 import apirest.domaine.modelo.repository.UsuarioLoginProjection;
 import apirest.domaine.service.ClienteService;
 import apirest.domaine.service.ReservaHabitacionesService;
@@ -39,8 +40,7 @@ public class ReservasRestController {
 	
 	
 	@PostMapping("/reservar-habitacion")
-	public ResponseEntity<?> crearReserva (@RequestBody ReservaRequestDto reservaDto,
-													Authentication auth) {
+	public ResponseEntity<?> crearReserva (@RequestBody ReservaRequestDto reservaDto, Authentication auth) {
 //		debugging
 //		System.out.println("ID recibido: " + reservaDto.getIdHabitacion());
 //	    System.out.println("Fecha Entrada: " + reservaDto.getFechaEntrada());
@@ -50,11 +50,18 @@ public class ReservasRestController {
 			String email = auth.getName();
 			
 			//Recuperar el idCliente
-			UsuarioLoginProjection usuarioLogin = usuLoginServ.findByEmail(email);
+			UsuarioLoginProjection usuarioLogin = usuLoginServ.findByEmail(email);//buscar en la tabla usuario
 			Long idCliente = usuarioLogin.getIdUsuario();
+			
+			
+			
+	        String mensaje = "PAGAR".equalsIgnoreCase(reservaDto.getAccion())
+	                ? "Reserva pagada con éxito."
+	                : "Reserva guardada con éxito.";
 			 			
+	        resServ.crearReserva(reservaDto, idCliente);
 
-			return ResponseEntity.status(HttpStatus.CREATED).body(resServ.crearReserva(reservaDto, idCliente));
+			return ResponseEntity.status(HttpStatus.CREATED).body(mensaje);
 			 
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
