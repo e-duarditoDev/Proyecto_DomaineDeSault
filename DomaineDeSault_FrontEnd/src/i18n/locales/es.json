@@ -53,7 +53,7 @@
   "book.checkIn": "Día de llegada",
   "book.checkOut": "Día de salida",
   "book.rooms": "Habitaciones",
-  "book.guests": "Guests",
+  "book.guests": "Huéspedes",
   "book.search": "Buscar",
   "book.promoCode": "Código promocional",
   "nights_one": "1 noche",
@@ -499,5 +499,6 @@
     "paySuccess": "Reserva pagada con éxito."
   }
 }
+
 
 }
