@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import apirest.domaine.modelo.dto.ReservaIdHabitacionFechasDto;
 import apirest.domaine.modelo.dto.ReservaRequestDto;
 import apirest.domaine.modelo.entities.Cliente;
 import apirest.domaine.modelo.entities.Habitacion;
@@ -73,33 +74,41 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 	@Override
 	public Reserva crearReserva(ReservaRequestDto dto, Long idCliente) {
 		
+		
 		Cliente cliente = clienteRepo.findById(idCliente)
 				.orElseThrow(() -> new RuntimeException("Cliente no registrado."));
 		
 		Habitacion habitacion = habitacionRepo.findById(dto.getIdHabitacion())
 				.orElseThrow(() -> new RuntimeException("Habitacion no encontrada."));
-			
 		
-	    if (dto.getFechaEntrada() == null || dto.getFechaSalida() == null) {
-	        throw new RuntimeException("Las fechas son obligatorias.");
-	    }
+	    //Si la habitacion esta en mantenimiento
+	    if (habitacion.getEstado() == EstadoHabitacion.MANTENIMIENTO)
+	    	throw new RuntimeException("La habitacion se encuentra en mantenimiento.");
+		
+		
+//		//No es necesario porque el front invalida los botones si no hay fechas
+//	    if (dto.getFechaEntrada() == null || dto.getFechaSalida() == null) {
+//	        throw new RuntimeException("Las fechas son obligatorias.");
+//	    }
+		
 
-	    //Si afirmativo isBefore coge este camino cuando LAS FECHAS SON IGUALES
-	    if (!dto.getFechaSalida().isAfter(dto.getFechaEntrada())) { 
-	        throw new RuntimeException("La fecha de salida debe ser posterior a la fecha de entrada.");
-	    }
+//	    //Si afirmativo isBefore coge este camino cuando LAS FECHAS SON IGUALES
+//		//El formulario y calendario evita entrar por aqui
+//	    if (!dto.getFechaSalida().isAfter(dto.getFechaEntrada())) { 
+//	        throw new RuntimeException("La fecha de salida debe ser posterior a la fecha de entrada.");
+//	    }
 	    
 //	    //no se necesita porque los huespedes se seleccionan mediante Select
 //	    if (dto.getNumHuespedes() < 1) {
 //	    	throw new RuntimeException("El numero de huespedes debe ser mayor a 0.");
 //	    }
-	    
+		
 	    
 //		EstadoReserva estadoReserva = "PAGAR".equalsIgnoreCase(dto.getAccion()) //"PAGAR" se interpreta como String
 //		? EstadoReserva.CONFIRMADA : EstadoReserva.PENDIENTE; //Operador ternario, condicion ternaria si getAccion() es igual a PAGAR entonces CONFIRMADA	    
 	    
 	    
-	    //Definicion de estados
+	    //Definicion de estados en funciona del boton pulsado
 		EstadoReserva estadoReserva;
 		EstadoHabitacion estadoHabitacion;
 
@@ -112,7 +121,8 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 		}
 		
 		
-		//Busca las reservas no estan pendientes de pagar, regla negocio: si esta pagada no se puede modificar
+		//Busca las reservas no esten en estado PENDIENTE, regla negocio: si esta pagada no se puede modificar
+		//No buscamos por el idReserva porque el dto del front no conoce el idReserva
 		Reserva reserva = reservaRepo.findByClienteIdUsuarioAndFechaEntradaAndFechaSalidaAndEstado(
 				idCliente,
 				dto.getFechaEntrada(),
@@ -120,11 +130,23 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 				EstadoReserva.PENDIENTE
 				).orElse(null);
 		
+		
 		//Calculo del precio total (precio habitacion * nro noches)
 		long noches = ChronoUnit.DAYS.between(dto.getFechaEntrada(), dto.getFechaSalida()); //obtiene numero de dias entre fechas
-        BigDecimal precioTotal = habitacion.getPrecioNoche().multiply(BigDecimal.valueOf(noches)); //getPrecioNoche devuelve BigDecimal, valueOf convierte noches a BigDecimal		
+        BigDecimal precioTotal = habitacion.getPrecioNoche().multiply(BigDecimal.valueOf(noches)); //getPrecioNoche devuelve BigDecimal, multiply es metodo de BigDecimal, valueOf convierte noches a BigDecimal		
 				
 		if (reserva == null) {
+			
+			//Comprobar si hay conflicto de fechas con otras reservas
+			List <ReservaIdHabitacionFechasDto> listaHabitacionesPorFecha = reservaRepo.findByHabitacionConFechas(dto.getIdHabitacion());
+			for (ReservaIdHabitacionFechasDto habitacionPorFechasDto : listaHabitacionesPorFecha) {
+				if (
+					dto.getFechaEntrada().isBefore(habitacionPorFechasDto.getFechaSalida()) &&
+					dto.getFechaSalida().isAfter(habitacionPorFechasDto.getFechaEntrada()) &&
+					habitacionPorFechasDto.getIdHabitacion() == dto.getIdHabitacion()
+						)
+					throw new RuntimeException("La habitacion no se encuentra disponible en las fechas seleccionadas.");
+			}
 			
 			Reserva reservaNueva = new Reserva();
 			reservaNueva.setCliente(cliente);
@@ -140,23 +162,23 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 			habitacionRepo.save(habitacion);
 		} else {
 			
-			//Si ya existia reserva no pagada, se puede modificar 
+			//Si ya tienes una resserva-habitacion en estado PENDIENTE
 		    boolean existe = reservaHabitacionRepo.existsByReservaHabitacionIdIdReservaAndReservaHabitacionIdIdHabitacion(
                     reserva.getIdReserva(),
                     habitacion.getIdHabitacion()
 		    		);
 
 		    if (existe) {
-		    	throw new RuntimeException("La habitación ya ha sido reservada.");
+		    	throw new RuntimeException("Ya ha realizado esta reserva.");
 		    }
+		    
 		    
 		    //Verificar si se supera la capacidad de la habitacion
 		    int huespedesActuales = reserva.getNumHuespedes();
 		    int huespedesNuevos = dto.getNumHuespedes();
 		    int totalHuespedes = huespedesActuales + huespedesNuevos;
 		    	
-		    if (totalHuespedes > habitacion.getCapacidad()) 
-		    	throw new RuntimeException("El numero de huespedes supera la capacidad de la habitacion.");
+
 		    	
 		    //Asignacion de nuevos valores valores
 		    reserva.setNumHuespedes(totalHuespedes);
@@ -174,7 +196,7 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 		//reserva al ser .orElse(null) Spring entiende que es posible reserva venga null y marcaba un warning 
 		//si por alguna razon llega aqui siendo reserva null, no generar un nullpointerException en la instancia de ReservaHabitacionId
 		if (reserva == null) {
-		    throw new RuntimeException("Error: la reserva no existe.");
+		    throw new RuntimeException("Ha ocurrido un error.");
 		}
 
 		//crear la id de la clave compuesta de la tabla intermadia
