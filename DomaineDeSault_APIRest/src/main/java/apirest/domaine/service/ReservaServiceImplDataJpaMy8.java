@@ -75,7 +75,6 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 	public Reserva guardarReserva(ReservaRequestDto reservaRequestDto, Long idCliente) {
 		
 		
-		
 		Cliente cliente = clienteRepo.findById(idCliente)
 				.orElseThrow(() -> new RuntimeException("Cliente no registrado."));
 		
@@ -113,7 +112,7 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 		EstadoReserva estadoReserva;
 		EstadoHabitacion estadoHabitacion;
 
-		if (reservaRequestDto.getAccion().equalsIgnoreCase("pagar")){
+		if (reservaRequestDto.getAccion().equalsIgnoreCase("PAGAR")){
 			estadoReserva = EstadoReserva.CONFIRMADA;
 			estadoHabitacion = EstadoHabitacion.OCUPADA;
 		} else {

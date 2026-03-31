@@ -3,7 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
+  //Para redirigir 
   const navigate = useNavigate();
+  //Para indicar la ruta de referencia, usada para redirigir en funcion donde se este
+  //const location = useLocation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +19,7 @@ const Login = () => {
     e.preventDefault();
     setError("");
     setLoading(true);
+
 
     try {
       //Evita hacer la peticion a la API si faltan campos
@@ -67,7 +71,13 @@ const Login = () => {
 
       //Redirigir segun este o no cumplimentado los datos del usuario
       if (perfilCompleto) {
-        navigate("/");
+        //Ver si puede dejar en el RoomReservation si se esta en el RoomDetail
+/*         if (location.pathname === "/login") {
+          navigate("/");
+        } */
+
+          navigate("/")
+
       } else {
         navigate("/mis-datos");
       }

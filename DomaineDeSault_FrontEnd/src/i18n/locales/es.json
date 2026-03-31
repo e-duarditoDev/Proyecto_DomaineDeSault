@@ -441,7 +441,7 @@
   },
   "roomDetail": {
     "showAll": "Mostrar todas las fotos",
-    "notFound": "Habitación no encontrada.",
+    "error": "Ha ocurrido un error.",
     "back": "Volver",
     "size": "Tamaño: {{size}}",
     "rating": "Camas cómodas: {{rating}}, según {{reviewsCount}} comentarios",

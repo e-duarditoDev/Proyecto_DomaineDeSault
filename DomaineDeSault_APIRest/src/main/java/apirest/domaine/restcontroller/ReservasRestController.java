@@ -84,9 +84,7 @@ public class ReservasRestController {
 			ReservaRequestDto reservaDto = requestDto.getReservaDto();
 			PagoDto pagoDto = requestDto.getPagoDto();
 			
-			//Aunque venga del front "PAGAR", es buena practica asegurarlo en el backEnd
-			//Al establecer en "PAGAR", el ReservaServiceImpl establece el estado de la reserva como "CONFIRMADA"
-			reservaDto.setAccion("PAGAR");
+			
 			Reserva reserva = resServ.guardarReserva(reservaDto, idCliente);
 			
 			

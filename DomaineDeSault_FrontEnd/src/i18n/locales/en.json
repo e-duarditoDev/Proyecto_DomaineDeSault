@@ -428,7 +428,7 @@
   },
   "roomDetail": {
     "showAll": "Show all photos",
-    "notFound": "Room not found.",
+    "error": "An error has occurred.",
     "back": "Back",
     "size": "Size: {{size}}",
     "rating": "Comfortable beds: {{rating}}, based on {{reviewsCount}} reviews",

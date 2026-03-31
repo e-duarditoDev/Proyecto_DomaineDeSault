@@ -47,7 +47,6 @@ const RoomReservation = () => {
     cardHolder: "",
     cardExpiry: "",
     cardCvv: ""
-    //iban: "ES12 1234 1234 1234 1234 1234" //cuenta a mostrar en caso de elegir transferencia (deprecada)
   });
 
 
@@ -312,7 +311,7 @@ const RoomReservation = () => {
 
     //prev es el estado primario (anterior) del poppup
     //...prev copia todo lo que habia dentro del objeto, convserva los campos no cambien
-    //solo se sobreescribe la propiedad que haya cambiado
+    //solo se sobreescribe la propiedad que haya cambiado (show: false)
     //es una forma compacta para no tener hacer onChange en cada campo (input)
     setPopup((prev) => ({ ...prev, show: false })); // Cierra el popup
 
@@ -416,6 +415,8 @@ const RoomReservation = () => {
       if (paymentMethod === "EFECTIVO") {
         payLoad.pagoDto.estado = "PENDIENTE";//Guarda el pago como pendiente, ya que se abonara en mostrador a la llegaga
         payLoad.reservaDto.accion = "GUARDAR";
+        //console.log("PayLoad: ", JSON.stringify(payLoad, null,2))
+
         //LLamada a la API
         const response = await fetch("/api/reserva/pagar-reserva", {
           method: "POST",
@@ -426,7 +427,7 @@ const RoomReservation = () => {
           body: JSON.stringify(payLoad) //Cargado el DTO que espera recibir el endPoint
         });
 
-        const responseText = await response.text();//Captura respuestas de la API
+        const responseText = await response.text();//Captura mensajes de la API
 
         if (response.status === 401) { //si ha expirado el token
           setPopup({
@@ -450,8 +451,6 @@ const RoomReservation = () => {
           return;
         }
 
-        //Simulacion de comunicacin con la entidad bancaria
-        await new Promise((resolve) => setTimeout(resolve, 2500));
         // Cerrar el formulario de pago
         setShowPaymentPanel(false);
 
@@ -459,52 +458,64 @@ const RoomReservation = () => {
           show: true,
           message: "Pago realizado con éxito.",
           isError: false,
-          redirectTo: null,
+          redirectTo: "/",
           logoutOnClose: false
         });
         return;
-      }
-
-      // Simulación decomunicacion con la entidad bancaria
-      if (paymentMethod === "TARJETA") {
-        await new Promise((resolve) => setTimeout(resolve, 2500));
-      }
+      };
 
       // Caso TARJETA y BIZUM: endPoint pagar-reserva, estado reserva CONFIRMADA estado pago PAGADO
-      //Llamada a la API
-      const response = await fetch("/api/reserva/pagar-reserva", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(payLoad) //Cargado el DTO que espera recibir el endPoint
-      });
+      if (paymentMethod !== "EFECTIVO") {
 
-      const responseText = await response.text();//Captura respuestas de la API
-
-      if (response.status === 401) { //si ha expirado el token
-        setPopup({
-          show: true,
-          message: t("roomReservation.popup.sessionExpired"),
-          isError: true,
-          redirectTo: "/login",
-          logoutOnClose: true
+        //Llamada a la API
+        const response = await fetch("/api/reserva/pagar-reserva", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify(payLoad) //Cargado el DTO que espera recibir el endPoint
         });
-        return; //interrumpe el flujo
-      }
 
-      if (!response.ok) { //capta mensaje de back o error inesperado
+        const responseText = await response.text();//Captura mensajes de la API
+
+        if (response.status === 401) { //si ha expirado el token
+          setPopup({
+            show: true,
+            message: t("roomReservation.popup.sessionExpired"),
+            isError: true,
+            redirectTo: "/login",
+            logoutOnClose: true
+          });
+          return; //interrumpe el flujo
+        }
+
+        if (!response.ok) { //capta mensaje de back o error inesperado
+          setPopup({
+            show: true,
+            message: responseText || t("roomReservation.popup.unexpectedError"),
+            isError: true,
+            redirectTo: null,
+            logoutOnClose: false
+          });
+          return;
+        }
+
+        // Simulación decomunicacion con la entidad bancaria
+        await new Promise((resolve) => setTimeout(resolve, 2500));
+
+        // Cerrar el formulario de pago
+        setShowPaymentPanel(false);
+
         setPopup({
           show: true,
-          message: responseText || t("roomReservation.popup.unexpectedError"),
-          isError: true,
-          redirectTo: null,
+          message: "Pago realizado con éxito.",
+          isError: false,
+          redirectTo: "/",
           logoutOnClose: false
         });
         return;
-      }
-
+      };
 
     } catch (error) {
       setShowPaymentPanel(false);
@@ -534,7 +545,7 @@ const RoomReservation = () => {
       <>
         {popup.show && (
           <div className="card d-flex justify-content-center align-items-center vw-100 vh-100 fixed-top">
-            <div className="bg-white rounded-4 shadow border-black w-25 d-flex justify-content-center align-items-center flex-column">
+            <div className="bg-white rounded-4 shadow border-black w-auto d-flex justify-content-center align-items-center flex-column">
               <div className={`reserva-popup-header ${popup.isError ? 'bg-danger' : 'bg-success'} w-100 ps-3 rounded-top-3 py-3`}>
               </div>
               <div className="p-4 text-center">
@@ -845,7 +856,7 @@ const RoomReservation = () => {
       {/*   Mensajes de error e informacion */}
       {popup.show && (
         <div className="card d-flex justify-content-center align-items-center vw-100 vh-100 fixed-top">
-          <div className="bg-white rounded-4 shadow border-black w-25 d-flex justify-content-center align-items-center flex-column">
+          <div className="bg-white rounded-4 shadow border-black w-auto d-flex justify-content-center align-items-center flex-column">
             <div className={`reserva-popup-header ${popup.isError ? 'bg-danger' : 'bg-success'} w-100 ps-3 rounded-top-3 py-3`}>
               {/*             <img className="m-1"
                 src={popup.isError ? "/icons/yellow-exclamation-mark.svg" : "/icons/success-check.svg"}

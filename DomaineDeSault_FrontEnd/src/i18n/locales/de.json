@@ -438,7 +438,7 @@
   },
   "roomDetail": {
     "showAll": "Alle Fotos anzeigen",
-    "notFound": "Zimmer nicht gefunden.",
+    "error": "Es ist ein Fehler aufgetreten.",
     "back": "Zurück",
     "size": "Größe: {{size}}",
     "rating": "Bettkomfort: {{rating}}, basierend auf {{reviewsCount}} Bewertungen",

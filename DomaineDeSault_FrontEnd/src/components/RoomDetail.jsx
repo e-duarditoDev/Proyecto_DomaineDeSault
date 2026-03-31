@@ -13,31 +13,31 @@ const RoomDetail = () => {
   // Estado para almacenar los datos de la habitación cargados desde el backend y el índice de la imagen en el lightbox.
   const [habitacionBackend, setHabitacionBackend] = useState(null);
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  // Estado para el popup (Añádelo al principio del componente)
+  const [popup, setPopup] = useState({ show: false, message: "", isError: false, redirectTo: null, logoutOnClose: false });
 
-  /*   // Obtenemos la habitación actual desde las traducciones usando el roomId de la URL.
-    const roomsObj = t("rooms.list", { returnObjects: true }) || {};
-    const roomKeys = Object.keys(roomsObj);
-    const roomIndex = Number(roomId) - 1;
-    const roomKey = roomKeys[roomIndex];
-    const room = roomsObj[roomKey]; */
+  //Obtener el array list de habitaciones de traducciones
+  const roomsObj =
+    t("rooms.list",
+      { returnObjects: true }) ||
+    {};
 
-  const roomsObj = t("rooms.list", { returnObjects: true }) || {};
-  // Buscar la habitación traducida por nombre del backend, no por posición
-  const room = Object.values(roomsObj).find(
-    (r) =>
-      r?.name?.trim()?.toLowerCase() ===
-      habitacionBackend?.nombre?.trim()?.toLowerCase()
-  );
+  // Buscar la habitacion en el array list que coindica con el nombre recuperado del backEnd
+  const room =
+    Object.values(roomsObj).find(
+      (r) =>
+        r?.name?.trim()?.toLowerCase() === habitacionBackend?.nombre?.trim()?.toLowerCase(),
+    );
 
   // refs para swipe móvil
   const touchStartX = useRef(null);
-
   const images = room?.images || [];
 
   //CONTROL POR TECLADO (← → ESC)
   useEffect(() => {
     if (!room || lightboxIndex === null) return;
 
+    //Interacciones con el teclado y raton
     const handleKey = (e) => {
       if (e.key === "ArrowRight") {
         setLightboxIndex((lightboxIndex + 1) % images.length);
@@ -61,19 +61,36 @@ const RoomDetail = () => {
         const response = await fetch(`/api/habitacion/info/${roomId}`);
 
         if (!response.ok) {
-          throw new Error("No se pudo cargar la habitación");
+          const errorText = await response.text();
+          setPopup({
+            show: true,
+            message: errorText || t("roomDetail.error"),
+            isError: true,
+            redirectTo: "/",
+            logoutOnClose: false
+          });
+          setHabitacionBackend(null);
+          return;
         }
 
         const data = await response.json();
         setHabitacionBackend(data);
+
       } catch (error) {
-        console.error("Error cargando habitación:", error);
+        setPopup({
+          show: true,
+          message: `${t("roomDetail.error")} ${error.message}`,
+          isError: true,
+          redirectTo: "/",
+        })
+        setHabitacionBackend(null);
       }
     };
 
     if (roomId) {
       cargarHabitacion();
     }
+
   }, [roomId]);
 
 
@@ -82,6 +99,7 @@ const RoomDetail = () => {
     touchStartX.current = e.touches[0].clientX;
   };
 
+  //HANDLER
   const handleTouchEnd = (e) => {
     if (!touchStartX.current) return;
 
@@ -96,15 +114,50 @@ const RoomDetail = () => {
     touchStartX.current = null;
   };
 
+  // Función para manejar el cierre del popup al pulsar el botón de continuar en el popup de mensajes
+  const manejarCierrePopup = () => {
+    const redirectTo = popup.redirectTo;
+
+    //prev es el estado primario (anterior) del poppup
+    //...prev copia todo lo que habia dentro del objeto, convserva los campos no cambien
+    //solo se sobreescribe la propiedad que haya cambiado (show: false)
+    //es una forma compacta para no tener hacer onChange en cada campo (input)
+    setPopup((prev) => ({ ...prev, show: false })); // Cierra el popup
+
+    if (redirectTo) {
+      navigate(redirectTo); // Redirige a la ruta especificada en la variable redirectTo 
+    }
+
+  };
+
+
+  //RENDER
 
   // Render condicional fuera de Hooks
-  if (!habitacionBackend) {
-    return <p className="not-found d-flex">{t("roomDetail.notFound")}</p>;
+  if (!room || !habitacionBackend) {
+    return popup.show ? (
+      <>
+        {popup.show && (
+          <div className="card not-found d-flex justify-content-center align-items-center vw-100 vh-100 fixed-top">
+            <div className="bg-white rounded-4 shadow border-black w-auto d-flex justify-content-center align-items-center flex-column">
+              <div className={`reserva-popup-header ${popup.isError ? 'bg-danger' : 'bg-success'} w-100 ps-3 rounded-top-3 py-3`}>
+              </div>
+              <div className="p-4 text-center">
+                <p>{popup.message}</p>
+                <button className="btn btn-dark" onClick={manejarCierrePopup}>
+                  {t("roomReservation.continue")}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    ) : null;
   }
   return (
     <div className="room-detail-container">
       {/* Botón atrás */}
-      <button className="back-btn" onClick={() => navigate(-1)}>
+      <button className="back-btn" onClick={() => navigate("/")}>
         ← {t("roomDetail.back")}
       </button>
 
