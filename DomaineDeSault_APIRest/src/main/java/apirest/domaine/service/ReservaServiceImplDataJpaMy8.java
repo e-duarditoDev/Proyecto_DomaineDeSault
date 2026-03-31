@@ -1,3 +1,4 @@
+
 package apirest.domaine.service;
 
 import java.math.BigDecimal;
@@ -6,7 +7,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import apirest.domaine.modelo.dto.ReservaIdHabitacionFechasDto;
 import apirest.domaine.modelo.dto.ReservaRequestDto;
@@ -37,6 +37,7 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 	@Autowired
 	private ReservaHabitacionRepository reservaHabitacionRepo;
 
+	
 	@Override
 	public Reserva findById(Long atributoId) {
 		return reservaRepo.findById(atributoId).orElse(null);
@@ -60,7 +61,6 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 		return reservaRepo.save(entidad);
 	}
 
-	@Transactional
 	@Override
 	public int deleteOne(Long atributoId) {
 		if (reservaRepo.existsById(atributoId)) {
@@ -72,13 +72,13 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 
 
 	@Override
-	public Reserva crearReserva(ReservaRequestDto dto, Long idCliente) {
+	public Reserva guardarReserva(ReservaRequestDto reservaRequestDto, Long idCliente) {
 		
 		
 		Cliente cliente = clienteRepo.findById(idCliente)
 				.orElseThrow(() -> new RuntimeException("Cliente no registrado."));
 		
-		Habitacion habitacion = habitacionRepo.findById(dto.getIdHabitacion())
+		Habitacion habitacion = habitacionRepo.findById(reservaRequestDto.getIdHabitacion())
 				.orElseThrow(() -> new RuntimeException("Habitacion no encontrada."));
 		
 	    //Si la habitacion esta en mantenimiento
@@ -112,7 +112,7 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 		EstadoReserva estadoReserva;
 		EstadoHabitacion estadoHabitacion;
 
-		if (dto.getAccion().equalsIgnoreCase("pagar")){
+		if (reservaRequestDto.getAccion().equalsIgnoreCase("pagar")){
 			estadoReserva = EstadoReserva.CONFIRMADA;
 			estadoHabitacion = EstadoHabitacion.OCUPADA;
 		} else {
@@ -125,25 +125,26 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 		//No buscamos por el idReserva porque el dto del front no conoce el idReserva
 		Reserva reserva = reservaRepo.findByClienteIdUsuarioAndFechaEntradaAndFechaSalidaAndEstado(
 				idCliente,
-				dto.getFechaEntrada(),
-				dto.getFechaSalida(),
+				reservaRequestDto.getFechaEntrada(),
+				reservaRequestDto.getFechaSalida(),
 				EstadoReserva.PENDIENTE
 				).orElse(null);
 		
 		
 		//Calculo del precio total (precio habitacion * nro noches)
-		long noches = ChronoUnit.DAYS.between(dto.getFechaEntrada(), dto.getFechaSalida()); //obtiene numero de dias entre fechas
+		long noches = ChronoUnit.DAYS.between(reservaRequestDto.getFechaEntrada(), reservaRequestDto.getFechaSalida()); //obtiene numero de dias entre fechas
         BigDecimal precioTotal = habitacion.getPrecioNoche().multiply(BigDecimal.valueOf(noches)); //getPrecioNoche devuelve BigDecimal, multiply es metodo de BigDecimal, valueOf convierte noches a BigDecimal		
 				
 		if (reserva == null) {
 			
+			
 			//Comprobar si hay conflicto de fechas con otras reservas
-			List <ReservaIdHabitacionFechasDto> listaHabitacionesPorFecha = reservaRepo.findByHabitacionConFechas(dto.getIdHabitacion());
+			List <ReservaIdHabitacionFechasDto> listaHabitacionesPorFecha = reservaRepo.findByHabitacionConFechas(reservaRequestDto.getIdHabitacion());
 			for (ReservaIdHabitacionFechasDto habitacionPorFechasDto : listaHabitacionesPorFecha) {
 				if (
-					dto.getFechaEntrada().isBefore(habitacionPorFechasDto.getFechaSalida()) &&
-					dto.getFechaSalida().isAfter(habitacionPorFechasDto.getFechaEntrada()) &&
-					habitacionPorFechasDto.getIdHabitacion() == dto.getIdHabitacion()
+					reservaRequestDto.getFechaEntrada().isBefore(habitacionPorFechasDto.getFechaSalida()) &&
+					reservaRequestDto.getFechaSalida().isAfter(habitacionPorFechasDto.getFechaEntrada()) &&
+					habitacionPorFechasDto.getIdHabitacion() == reservaRequestDto.getIdHabitacion()
 						)
 					throw new RuntimeException("La habitacion no se encuentra disponible en las fechas seleccionadas.");
 			}
@@ -151,9 +152,9 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 			Reserva reservaNueva = new Reserva();
 			reservaNueva.setCliente(cliente);
 			reservaNueva.setEstado(estadoReserva);
-			reservaNueva.setFechaEntrada(dto.getFechaEntrada());
-			reservaNueva.setFechaSalida(dto.getFechaSalida());
-			reservaNueva.setNumHuespedes(dto.getNumHuespedes());
+			reservaNueva.setFechaEntrada(reservaRequestDto.getFechaEntrada());
+			reservaNueva.setFechaSalida(reservaRequestDto.getFechaSalida());
+			reservaNueva.setNumHuespedes(reservaRequestDto.getNumHuespedes());
 			reservaNueva.setPrecioTotal(precioTotal);
 			
 			habitacion.setEstado(estadoHabitacion);
@@ -175,7 +176,7 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 		    
 		    //Verificar si se supera la capacidad de la habitacion
 		    int huespedesActuales = reserva.getNumHuespedes();
-		    int huespedesNuevos = dto.getNumHuespedes();
+		    int huespedesNuevos = reservaRequestDto.getNumHuespedes();
 		    int totalHuespedes = huespedesActuales + huespedesNuevos;
 		    	
 
@@ -212,9 +213,11 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 	    reservaHabitacion.setHabitacion(habitacion);
 
 	    reservaHabitacionRepo.save(reservaHabitacion);
+	    
+	    return reserva;
 			
-		return reserva;
 	}
+
 
 	
 }

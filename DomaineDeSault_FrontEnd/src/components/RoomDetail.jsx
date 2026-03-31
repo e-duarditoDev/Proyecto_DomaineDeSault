@@ -14,12 +14,20 @@ const RoomDetail = () => {
   const [habitacionBackend, setHabitacionBackend] = useState(null);
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
-  // Obtenemos la habitación actual desde las traducciones usando el roomId de la URL.
+  /*   // Obtenemos la habitación actual desde las traducciones usando el roomId de la URL.
+    const roomsObj = t("rooms.list", { returnObjects: true }) || {};
+    const roomKeys = Object.keys(roomsObj);
+    const roomIndex = Number(roomId) - 1;
+    const roomKey = roomKeys[roomIndex];
+    const room = roomsObj[roomKey]; */
+
   const roomsObj = t("rooms.list", { returnObjects: true }) || {};
-  const roomKeys = Object.keys(roomsObj);
-  const roomIndex = Number(roomId) - 1;
-  const roomKey = roomKeys[roomIndex];
-  const room = roomsObj[roomKey];
+  // Buscar la habitación traducida por nombre del backend, no por posición
+  const room = Object.values(roomsObj).find(
+    (r) =>
+      r?.name?.trim()?.toLowerCase() ===
+      habitacionBackend?.nombre?.trim()?.toLowerCase()
+  );
 
   // refs para swipe móvil
   const touchStartX = useRef(null);
@@ -50,7 +58,7 @@ const RoomDetail = () => {
   useEffect(() => {
     const cargarHabitacion = async () => {
       try {
-        const response = await fetch(`/api/habitacion/${roomId}`);
+        const response = await fetch(`/api/habitacion/info/${roomId}`);
 
         if (!response.ok) {
           throw new Error("No se pudo cargar la habitación");
@@ -90,8 +98,9 @@ const RoomDetail = () => {
 
 
   // Render condicional fuera de Hooks
-  if (!room) return <p className="not-found">{t("roomDetail.notFound")}</p>;
-
+  if (!habitacionBackend) {
+    return <p className="not-found d-flex">{t("roomDetail.notFound")}</p>;
+  }
   return (
     <div className="room-detail-container">
       {/* Botón atrás */}

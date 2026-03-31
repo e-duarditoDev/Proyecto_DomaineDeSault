@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 
+import apirest.domaine.modelo.dto.PagoDto;
+import apirest.domaine.modelo.dto.ReservaPagoRequestDto;
 import apirest.domaine.modelo.dto.ReservaRequestDto;
+import apirest.domaine.modelo.entities.Pago;
 import apirest.domaine.modelo.entities.Reserva;
 import apirest.domaine.modelo.repository.UsuarioLoginProjection;
-import apirest.domaine.service.ClienteService;
-import apirest.domaine.service.ReservaHabitacionesService;
+import apirest.domaine.service.PagoService;
 import apirest.domaine.service.ReservaService;
-import apirest.domaine.service.ReservaServiciosService;
 import apirest.domaine.service.UsuarioLoginService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/reserva")
 public class ReservasRestController {
 	
-	@Autowired
-	private ClienteService clienteServ;
 	
 	@Autowired
 	private ReservaService resServ;
@@ -33,14 +33,11 @@ public class ReservasRestController {
 	private UsuarioLoginService usuLoginServ;
 	
 	@Autowired
-	private ReservaServiciosService resServiciosServ;
-	
-	@Autowired
-	private ReservaHabitacionesService resHabitacionesServ;
+	private PagoService pagoServ;
 	
 	
-	@PostMapping("/reservar-habitacion")
-	public ResponseEntity<?> crearReserva (@RequestBody ReservaRequestDto reservaDto, Authentication auth) {
+	@PostMapping("/guardar-reserva")
+	public ResponseEntity<?> guardarReserva (@RequestBody ReservaRequestDto reservaDto, Authentication auth) {
 //		debugging
 //		System.out.println("ID recibido: " + reservaDto.getIdHabitacion());
 //	    System.out.println("Fecha Entrada: " + reservaDto.getFechaEntrada());
@@ -55,18 +52,57 @@ public class ReservasRestController {
 			
 			
 			
-	        String mensaje = "PAGAR".equalsIgnoreCase(reservaDto.getAccion())
-	                ? "Reserva pagada con éxito."
-	                : "Reserva guardada con éxito.";
-			 			
-	        resServ.crearReserva(reservaDto, idCliente);
-
-			return ResponseEntity.status(HttpStatus.CREATED).body(mensaje);
-			 
+//	        String mensaje = "PAGAR".equalsIgnoreCase(reservaDto.getAccion())
+//	                ? "Reserva pagada con éxito."
+//	                : "Reserva guardada con éxito.";
+	        
+	        
+		    resServ.guardarReserva(reservaDto, idCliente);
+		    return ResponseEntity.status(HttpStatus.CREATED).body("Reserva guardada con éxito.");
+	       
+	 
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error del servidor al procesar la reserva");
 		}		
 	}
+	
+	@PostMapping ("/pagar-reserva")
+	//se coloca @Valid para activar las validaciones del ClienteDto, devuelve http 400
+	//si una validacion no pasa, lanza MethodArgumentNotValidException que es capturada por GlobalExceptionHandler
+	public ResponseEntity<?> pagarReserva (@Valid @RequestBody ReservaPagoRequestDto requestDto, Authentication auth){
+		
+		try {
+			
+			String email = auth.getName();
+			
+			//Recuperar el idCliente
+			UsuarioLoginProjection usuarioLogin = usuLoginServ.findByEmail(email);//buscar en la tabla usuario
+			Long idCliente = usuarioLogin.getIdUsuario();
+			
+			ReservaRequestDto reservaDto = requestDto.getReservaDto();
+			PagoDto pagoDto = requestDto.getPagoDto();
+			
+			//Aunque venga del front "PAGAR", es buena practica asegurarlo en el backEnd
+			//Al establecer en "PAGAR", el ReservaServiceImpl establece el estado de la reserva como "CONFIRMADA"
+			reservaDto.setAccion("PAGAR");
+			Reserva reserva = resServ.guardarReserva(reservaDto, idCliente);
+			
+			
+			Pago pago = PagoDto.convertToEntity(pagoDto, reserva);
+			pagoServ.insertOne(pago);
+			
+		    return ResponseEntity.status(HttpStatus.CREATED).body("Reserva pagada con éxito.");
+
+			
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error del servidor al procesar la reserva");
+		}
+		
+	}
+	
+	
 }
