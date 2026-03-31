@@ -127,6 +127,7 @@ function AppContent() {
           }
         />
 
+        {/* Ruta datos del usuario registrado */}
         <Route
           path="/mis-datos"
           element={

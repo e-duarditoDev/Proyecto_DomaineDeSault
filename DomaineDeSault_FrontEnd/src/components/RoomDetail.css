@@ -152,13 +152,6 @@
   background: #000;
 }
 
-/* Not found */
-.not-found {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #b00;
-  margin-top: 15rem !important;
-}
 
 /* LIGHTBOX */
 .lightbox {

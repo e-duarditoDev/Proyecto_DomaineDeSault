@@ -21,17 +21,20 @@ const flags = {
   de: "/flags/de.svg",
 };
 
-// Definimos el componente funcional Navbar.
+// Componente funcional Navbar.
 const Navbar = () => {
 
   // Obtenemos la función t para traducir textos y el objeto i18n para gestionar el idioma.
   const { t, i18n } = useTranslation();
 
+  //ESTADOS
   // Estado para controlar si el menú principal está abierto o cerrado.
   const [menuOpen, setMenuOpen] = useState(false);
-
   // Estado para controlar qué submenú está abierto (null, "rooms", "alojamiento").
   const [submenuOpen, setSubmenuOpen] = useState(null);
+  // Estado para almacenar los datos de la habitación cargados desde el backend y el índice de la imagen en el lightbox.
+  const [habitaciones, setHabitaciones] = useState([]);
+
 
   // Comprobamos si la pantalla es de tamaño móvil para ajustar el comportamiento del menú.
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -49,13 +52,27 @@ const Navbar = () => {
       },
     ]; */
 
-  const roomsObject = t("rooms.list", { returnObjects: true }) || {};
-  const roomKeys = Object.keys(roomsObject);
+  /*   
+    const roomsObject = t("rooms.list", { returnObjects: true }) || {};
 
-  const rooms = roomKeys.map((key, index) => ({
-    id: index + 1,
-    name: roomsObject[key]?.name || key,
+    const roomKeys = Object.keys(roomsObject);
+    const rooms = roomKeys.map((key, index) => ({
+      id: index + 1,
+      name: roomsObject[key]?.name || key,
+    })); */
+
+  //Montar un roomsObject [] de rooms.list de traducciones
+  const roomsObject =
+    t("rooms.list",
+      { returnObjects: true }) ||
+    {};
+
+  // Recorre el array de habitaciones creado en useEffect de cargarHabitaciones() y monta un array rooms[] con el id y name 
+  const rooms = habitaciones.map((habitacion) => ({
+    id: habitacion.idHabitacion,
+    name: habitacion.nombre,
   }));
+
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng); // Cambiamos el idioma activo.
@@ -66,15 +83,14 @@ const Navbar = () => {
   // Para la navegación programática (redirecciones).
   const navigate = useNavigate();
 
-  const [authenticated, setAuthenticated] = useState(isAuthenticated());
   // Estado para controlar si el usuario está autenticado o no.
-  
+  const [authenticated, setAuthenticated] = useState(isAuthenticated());
 
 
-
-  const location = useLocation();
   // Obtenemos la ubicación actual para poder actualizar el estado de autenticación
+  const location = useLocation();
 
+  // Función para cerrar sesión: elimina el token, actualiza el estado y redirige al inicio.
   const handleLogout = () => {
     logout();
     setAuthenticated(false);
@@ -82,19 +98,39 @@ const Navbar = () => {
     setSubmenuOpen(null);
     navigate("/");
   };
-  // Función para cerrar sesión: elimina el token, actualiza el estado y redirige al inicio.
 
+  // Cada vez que cambie la ruta, comprobamos si el usuario sigue autenticado.
   useEffect(() => {
     setAuthenticated(isAuthenticated());
   }, [location.pathname]);
-  // Cada vez que cambie la ruta, comprobamos si el usuario sigue autenticado.
 
 
+  // Al montar el componente, comprobamos si el usuario está autenticado y actualizamos el estado.
   useEffect(() => {
     setAuthenticated(isAuthenticated());
   }, []);
-  // Al montar el componente, comprobamos si el usuario está autenticado y actualizamos el estado.
 
+  //Captar la lista de habitaciones del backEnd
+  useEffect(() => {
+    const cargarHabitaciones = async () => {
+      try {
+        const response = await fetch("/api/habitacion/todas");
+
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+
+        const data = await response.json();
+        setHabitaciones(data);
+      } catch (error) {
+        console.error("Error al cargar habitaciones en Navbar:", error);
+      }
+    };
+
+    cargarHabitaciones();
+  }, []);
+
+  //RENDER
   return (
     <nav className="navbar">
       {/* Estructura principal de la barra de navegación */}
@@ -164,13 +200,15 @@ const Navbar = () => {
           {submenuOpen === "rooms" && (
             <ul className="dropdown-menu open">
               {rooms.map((room) => (
-                <li key={room.key}>
+                <li key={room.id}> {/* ya no usamos el room.key para obtener el index de la iteracion */}
                   {/* Enlace a la página de cada habitación, con cierre del menú al hacer clic. */}
                   <a
-                    href={`/room/${room.id}`}// Cambia a usar el ID para la ruta
-                    onClick={() => {
+                    href={`/room/${room.id}`}// Cambia a usar el ID de la habitacion del backEnd
+                    onClick={(e) => {
+                      e.preventDefault();
                       setMenuOpen(false);
                       setSubmenuOpen(null);
+                      navigate(`/room/${room.id}`);
                     }}
                   >
                     {room.name}

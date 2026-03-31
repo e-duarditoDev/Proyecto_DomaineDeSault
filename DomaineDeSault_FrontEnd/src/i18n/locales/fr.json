@@ -436,7 +436,7 @@
   },
   "roomDetail": {
     "showAll": "Afficher toutes les photos",
-    "notFound": "Chambre introuvable.",
+    "error": "Une erreur s'est produite.",
     "back": "Retour",
     "size": "Taille : {{size}}",
     "rating": "Confort des lits : {{rating}}, selon {{reviewsCount}} commentaires",
