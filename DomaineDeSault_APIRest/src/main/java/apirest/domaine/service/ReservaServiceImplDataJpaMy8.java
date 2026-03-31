@@ -75,6 +75,7 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 	public Reserva guardarReserva(ReservaRequestDto reservaRequestDto, Long idCliente) {
 		
 		
+		
 		Cliente cliente = clienteRepo.findById(idCliente)
 				.orElseThrow(() -> new RuntimeException("Cliente no registrado."));
 		
