@@ -22,18 +22,18 @@ public class PagoServiceImplDataJpaMy8 implements PagoService{
 	@Override
 	public List<Pago> findAll() {
 		return pagoRepo.findAll();
-	}
+	} 
 
 	@Override
 	public Pago insertOne(Pago entidad) {
+		if (entidad == null)
+			throw new RuntimeException("Error: El pago es nulo.");
+		
 		return pagoRepo.save(entidad);
 	}
 
 	@Override
 	public Pago updateOne(Pago entidad) {
-		if (!pagoRepo.existsById(entidad.getIdPago())) {
-			return null;
-		}
 		return pagoRepo.save(entidad);
 	}
 

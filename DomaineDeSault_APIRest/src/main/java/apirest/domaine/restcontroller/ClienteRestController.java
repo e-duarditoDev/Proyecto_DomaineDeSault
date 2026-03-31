@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +18,6 @@ import apirest.domaine.modelo.dto.ClienteDto;
 import apirest.domaine.modelo.dto.DireccionDto;
 import apirest.domaine.modelo.entities.Cliente;
 import apirest.domaine.modelo.entities.Direccion;
-import apirest.domaine.modelo.enumerados.EstadoUsuario;
-import apirest.domaine.modelo.repository.ClienteRepository;
 import apirest.domaine.modelo.repository.UsuarioLoginProjection;
 import apirest.domaine.service.ClienteService;
 import apirest.domaine.service.DireccionService;
@@ -113,6 +110,7 @@ public class ClienteRestController {
 	
 	@PutMapping("/mis-datos")
 	//se coloca @Valid para activar las validaciones del ClienteDto, devuelve http 400
+	//si una validacion no pasa, lanza MethodArgumentNotValidException que es capturada por GlobalExceptionHandler
 	public ResponseEntity<?> guardarMisDatos(@Valid @RequestBody ClienteDto clienteDto, Authentication auth) {
 
 	    if (clienteDto == null) {
