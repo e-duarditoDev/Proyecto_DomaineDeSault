@@ -156,9 +156,9 @@
   color: #b0b0b0;
 }
 
-.text-grey:hover{
+.text-grey:hover {
   transition: 300ms ease-in;
-  color: black !important; 
+  color: black !important;
   font-weight: 400;
 }
 
