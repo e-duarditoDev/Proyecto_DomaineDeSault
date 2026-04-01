@@ -8,6 +8,7 @@ import "./RoomReservation.css";
 import { logout } from "../../utils/auth"; //Importa la función de logout para el cierre de sesión expirado el token
 
 
+
 const RoomReservation = () => {
   const { t, i18n } = useTranslation();
   const { idHabitacion } = useParams();//lo coge de la url, se referencia en el app.jsx
@@ -27,9 +28,8 @@ const RoomReservation = () => {
   const [popup, setPopup] = useState({ show: false, message: "", isError: false, redirectTo: null, logoutOnClose: false });
   // Estado para controlar la carga del popup de mensajes de error y éxito
   const [loadingHabitacion, setLoadingHabitacion] = useState(true);
-
-  // Estado para redirigir al login si el token ha expirado
-  //const [redirectToLogin, setRedirectToLogin] = useState(false);
+  // Estado para mensaje de error sin salir del formulario
+  const [alertData, setAlertData] = useState({ show: false, message: "" });//kk
 
   // Ref para detectar clicks fuera del calendario y cerrarlo
   const formRef = useRef(null);
@@ -40,17 +40,18 @@ const RoomReservation = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   //Simulacion de contacto con la entidad bancaria
   const [processingPayment, setProcessingPayment] = useState(false);
-  //Formulario en funcion del metodo de pago elegido, con valores por defecto.
+  //Formulario en funcion del metodo de pago elegido, con valores por defecto o estado inicial.
   const [paymentCardForm, setPaymentCardForm] = useState({
     telefonoBizum: "612345678",//informacion que se le muestra al usuario
     cardNumber: "",//vacios, lo rellena el usuario
-    cardHolder: "",
+    cardName: "",
     cardExpiry: "",
     cardCvv: ""
   });
 
 
-  // TRADUCCIONES Y LOGICA DE NEGOCIO
+
+  // TRADUCCIONES
   const localesMap = { es, fr, en: enGB, de };
   const currentLang = i18n.language.split("-")[0];
   const currentLocale = localesMap[currentLang] || enGB;
@@ -60,9 +61,8 @@ const RoomReservation = () => {
   const roomKey = roomKeys[roomIndex];
   const room = roomsObj[roomKey] || {};
 
-
+  //FUNCIONES
   useEffect(() => {
-
     // Función para cargar la información de la habitación desde el backend
     const fetchHabitacionInfo = async () => {
       try {
@@ -130,7 +130,6 @@ const RoomReservation = () => {
       setLoadingHabitacion(false);
     }
 
-
     // Lógica del click de cerrar el calendario separada
     const handleClickOutside = (event) => {
       if (formRef.current && !formRef.current.contains(event.target)) {
@@ -159,179 +158,12 @@ const RoomReservation = () => {
   }, [nights, pricePerNight]);
 
 
-  // FUNCIONES DE ACCION (ZONA HANDLERS)
-
-  //Modifica los datos por defecto del paymentCardForm
-  const handlePaymentFormChange = (e) => {
-    const { name, value } = e.target;
-
-    //prev es el estado anterior (default) del PaymentForm
-    //...prev copia todos los campos con el estado default para comparar
-    //solo se actualizan los campos del objeto que hayan cambiado ([name]: value - [clave]:valor)
-    //evita tener que hacer un onChange en cada campo (input)
-    setPaymentCardForm((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  // Función para enviar la reserva, construye el DTO y llama a la API guardar-reserva
-  const enviarReserva = async (accion) => {
-    const token = localStorage.getItem("token");
-
-    if (!habitacionData) {
-      setPopup({
-        show: true,
-        message: t("roomReservation.popup.roomNotFound"),
-        isError: true,
-        redirectTo: "/",
-        logoutOnClose: false
-      });
-      return;
-    }
-
-    if (!startDate || !endDate) {
-      setPopup({
-        show: true,
-        message: t("roomReservation.popup.selectDates"),
-        isError: true,
-        redirectTo: null,
-        logoutOnClose: false
-      });
-      return;
-    }
-
-    // Construir el DTO de reserva según lo que el backend espera recibir (mismo DTO que backend)
-    // En un principio back recibe la accion GUARDAR o PAGAR,
-    // muestra mensaje acorde y guarda la reserva como PENDIENTE o CONFIRMADA
-    // luego se toma caminos diferentes para simular plataforma de pago, el service se mantiene igual
-    const reservaRequestDto = {
-      idHabitacion: Number(habitacionData?.idHabitacion),
-      numHuespedes: guests,
-      fechaEntrada: startDate.toISOString().split('T')[0],
-      fechaSalida: endDate.toISOString().split('T')[0],
-      accion: accion
-    };
-
-    // Enviar la reserva al backend
-    try {
-      const response = await fetch("/api/reserva/guardar-reserva", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(reservaRequestDto)
-      });
-
-
-      // Captura la respuesta del backend
-      const responseText = await response.text();
-
-      if (response.status === 401) {
-        setPopup({
-          show: true,
-          message: t("roomReservation.popup.sessionExpired"),
-          isError: true,
-          redirectTo: "/login",
-          logoutOnClose: true
-        });
-        return;
-      }
-
-      if (!response.ok) {
-        setPopup({
-          show: true,
-          message: responseText || t("roomReservation.popup.unexpectedError"),
-          isError: true,
-          redirectTo: null,
-          logoutOnClose: false
-        });
-        return;
-      }
-
-      // Si la respuesta es OK (200/201)
-      setPopup({
-        show: true,
-        message:
-          responseText ||
-          (accion === "PAGAR"
-            ? t("roomReservation.popup.paySuccess")
-            : t("roomReservation.popup.saveSuccess")),
-        isError: false,
-        redirectTo: accion === "PAGAR" ? "/" : "/mis-reservas",// Operador ternario para redirigir a la página principal después de pagar o a mis reservas después de guardar
-        logoutOnClose: false
-      });
-
-    } catch (error) {
-      setPopup({
-        show: true,
-        message: `${t("roomReservation.popup.connectionError")} ${error.message}`,
-        isError: true,
-        redirectTo: null,
-        logoutOnClose: false
-      });
-    }
-  };
-
-  const handleGuardar = () => {
-    enviarReserva("GUARDAR");
-  };
-
-  const handlePagar = () => {
-    if (!habitacionData) {
-      setPopup({
-        show: true,
-        message: t("roomReservation.popup.roomNotFound"),
-        isError: true,
-        redirectTo: "/",
-        logoutOnClose: false
-      });
-      return;
-    }
-
-    if (!startDate || !endDate) {
-      setPopup({
-        show: true,
-        message: t("roomReservation.popup.selectDates"),
-        isError: true,
-        redirectTo: null,
-        logoutOnClose: false
-      });
-      return;
-    }
-    //Si las anteriores validaciones van bien muestra el panel de seleccion de pago
-    setShowPaymentPanel(true);
-  };
-
-  // Función para manejar el cierre del popup al pulsar el botón de continuar en el popup de mensajes
-  const manejarCierrePopup = () => {
-    const redirectTo = popup.redirectTo;
-    const logoutOnClose = popup.logoutOnClose;
-
-    //prev es el estado primario (anterior) del poppup
-    //...prev copia todo lo que habia dentro del objeto, convserva los campos no cambien
-    //solo se sobreescribe la propiedad que haya cambiado (show: false)
-    //es una forma compacta para no tener hacer onChange en cada campo (input)
-    setPopup((prev) => ({ ...prev, show: false })); // Cierra el popup
-
-    if (logoutOnClose) {
-      logout(); // Cierra sesión si se indica que el token ha expirado
-    }
-
-    if (redirectTo) {
-      navigate(redirectTo); // Redirige a la ruta especificada en la variable redirectTo 
-    }
-
-  };
-
   //Funcion para simualar el procesamiento de pago
   const confirmarPago = async () => {
     const token = localStorage.getItem("token");
 
     // Validaciones antes de simular (fuera del try)
-
-    //Si falta el idHabitacion
+    //Si falta el idHabitacion (dificil porque no hubiese entrado en el RoomDetail)
     if (!idHabitacion) {
       setPopup({
         show: true,
@@ -364,28 +196,31 @@ const RoomReservation = () => {
         redirectTo: null,
         logoutOnClose: false
       });
+      setShowPaymentPanel(false);
       return;
     }
 
-    //Si falta algun campo de la tarjeta y se pulsa aceptar
-    if (paymentMethod === "TARJETA") {
-      if (
-        !paymentCardForm.cardNumber.trim() ||
-        !paymentCardForm.cardHolder.trim() ||
-        !paymentCardForm.cardExpiry.trim() ||
-        !paymentCardForm.cardCvv.trim()
-
-      ) {
-        setPopup({
-          show: true,
-          message: "Completa todos los datos de la tarjeta.",
-          isError: true,
-          redirectTo: null,
-          logoutOnClose: false
-        });
-        return;
-      }
-    }
+    /*     //Si falta algun campo de la tarjeta y se pulsa aceptar
+        if (paymentMethod === "TARJETA") {//kk
+    
+          if (
+                  !paymentCardForm.cardNumber.trim() ||
+                  !paymentCardForm.cardName.trim() ||
+                  !paymentCardForm.cardExpiry.trim() ||
+                  !paymentCardForm.cardCvv.trim()
+          
+                ) {
+                  setShowPaymentPanel(false);
+                  setPopup({
+                    show: true,
+                    message: "Completa todos los datos de la tarjeta.",
+                    isError: true,
+                    redirectTo: null,
+                    logoutOnClose: false,
+                  });
+                  return;
+                } 
+        } */
 
     try {
       // Activa mensaje visual de procesamiento
@@ -534,12 +369,261 @@ const RoomReservation = () => {
   };
 
 
-  //ZONA RENDERIZADO
+  // FUNCIONES DE ACCION (ZONA HANDLER)
+
+  //Modifica los datos por defecto del paymentCardForm
+  const handlePaymentFormChange = (e) => {
+    const { name, value } = e.target;
+
+    //prev es el estado anterior (default) del PaymentForm
+    //...paymentCardForm copia todos los campos con el estado default para comparar
+    //solo se actualizan los campos del objeto que hayan cambiado ([name]: value - [clave]:valor)
+    //evita tener que hacer un onChange en cada campo (input)
+    const updatedForm = {
+      ...paymentCardForm,
+      [name]: value
+    };
+
+    setPaymentCardForm(updatedForm);
+
+    if (name === "cardNumber") {
+      if (!value || !/^\d{16}$/.test(value)) {
+        setAlertData({
+          show: true,
+          message: "Numero de tarjeta no valido."
+        });
+      } else {
+        setAlertData({
+          show: false,
+          message: ""
+        });
+      }
+    }; //kk
+
+    if (name === "cardName") {
+      if (!value || !/^[A-Za-zÀ-ÿ\s]{2,}$/.test(value)) {
+        setAlertData({
+          show: true,
+          message: "El nombre del titular incorrecto."
+        });
+      } else {
+        setAlertData({
+          show: false,
+          message: ""
+        });
+      }
+    };
+
+    if (name === "cardExpiry") {//kk
+      const mesForm = parseInt(value.slice(0, 2), 10);
+      const agnoForm = parseInt(value.slice(3, 5), 10);
+
+      const hoy = new Date();
+      const mesActual = hoy.getMonth() + 1;
+      const agnoActual = hoy.getFullYear() % 100;
+
+      if (!value || !/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
+        setAlertData({
+          show: true,
+          message: "Fecha incorrecta."
+        });
+      } else if (
+        agnoForm < agnoActual ||
+        (agnoForm === agnoActual && mesForm < mesActual)
+      ) {
+        setAlertData({
+          show: true,
+          message: "Tarjeta caducada. Pruebe con otra tarjeta."
+        });
+      } else {
+        setAlertData({
+          show: false,
+          message: ""
+        });
+      }
+    };
+
+    if (name === "cardCvv") {
+      if (!value || !/^\d{3}/.test(value)) {
+        setAlertData({
+          show: true,
+          message: "CVV no válido."
+        })
+      } else {
+        setAlertData({
+          show: false,
+          message: ""
+        });
+      }
+    };
+
+  };
+
+  /*  
+    cardCvv: ""
+ */
+
+  // Función para enviar la reserva, construye el DTO y llama a la API guardar-reserva
+  const enviarReserva = async (accion) => {
+    const token = localStorage.getItem("token");
+
+    if (!habitacionData) {
+      setPopup({
+        show: true,
+        message: t("roomReservation.popup.roomNotFound"),
+        isError: true,
+        redirectTo: "/",
+        logoutOnClose: false
+      });
+      return;
+    }
+
+    if (!startDate || !endDate) {
+      setPopup({
+        show: true,
+        message: t("roomReservation.popup.selectDates"),
+        isError: true,
+        redirectTo: null,
+        logoutOnClose: false
+      });
+      return;
+    }
+
+    // Construir el DTO de reserva según lo que el backend espera recibir (mismo DTO que backend)
+    // En un principio back recibe la accion GUARDAR o PAGAR,
+    // muestra mensaje acorde y guarda la reserva como PENDIENTE o CONFIRMADA
+    // luego se toma caminos diferentes para simular plataforma de pago, el service se mantiene igual
+    const reservaRequestDto = {
+      idHabitacion: Number(habitacionData?.idHabitacion),
+      numHuespedes: guests,
+      fechaEntrada: startDate.toISOString().split('T')[0],
+      fechaSalida: endDate.toISOString().split('T')[0],
+      accion: accion
+    };
+
+    // Enviar la reserva al backend
+    try {
+      const response = await fetch("/api/reserva/guardar-reserva", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(reservaRequestDto)
+      });
+
+
+      // Captura la respuesta del backend
+      const responseText = await response.text();
+
+      if (response.status === 401) {
+        setPopup({
+          show: true,
+          message: t("roomReservation.popup.sessionExpired"),
+          isError: true,
+          redirectTo: "/login",
+          logoutOnClose: true
+        });
+        return;
+      }
+
+      if (!response.ok) {
+        setPopup({
+          show: true,
+          message: responseText || t("roomReservation.popup.unexpectedError"),
+          isError: true,
+          redirectTo: null,
+          logoutOnClose: false
+        });
+        return;
+      }
+
+      // Si la respuesta es OK (200/201)
+      setPopup({
+        show: true,
+        message:
+          responseText ||
+          (accion === "PAGAR"
+            ? t("roomReservation.popup.paySuccess")
+            : t("roomReservation.popup.saveSuccess")),
+        isError: false,
+        redirectTo: accion === "PAGAR" ? "/" : "/mis-reservas",// Operador ternario para redirigir a la página principal después de pagar o a mis reservas después de guardar
+        logoutOnClose: false
+      });
+
+    } catch (error) {
+      setPopup({
+        show: true,
+        message: `${t("roomReservation.popup.connectionError")} ${error.message}`,
+        isError: true,
+        redirectTo: null,
+        logoutOnClose: false
+      });
+    }
+  };
+
+  const handleGuardar = () => {
+    enviarReserva("GUARDAR");
+  };
+
+  const handlePagar = () => {
+    if (!habitacionData) {
+      setPopup({
+        show: true,
+        message: t("roomReservation.popup.roomNotFound"),
+        isError: true,
+        redirectTo: "/",
+        logoutOnClose: false
+      });
+      return;
+    }
+
+    if (!startDate || !endDate) {
+      setPopup({
+        show: true,
+        message: t("roomReservation.popup.selectDates"),
+        isError: true,
+        redirectTo: null,
+        logoutOnClose: false
+      });
+      return;
+    }
+    //Si las anteriores validaciones van bien muestra el panel de seleccion de pago
+    setShowPaymentPanel(true);
+  };
+
+  // Función para manejar el cierre del popup al pulsar el botón de continuar en el popup de mensajes
+  const handlePopupClose = () => {
+    //Variables almacenan los valores de los atributos del popup
+    const redirectTo = popup.redirectTo; //devuelve booleano
+    const logoutOnClose = popup.logoutOnClose;
+
+    //prev es el estado primario (anterior) del poppup
+    //...prev copia todo lo que habia dentro del objeto, convserva los campos no cambien
+    //solo se sobreescribe la propiedad que haya cambiado (show: false)
+    //es una forma compacta para no tener hacer onChange en cada campo (input)
+    setPopup((prev) => ({ ...prev, show: false })); // Cierra el popup
+
+    if (logoutOnClose) {
+      logout(); // Cierra sesión si se indica que el token ha expirado
+    }
+
+    if (redirectTo) {
+      navigate(redirectTo); // Redirige a la ruta especificada en la variable redirectTo 
+    }
+
+  };
+
+
+
+  // RENDER
+
   // Renderizado condicional para manejar los estados de carga, error y datos de la habitación
   if (loadingHabitacion) {
     return <p className="text-center mt-5 pt-5">{t("roomReservation.loadingRoom")}</p>;
   }
 
+  //Render si no se recuperan datos de la habitacion del backEnd
   if (!habitacionData) {
     return popup.show ? (
       <>
@@ -550,7 +634,7 @@ const RoomReservation = () => {
               </div>
               <div className="p-4 text-center">
                 <p>{popup.message}</p>
-                <button className="btn btn-dark" onClick={manejarCierrePopup}>
+                <button className="btn btn-dark" onClick={handlePopupClose}>
                   {t("roomReservation.continue")}
                 </button>
               </div>
@@ -561,9 +645,34 @@ const RoomReservation = () => {
     ) : null;
   }
 
-  // RENDER de la pagina de reserva de habitación
+  // Render de la pagina de reserva de habitación
   return (
     <div className="room-reservation-page" id="formulario-reserva">
+
+      {/* Render popup */}
+      {popup.show && ( //si el atributo show es true
+        <div className="card d-flex justify-content-center align-items-center vw-100 vh-100 fixed-top">
+          <div className="bg-white rounded-4 shadow border-black w-auto d-flex justify-content-center align-items-center flex-column">
+            <div className={`reserva-popup-header ${popup.isError ? 'bg-danger' : 'bg-success'} w-100 ps-3 rounded-top-3 py-3`}>
+              {/*<img className="m-1"
+                src={popup.isError ? "/icons/yellow-exclamation-mark.svg" : "/icons/success-check.svg"}
+                alt={popup.isError ? "Error" : "Éxito"}
+                style={{ width: "20px", height: "20px" }} // Ajusta el tamaño a tu gusto
+              /> */}
+            </div>
+            <div className="text-center p-3 bg-body-tertiary w-100">
+              <h3>{popup.isError ? 'Atención' : 'Confirmación'}</h3>
+              <p>{popup.message}</p>
+              <button className="btn btn-outline-dark" onClick={handlePopupClose}>
+                {t("roomReservation.continue")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )
+      }
+
+      {/* Render pagina */}
       <div className="room-reservation-card" ref={formRef}>
         <button
           id="boton-atras"
@@ -584,7 +693,7 @@ const RoomReservation = () => {
           <span className="text-grey">{t("roomReservation.back")}</span>
         </button>
 
-        <div className="reservation-header">
+        <div className="reservation-header mt-3">
           <div>
             <h1>{habitacionData?.nombre}</h1>
             <p className="reservation-subtitle">
@@ -715,20 +824,22 @@ const RoomReservation = () => {
                 3.2. Modal body cotiene los formularios, botones, select... 
                 3.3. Modal footer
               */
+
+            /* kk */
             <div
-              className="modal fade show d-block justify-content-center align-content-center"
+              className="modal fade show d-flex justify-content-center align-items-center"
               tabIndex={-1}
               role="dialog"
-/*               onClick={() => setShowPaymentPanel(false)}
- */              style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+              /*onClick={() => setShowPaymentPanel(false)}*/
+              style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
             >
-              <div
-                className="modal-dialog bg-body-tertiary rounded-3"
+              <div //kk
+                className="w-50 h-auto bg-body-tertiary rounded-3"
                 role="document"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="modal-content p-2 rounded-3 bg-body-tertiary">
-                  <div className="modal-title d-flex justify-content-end p-2">
+                <div className="modal-content rounded-3 bg-body-tertiary">
+                  <div className="modal-title d-flex justify-content-end p-3">
                     <button
                       id="aspa-cierre-ventana"
                       type="button"
@@ -758,8 +869,14 @@ const RoomReservation = () => {
                       </div>
                     )}
 
-                    {paymentMethod === "TARJETA" && (
+                    {paymentMethod === "TARJETA" && ( //kk
                       <div className="row g-3 mt-1">
+                        {/* Render Alert personalizado para formularios kk */}
+                        {alertData.show && ( //si el atributo show es true
+                          <div className="alert alert-warning pb-0 rounded-0 w-100 d-flex justify-content-center align-items-center">
+                            <p>{alertData.message}</p>{/* kk */}
+                          </div>
+                        )}
                         <div className="col-12">
                           <label
                             htmlFor="numero-tarjeta" //si hace clic en el texto de la label hace foco al input id="numero-tarjeta"
@@ -768,6 +885,8 @@ const RoomReservation = () => {
                           </label>
                           <input
                             type="text"
+                            maxLength={16}
+                            minLength={16}
                             className="form-control"
                             name="cardNumber"//Identifica que campo del handlePaymentFormChange es el imput
                             id="numero-tarjeta"
@@ -780,18 +899,22 @@ const RoomReservation = () => {
                           <label htmlFor="titular" className="form-label">Titular de la tarjeta</label>
                           <input
                             type="text"
+                            minLength={2}
+                            maxLength={40} //kk
                             className="form-control"
-                            name="cardHolder"
+                            name="cardName"
                             id="titular"
-                            value={paymentCardForm.cardHolder}
+                            value={paymentCardForm.cardName}
                             onChange={handlePaymentFormChange}
                           />
                         </div>
 
-                        <div className="col-6 mb-4">
+                        <div className="col-6 mb-3">
                           <label htmlFor="fecha-vencimiento" className="form-label">Fecha de validez</label>
                           <input
                             type="text"
+                            minLength={5}
+                            maxLength={5}
                             className="form-control"
                             name="cardExpiry"
                             id="fecha-vencimiento"
@@ -805,6 +928,8 @@ const RoomReservation = () => {
                           <label htmlFor="cvv" className="form-label">CVV</label>
                           <input
                             type="text"
+                            maxLength={3}
+                            minLength={3}
                             className="form-control"
                             name="cardCvv"
                             id="cvv"
@@ -823,7 +948,8 @@ const RoomReservation = () => {
                     )}
                   </div>
 
-                  <div className="modal-footer gap-2">
+                  {/* Botones del formulario de la tarjeta  kk*/}
+                  <div className="modal-footer rounded-0 gap-2">
                     <button
                       type="button"
                       className="btn btn-outline-secondary"
@@ -853,32 +979,7 @@ const RoomReservation = () => {
         </div>
       </div>
 
-      {/*   Mensajes de error e informacion */}
-      {popup.show && (
-        <div className="card d-flex justify-content-center align-items-center vw-100 vh-100 fixed-top">
-          <div className="bg-white rounded-4 shadow border-black w-auto d-flex justify-content-center align-items-center flex-column">
-            <div className={`reserva-popup-header ${popup.isError ? 'bg-danger' : 'bg-success'} w-100 ps-3 rounded-top-3 py-3`}>
-              {/*             <img className="m-1"
-                src={popup.isError ? "/icons/yellow-exclamation-mark.svg" : "/icons/success-check.svg"}
-                alt={popup.isError ? "Error" : "Éxito"}
-                style={{ width: "20px", height: "20px" }} // Ajusta el tamaño a tu gusto
-              /> */}
-            </div>
-            <div className="text-center p-3 bg-body-tertiary w-100">
-              <h3>{popup.isError ? 'Atención' : 'Confirmación'}</h3>
-              <p>{popup.message}</p>
-              <button className="btn btn-outline-dark" onClick={manejarCierrePopup}>
-                {t("roomReservation.continue")}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 };
-
-
-
 export default RoomReservation;

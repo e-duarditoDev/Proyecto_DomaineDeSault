@@ -62,10 +62,10 @@ const Navbar = () => {
     })); */
 
   //Montar un roomsObject [] de rooms.list de traducciones
-  const roomsObject =
+/*   const roomsObject =
     t("rooms.list",
-      { returnObjects: true }) ||
-    {};
+      { returnObjects: true })
+    {}; */
 
   // Recorre el array de habitaciones creado en useEffect de cargarHabitaciones() y monta un array rooms[] con el id y name 
   const rooms = habitaciones.map((habitacion) => ({
