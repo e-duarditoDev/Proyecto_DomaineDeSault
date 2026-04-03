@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import apirest.domaine.modelo.dto.MisReservasDto;
 import apirest.domaine.modelo.entities.Cliente;
 import apirest.domaine.modelo.enumerados.EstadoReserva;
 import apirest.domaine.modelo.enumerados.EstadoUsuario;
@@ -128,6 +129,16 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 	    //no tiene RuntimeException cuando cliente == null, para asi React pinte el formulario vacio
 
 	    return clienteRepo.findById(idUsuario).orElse(null);
+	}
+
+	@Override
+	public List<MisReservasDto> misReservas(Long idUsuario) {
+		List <MisReservasDto> listaReservas = clienteRepo.misReservas(idUsuario);
+		
+		if (listaReservas.isEmpty())
+			throw new RuntimeException("No hay reservas que mostrar.");
+		
+		return listaReservas;
 	}
 
 	

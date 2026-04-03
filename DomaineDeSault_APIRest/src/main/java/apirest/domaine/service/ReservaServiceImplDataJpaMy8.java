@@ -218,6 +218,18 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 			
 	}
 
-
+	@Override
+	public List <Reserva> findByClienteIdUsuario(Long idUsuario) {
+		
+		if (idUsuario <= 0)
+			throw new RuntimeException("Id de busqueda no valido.");
+		
+		List <Reserva> listaReservas = reservaRepo.findByClienteIdUsuario(idUsuario);
+		
+		if(listaReservas.isEmpty())
+			throw new RuntimeException("No se han recuperado reservas.");
+			
+		return listaReservas;
+	}
 	
 }

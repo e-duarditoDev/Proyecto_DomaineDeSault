@@ -48,6 +48,9 @@ public class ReservasRestController {
 			
 			//Recuperar el idCliente
 			UsuarioLoginProjection usuarioLogin = usuLoginServ.findByEmail(email);//buscar en la tabla usuario
+			if (usuarioLogin == null)
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no registrado.");
+			
 			Long idCliente = usuarioLogin.getIdUsuario();
 			
 			
@@ -79,6 +82,9 @@ public class ReservasRestController {
 			
 			//Recuperar el idCliente
 			UsuarioLoginProjection usuarioLogin = usuLoginServ.findByEmail(email);//buscar en la tabla usuario
+			if (usuarioLogin == null)
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no registrado.");
+			
 			Long idCliente = usuarioLogin.getIdUsuario();
 			
 			ReservaRequestDto reservaDto = requestDto.getReservaDto();
