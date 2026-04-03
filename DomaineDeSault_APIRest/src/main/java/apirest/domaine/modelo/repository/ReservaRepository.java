@@ -35,5 +35,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long>{
 				""")
 		List <ReservaIdHabitacionFechasDto> findByHabitacionConFechas (Long idHabitacion);
 		
-
+		List <Reserva> findByClienteIdUsuario (Long idUsuario);
+	
 }
