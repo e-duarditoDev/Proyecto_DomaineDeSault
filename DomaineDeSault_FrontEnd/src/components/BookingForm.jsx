@@ -47,6 +47,10 @@ const BookingForm = () => {
   // const [promoCode, setPromoCode] = useState("");
   // Estado que guarda el texto del código promocional ingresado.
 
+  // Fechas ocupadas de todas las habitaciones y total de habitaciones (para disponibilidad general)
+  const [todasFechasOcupadas, setTodasFechasOcupadas] = useState([]);
+  const [totalHabitaciones, setTotalHabitaciones] = useState(0);
+
   const formRef = useRef();
   // Creamos una referencia al formulario, para detectar clics fuera del mismo y cerrar el calendario.
 
@@ -75,6 +79,29 @@ const BookingForm = () => {
   }, []);
   // El array vacío hace que este efecto se ejecute solo una vez (al montar y desmontar).
 
+  // Carga la disponibilidad general al montar el componente
+  useEffect(() => {
+    const fetchDisponibilidad = async () => {
+      try {
+        const [resFechas, resHabitaciones] = await Promise.all([
+          fetch("/api/habitacion/disponibilidad/todas"),
+          fetch("/api/habitacion/todas")
+        ]);
+        if (resFechas.ok) {
+          const fechas = await resFechas.json();
+          setTodasFechasOcupadas(fechas);
+        }
+        if (resHabitaciones.ok) {
+          const habitaciones = await resHabitaciones.json();
+          setTotalHabitaciones(habitaciones.length);
+        }
+      } catch (error) {
+        console.error("Error cargando disponibilidad:", error);
+      }
+    };
+    fetchDisponibilidad();
+  }, []);
+
   const handleSearch = () => {
     // Función que se ejecuta al pulsar el botón de búsqueda.
     alert(
@@ -83,20 +110,33 @@ const BookingForm = () => {
     // Mostramos un mensaje con la información seleccionada (a modo de prueba).
   };
 
+  // Convierte fecha del backend (array [a,m,d] o string "YYYY-MM-DD") a Date
+  const parseBackendDate = (d) => {
+    if (Array.isArray(d)) return new Date(d[0], d[1] - 1, d[2]);
+    return new Date(d + "T00:00:00");
+  };
+
   const isDateAvailable = (date) => {
-    // Función que determina si una fecha está disponible o no para reserva.
+    // No permitir fechas pasadas
     const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    // Calculamos "ayer" para no permitir seleccionar fechas pasadas.
-    if (date < yesterday) return false;
-    // Si la fecha es anterior a ayer, no se puede seleccionar.
-    const unavailableDates = [new Date(2025, 7, 21), new Date(2025, 7, 22)];
-    // Definimos algunas fechas no disponibles (ejemplo de días bloqueados).
-    return !unavailableDates.some(
-      (d) => d.toDateString() === date.toDateString()
-    );
-    // Si la fecha coincide con alguna de las bloqueadas, la marcamos como no disponible.
+    today.setHours(0, 0, 0, 0);
+    if (date < today) return false;
+
+    // Si aún no hay datos del backend, permitir todas las fechas
+    if (totalHabitaciones === 0) return true;
+
+    // Contar cuántas habitaciones distintas están ocupadas ese día
+    const ocupadas = new Set();
+    for (const slot of todasFechasOcupadas) {
+      const entrada = parseBackendDate(slot.fechaEntrada);
+      const salida = parseBackendDate(slot.fechaSalida);
+      // entrada <= date < salida (el día de salida queda libre para nuevas entradas)
+      if (date >= entrada && date < salida) {
+        ocupadas.add(slot.idHabitacion);
+      }
+    }
+    // El día está bloqueado solo si TODAS las habitaciones están ocupadas
+    return ocupadas.size < totalHabitaciones;
   };
 
   const calculateNights = (start, end) => {

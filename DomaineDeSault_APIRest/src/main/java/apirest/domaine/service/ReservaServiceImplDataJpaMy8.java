@@ -232,4 +232,14 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 		return listaReservas;
 	}
 	
+	@Override
+	public List<ReservaIdHabitacionFechasDto> getFechasOcupadasPorHabitacion(Long idHabitacion) {
+		return reservaRepo.findByHabitacionConFechas(idHabitacion);
+	}
+
+	@Override
+	public List<ReservaIdHabitacionFechasDto> getTodasFechasOcupadas() {
+		return reservaRepo.findTodasFechasOcupadas();
+	}
 }
+
