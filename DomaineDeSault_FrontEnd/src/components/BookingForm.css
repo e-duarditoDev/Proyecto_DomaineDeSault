@@ -2,7 +2,7 @@
 .booking-form {
   max-width: 1200px;
   margin: 2rem auto;
-  background: #ffffff93;
+  background: #ffffffcc;
   border-radius: 20px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
   font-family: 'Argesta', sans-serif;
@@ -25,10 +25,10 @@
 .booking-controls label {
   display: flex;
   flex-direction: column;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 1.2rem;
   color: #1e1e1e;
-  min-width: 120px;
+  min-width: 140px;
 }
 
 .booking-controls select,
@@ -98,12 +98,11 @@
 /* Calendario overlay */
 .calendar-overlay {
   position: absolute;
-  overlay: auto;
-  top: 100%;
+  bottom: 100%;
   left: 0;
-  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   z-index: 50;
-  background: #fff;
+  background: #ffffffcc;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
   padding: 1rem;
@@ -125,16 +124,18 @@ cursor: pointer
 .day-with-tooltip:hover::after {
   content: attr(data-tooltip);
   position: absolute;
-  top: 20px;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
   background: #2193b0;
   color: #fff;
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 3px 10px;
+  border-radius: 5px;
   font-size: 0.75rem;
+  line-height: 1.6;
   white-space: nowrap;
   pointer-events: none;
+  z-index: 9999;
 }
 
 /*Responsive: en móvil se apila */
