@@ -14,7 +14,7 @@ import ImageSlider from "./ImageSlider";
 
 
 // Definimos el componente funcional RoomsSection.
-const RoomsSection = () => {
+const RoomsSection = ({ searchState = { active: false, unavailableIds: [] } }) => {
 
   // Obtenemos la función t para traducir textos en este componente.
   const { t } = useTranslation();
@@ -68,6 +68,13 @@ const RoomsSection = () => {
       {/* Mostramos el título de la sección traducido */}
       <h2 className="rooms-title">{t("rooms.title")}</h2>
 
+      {/* Mensaje de resultados de búsqueda */}
+      {/* {searchState.active && (
+        <p className="rooms-search-message">
+          Estas son las habitaciones disponibles para las fechas seleccionadas
+        </p>
+      )} */}
+
       {/* Contenedor en cuadrícula para las tarjetas de las habitaciones */}
       <div className="rooms-grid">
 
@@ -78,12 +85,16 @@ const RoomsSection = () => {
           // Obtenemos el nombre de la habitación en el backend para mapearlo con la clave de i18n.
           const habitacionBackend = habitaciones[index];
 
+          // Determinar si esta habitación no está disponible en las fechas buscadas
+          const isUnavailable = searchState.active &&
+            searchState.unavailableIds.includes(Number(habitacionBackend?.idHabitacion));
+
           // Obtenemos las características de la habitación, si existen.
           const features = room.features || [];
 
           {/* Tarjeta individual de la habitación */ }
           return (
-            <div key={key} className="room-card">
+            <div key={key} className={`room-card${isUnavailable ? ' room-card--unavailable' : ''}`}>
 
               {/* <img
                 src={room.image || "/photos/placeholder.png"}
@@ -100,7 +111,7 @@ const RoomsSection = () => {
                   room.images || [room.image] || ["/photos/placeholder.png"]
                 }
                 interval={6000}
-                onClick={() => navigate(`/room/${habitacionBackend?.idHabitacion || key}`)}
+                onClick={isUnavailable ? undefined : () => navigate(`/room/${habitacionBackend?.idHabitacion || key}`)}
                 onError={(e) => (e.target.src = "/photos/placeholder.png")}
               />
 
@@ -146,9 +157,10 @@ const RoomsSection = () => {
                 {/* Botón para reservar; al hacer clic navegamos a la página de detalle */}
                 <button
                   className="room-btn"
-                  onClick={() => navigate(`/room/${habitacionBackend?.idHabitacion || key}`)}
+                  disabled={isUnavailable}
+                  onClick={isUnavailable ? undefined : () => navigate(`/room/${habitacionBackend?.idHabitacion || key}`)}
                 >
-                  {t("rooms.button", "Reservar ahora")}
+                  {isUnavailable ? 'No disponible en la fecha elegida' : t("rooms.button", "Reservar ahora")}
                 </button>
               </div>
             </div>

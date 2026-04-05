@@ -19,7 +19,7 @@ import { es, fr, enGB, de } from "date-fns/locale";
 // ---------------------------------------------
 // Componente principal BookingForm
 // ---------------------------------------------
-const BookingForm = () => {
+const BookingForm = ({ onSearch }) => {
   const { t, i18n } = useTranslation();
   // Obtenemos la función de traducción "t" y el objeto "i18n" que maneja el idioma actual.
 
@@ -103,11 +103,25 @@ const BookingForm = () => {
   }, []);
 
   const handleSearch = () => {
-    // Función que se ejecuta al pulsar el botón de búsqueda.
-    alert(
-      `Buscando: ${startDate?.toLocaleDateString()} - ${endDate?.toLocaleDateString()}, ${rooms} habitaciones, ${guests} huéspedes}`
-    );
-    // Mostramos un mensaje con la información seleccionada (a modo de prueba).
+    if (!startDate || !endDate) return;
+
+    // Calcular qué habitaciones tienen solapamiento con el rango seleccionado
+    const unavailableIds = new Set();
+    for (const slot of todasFechasOcupadas) {
+      const entrada = parseBackendDate(slot.fechaEntrada);
+      const salida = parseBackendDate(slot.fechaSalida);
+      // Solapamiento: la reserva empieza antes de que termine la búsqueda
+      // y termina después de que empiece la búsqueda
+      if (entrada < endDate && salida > startDate) {
+        unavailableIds.add(Number(slot.idHabitacion));
+      }
+    }
+
+    onSearch?.({ active: true, unavailableIds: [...unavailableIds] });
+
+    // Desplazar a la sección de habitaciones
+    document.getElementById("lodging")?.scrollIntoView({ behavior: "smooth" });
+    setShowCalendar(false);
   };
 
   // Convierte fecha del backend (array [a,m,d] o string "YYYY-MM-DD") a Date
