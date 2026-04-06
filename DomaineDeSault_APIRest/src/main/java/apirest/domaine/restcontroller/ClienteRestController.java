@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import apirest.domaine.modelo.dto.ClienteDto;
 import apirest.domaine.modelo.dto.DireccionDto;
-import apirest.domaine.modelo.dto.MisReservasDto;
+import apirest.domaine.modelo.dto.MiReservaDto;
 import apirest.domaine.modelo.entities.Cliente;
 import apirest.domaine.modelo.entities.Direccion;
 import apirest.domaine.modelo.repository.UsuarioLoginProjection;
@@ -231,7 +231,7 @@ public class ClienteRestController {
 //			}
 //		}
 		
-		List <MisReservasDto> listaReservas = clienteServ.misReservas(usuarioLogin.getIdUsuario());
+		List <MiReservaDto> listaReservas = clienteServ.misReservas(usuarioLogin.getIdUsuario());
 		
 		if (listaReservas.isEmpty())
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se han recuperado reservas.");

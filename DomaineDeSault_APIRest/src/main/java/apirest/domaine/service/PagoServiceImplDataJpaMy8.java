@@ -46,5 +46,23 @@ public class PagoServiceImplDataJpaMy8 implements PagoService{
 		return 0;
 	}
 
+	@Override
+	public int eliminarPorIdReserva(Long idReserva) {
+		if (idReserva == null) {
+			throw new RuntimeException("Ha ocurrido un error. No hay id de reserva.");
+		}
+		
+		return pagoRepo.elimarPorIdReserva(idReserva);
+	}
+
+	@Override
+	public boolean existsByReservaIdReserva(Long idReserva) {
+		if (idReserva == null) {
+			throw new RuntimeException("Ha ocurrido un error. No hay id de reserva.");
+		}
+				
+		return pagoRepo.existsByReservaIdReserva(idReserva);
+	}
+
 	
 }

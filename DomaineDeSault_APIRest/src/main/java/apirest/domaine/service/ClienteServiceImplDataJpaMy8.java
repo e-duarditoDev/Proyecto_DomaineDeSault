@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import apirest.domaine.modelo.dto.MisReservasDto;
+import apirest.domaine.modelo.dto.MiReservaDto;
 import apirest.domaine.modelo.entities.Cliente;
 import apirest.domaine.modelo.enumerados.EstadoReserva;
 import apirest.domaine.modelo.enumerados.EstadoUsuario;
@@ -132,8 +132,8 @@ public class ClienteServiceImplDataJpaMy8 implements ClienteService{
 	}
 
 	@Override
-	public List<MisReservasDto> misReservas(Long idUsuario) {
-		List <MisReservasDto> listaReservas = clienteRepo.misReservas(idUsuario);
+	public List<MiReservaDto> misReservas(Long idUsuario) {
+		List <MiReservaDto> listaReservas = clienteRepo.misReservas(idUsuario);
 		
 		if (listaReservas.isEmpty())
 			throw new RuntimeException("No hay reservas que mostrar.");

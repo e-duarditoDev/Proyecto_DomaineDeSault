@@ -8,9 +8,13 @@
     "accommodation": "Accommodation",
     "review": "Reviews",
     "location": "Location",
-    "contact": "Contact"
+    "contact": "Contact",
+    "myBookings": "My bookings",
+    "myDetails": "My details",
+    "signIn": "Sign in",
+    "noAccount": "Haven't an account",
+    "signOut": "Sign out"
   },
-
   "accommodation": {
     "menu": {
       "commonAreas": "Common Areas",
@@ -18,25 +22,30 @@
       "whatToDo": "What to Do",
       "reviews": "Reviews"
     },
-
     "sections": [
       {
         "slug": "common-areas",
         "title": "Common Areas",
         "description": "Our shared spaces are designed to offer comfort, tranquility, and moments to connect with nature. Relax with a book in the cozy corners of the estate, enjoy a coffee in the summer kitchen, or admire the gardens from the balcony of the Maison des Oiseaux. Every corner invites serenity and lets you enjoy the beauty of Auvergne in perfect harmony.",
-        "images": ["/photos/Common Areas/esperaHorizontal_2.avif"]
+        "images": [
+          "/photos/Common Areas/esperaHorizontal_2.avif"
+        ]
       },
       {
         "slug": "services",
         "title": "Services",
         "description": "Designed to make your stay comfortable and memorable, we offer high-quality services: Wi-Fi, gourmet breakfast, daily housekeeping, and personalized attention. Our wellness area includes a sauna, reading and game spaces, and a massage room led by professional therapists. Treatments help relieve tension, relax muscles, improve circulation, and promote restful sleep, including facial, back, leg, and foot massages.",
-        "images": ["/photos/Breakfast/desayunoC.png"]
+        "images": [
+          "/photos/Breakfast/desayunoC.png"
+        ]
       },
       {
         "slug": "what-to-do",
         "title": "What to Do",
         "description": "Discover the richness of the Auvergne region with experiences for every taste. Enjoy hiking through forests and green landscapes, explore local culture, take cycling tours, or participate in sports activities. Nearby excursions, such as La Chaise-Dieu and the Romanesque churches, immerse you in the history and architectural beauty of the region.",
-        "images": ["/photos/Activities/LePuy.webp"]
+        "images": [
+          "/photos/Activities/LePuy.webp"
+        ]
       }
     ]
   },
@@ -74,9 +83,18 @@
         "reviewsCount": 57,
         "summary": "Gîte Valentin is an intimate and autonomous accommodation, perfect to enjoy the estate as if at home. Its spacious living area includes a fully equipped kitchen and cozy lounge around the pellet stove. The mezzanine bedroom features a 160 cm bed. Facilities include a shower, separate WC, equipped laundry, and a private garden sheltered from views. Linen provided and a crib available.",
         "features": [
-          { "icon": "/icons/cama-doble.svg", "text": "Double bed" },
-          { "icon": "/icons/cocina.svg", "text": "Equipped kitchen" },
-          { "icon": "/icons/banio.svg", "text": "Private bathroom" },
+          {
+            "icon": "/icons/cama-doble.svg",
+            "text": "Double bed"
+          },
+          {
+            "icon": "/icons/cocina.svg",
+            "text": "Equipped kitchen"
+          },
+          {
+            "icon": "/icons/banio.svg",
+            "text": "Private bathroom"
+          },
           {
             "icon": "/icons/jardin-independiente.svg",
             "text": "Private garden"
@@ -90,7 +108,10 @@
           "Sink",
           "Natural light"
         ],
-        "views": ["Views of private garden", "Views of nature"],
+        "views": [
+          "Views of private garden",
+          "Views of nature"
+        ],
         "amenities": [
           "160 cm bed in mezzanine",
           "Baby crib available",
@@ -144,8 +165,14 @@
         "reviewsCount": 38,
         "summary": "Autrefois retains the essence of a traditional Auvergne interior: stone floor, old wooden partitions, large stone fireplace with wooden lintel and a small garden below the window. The cozy 140 cm lit clos, all wood, creates a perfect nest in summer and winter. Bathroom mixes traditional and modern amenities. Independent entrance and small terrace for a quiet, authentic experience.",
         "features": [
-          { "icon": "/icons/cama-doble.svg", "text": "Double bed" },
-          { "icon": "/icons/jardin.svg", "text": "Garden view" }
+          {
+            "icon": "/icons/cama-doble.svg",
+            "text": "Double bed"
+          },
+          {
+            "icon": "/icons/jardin.svg",
+            "text": "Garden view"
+          }
         ],
         "bathroom": [
           "Old-style sink",
@@ -155,7 +182,10 @@
           "Free toiletries",
           "Towels included"
         ],
-        "views": ["Garden view", "Terrace view"],
+        "views": [
+          "Garden view",
+          "Terrace view"
+        ],
         "amenities": [
           "140 cm lit clos",
           "Large stone fireplace",
@@ -199,9 +229,18 @@
         "reviewsCount": 41,
         "summary": "Le Grenier d’Hubert is the brightest and most spacious suite, covering the first floor, with exceptional views of the clearing, garden, and Monts du Forez. Includes king bed, reading corner, and small lounge overlooking the swimming pool. Large luminous bathroom completes the peaceful and cozy atmosphere.",
         "features": [
-          { "icon": "/icons/cama-king.svg", "text": "King bed" },
-          { "icon": "/icons/banio.svg", "text": "Private bathroom" },
-          { "icon": "/icons/campo.svg", "text": "Country view" }
+          {
+            "icon": "/icons/cama-king.svg",
+            "text": "King bed"
+          },
+          {
+            "icon": "/icons/banio.svg",
+            "text": "Private bathroom"
+          },
+          {
+            "icon": "/icons/campo.svg",
+            "text": "Country view"
+          }
         ],
         "bathroom": [
           "Spacious private bathroom",
@@ -256,9 +295,18 @@
         "reviewsCount": 29,
         "summary": "Salomé is our seventies bohemian caravan, set in a natural garden overlooking the clearing. Isolated in a quiet corner, it offers an intimate, authentic nature experience without sacrificing comfort. Includes wooden terrace, hammock, double bed, and all necessary amenities.",
         "features": [
-          { "icon": "/icons/cama-doble.svg", "text": "Double bed" },
-          { "icon": "/icons/banio.svg", "text": "Private bathroom" },
-          { "icon": "/icons/wifi.svg", "text": "Wi-Fi" }
+          {
+            "icon": "/icons/cama-doble.svg",
+            "text": "Double bed"
+          },
+          {
+            "icon": "/icons/banio.svg",
+            "text": "Private bathroom"
+          },
+          {
+            "icon": "/icons/wifi.svg",
+            "text": "Wi-Fi"
+          }
         ],
         "bathroom": [
           "Private bathroom",
@@ -267,7 +315,10 @@
           "Free toiletries",
           "Towels included"
         ],
-        "views": ["View of clearing", "View of natural garden"],
+        "views": [
+          "View of clearing",
+          "View of natural garden"
+        ],
         "amenities": [
           "Double bed",
           "Wooden terrace",
@@ -280,7 +331,7 @@
           "Electricity",
           "Non-smoking room"
         ],
-        "price":"115€/night",
+        "price": "115€/night",
         "capacity": "2 adults",
         "bed": "1 large double bed",
         "cancellation": "Free cancellation up to 30 days before reserved date",
@@ -305,9 +356,18 @@
         "reviewsCount": 43,
         "summary": "Adélaïde is cozy and elegant, combining classic charm and modern comfort. King or twin beds, small seating corner, decorative fireplace, and bright bathroom with Italian shower and antique sink facing garden.",
         "features": [
-          { "icon": "/icons/cama-doble.svg", "text": "Double bed" },
-          { "icon": "/icons/salon.svg", "text": "Lounge" },
-          { "icon": "/icons/banio.svg", "text": "Private bathroom" }
+          {
+            "icon": "/icons/cama-doble.svg",
+            "text": "Double bed"
+          },
+          {
+            "icon": "/icons/salon.svg",
+            "text": "Lounge"
+          },
+          {
+            "icon": "/icons/banio.svg",
+            "text": "Private bathroom"
+          }
         ],
         "bathroom": [
           "Free toiletries",
@@ -318,7 +378,11 @@
           "Toilet paper",
           "Antique sink with garden view"
         ],
-        "views": ["View of garden", "View of Monts du Forez", "Mountain view"],
+        "views": [
+          "View of garden",
+          "View of Monts du Forez",
+          "Mountain view"
+        ],
         "amenities": [
           "180 cm bed or twin beds",
           "Small seating corner",
@@ -358,9 +422,18 @@
         "name": "Maison des Oiseaux",
         "description": "Small refuge with amazing views of Monts du Forez, balcony to observe nature and stars.",
         "features": [
-          { "icon": "/icons/cama-doble.svg", "text": "Double bed" },
-          { "icon": "/icons/balcon.svg", "text": "Balcony" },
-          { "icon": "/icons/wifi.svg", "text": "Wi-Fi" }
+          {
+            "icon": "/icons/cama-doble.svg",
+            "text": "Double bed"
+          },
+          {
+            "icon": "/icons/balcon.svg",
+            "text": "Balcony"
+          },
+          {
+            "icon": "/icons/wifi.svg",
+            "text": "Wi-Fi"
+          }
         ],
         "size": "16 m²",
         "rating": "9.4",
@@ -375,7 +448,11 @@
           "Hair dryer",
           "Toilet paper"
         ],
-        "views": ["Balcony", "Garden view", "Mountain view"],
+        "views": [
+          "Balcony",
+          "Garden view",
+          "Mountain view"
+        ],
         "amenities": [
           "Desk",
           "Wood or parquet floor",
@@ -455,7 +532,6 @@
     "namePlaceholder": "John Smith",
     "send": "Send"
   },
-
   "roomReservation": {
     "title": "Configure your reservation",
     "checkIn": "Check-in date",
@@ -463,7 +539,7 @@
     "selectDate": "Select date",
     "guests": "guest(s)",
     "nights": "Nights",
-    "maxCapacity": "Maximum capacity:",
+    "maxCapacity": "Capacity:",
     "pricePerNight": "Price/night:",
     "total": "Total",
     "cancel": "Cancel",
@@ -475,14 +551,134 @@
     "confirmation": "Confirmation",
     "continue": "Continue",
     "popup": {
-      "roomNotFound": "The room could not be retrieved.",
-      "selectDates": "Please select check-in and check-out dates.",
-      "loadRoomError": "Error loading room information.",
-      "connectionError": "Connection error:",
-      "unexpectedError": "An unexpected error occurred.",
-      "sessionExpired": "The session has expired. Please log in again.",
-      "saveSuccess": "Reservation saved successfully.",
-      "paySuccess": "Reservation paid successfully."
+      "selectPaymentMethod": "Select a payment method.",
+      "paymentSuccess": "Payment completed successfully.",
+      "paymentProcessError": "Error processing payment:",
+      "warningTitle": "Warning",
+      "confirmationTitle": "Confirmation"
+    },
+    "cardAlert": {
+      "invalidCardNumber": "Invalid card number.",
+      "invalidCardName": "The cardholder name is incorrect.",
+      "invalidExpiry": "Incorrect expiry date.",
+      "expiredCard": "Card expired. Please try another card.",
+      "invalidCvv": "Invalid CVV."
+    },
+    "payment": {
+      "title": "Select a payment method",
+      "selectOption": "-- Select an option --",
+      "card": "Card",
+      "cash": "Pay at desk",
+      "bizumMessageBefore": "Send a Bizum to the number",
+      "bizumMessageAfter": "When finished, click \"Accept\"",
+      "cardNumber": "Card number",
+      "cardHolder": "Cardholder name",
+      "expiryDate": "Expiry date",
+      "expiryPlaceholder": "MM/YY",
+      "cashWarning": "You have chosen to pay at the front desk. Since the booking is not paid yet, it remains subject to availability. You may confirm your booking up to 24 hours before check-in.",
+      "cancel": "Cancel",
+      "accept": "Accept",
+      "processingCard": "Processing payment. Please wait.",
+      "loading": "Loading. Please wait."
+    }
+  },
+  "misReservas": {
+    "estadoReserva": {
+      "confirmada": "CONFIRMED",
+      "comprometida": "COMMITTED",
+      "cancelada": "CANCELLED",
+      "guardada": "SAVED"
+    },
+    "header": {
+      "title": "My bookings",
+      "subtitle": "Check the status and details of your booked rooms",
+      "backHome": "Back to home"
+    },
+    "card": {
+      "bookingNumber": "Booking",
+      "rooms": "room(s).",
+      "guestsLabel": "Guests:",
+      "roomFallback": "Room",
+      "type": "Type:",
+      "capacity": "Capacity:",
+      "deleteRoom": "Remove room",
+      "bookingId": "Booking id",
+      "totalPrice": "Total price",
+      "cancelBooking": "Cancel booking",
+      "pay": "Pay"
+    },
+    "updateGuestsModal": {
+      "title": "Update guests",
+      "removeRoomMessageBefore": "By removing the room",
+      "removeRoomMessageMiddle": "the maximum booking capacity becomes",
+      "removeRoomMessageAfter": "guests.",
+      "selectNewGuests": "Select the new number of guests.",
+      "cancel": "Cancel",
+      "accept": "Accept"
+    },
+    "paymentPanel": {
+      "title": "Select a payment method",
+      "selectOption": "-- Select an option --",
+      "card": "Card",
+      "cash": "Pay at desk",
+      "bizumMessageBefore": "Send a Bizum to the number",
+      "bizumMessageAfter": "When finished, click \"Accept\"",
+      "cardNumber": "Card number",
+      "cardHolder": "Cardholder name",
+      "expiryDate": "Expiry date",
+      "expiryPlaceholder": "MM/YY",
+      "cashWarning": "You have chosen to pay at the front desk. Since the booking is not paid yet, it remains subject to availability. You may confirm your booking up to 24 hours before check-in.",
+      "cancel": "Cancel",
+      "accept": "Accept",
+      "processingCard": "Processing payment. Please wait.",
+      "loading": "Loading. Please wait."
+    },
+    "popup": {
+      "warningTitle": "Warning",
+      "confirmationTitle": "Confirmation",
+      "continue": "Continue"
+    }
+  },
+  "misDatos": {
+    "loading": "Loading your data...",
+    "title": "My details",
+    "messages": {
+      "sessionExpired": "Your session has expired. Please sign in again.",
+      "loadError": "Your data could not be loaded.",
+      "firstAccess": "Welcome. Complete your details to make a booking.",
+      "completeToContinue": "Welcome. Complete your details to continue.",
+      "loadCatchError": "Error loading data.",
+      "reviewFields": "Please review the form fields.",
+      "saveError": "Your data could not be saved.",
+      "saveSuccess": "Your data has been saved successfully."
+    },
+    "form": {
+      "name": "First name",
+      "firstSurname": "First surname",
+      "secondSurname": "Second surname",
+      "identityDocument": "Identity document",
+      "phone": "Phone",
+      "myBookings": "My bookings",
+      "myDetails": "My details"
+    },
+    "address": {
+      "title": "Address",
+      "street": "Street",
+      "number": "Number",
+      "postalCode": "Postal code",
+      "province": "Province",
+      "city": "City"
+    },
+    "actions": {
+      "exit": "Exit",
+      "saving": "Saving...",
+      "save": "Save"
+    },
+    "validation": {
+      "onlyLetters": "This field can only contain letters.",
+      "validPhone": "Enter a valid phone number. If it has an international prefix, add + and the country code before the phone number.",
+      "lettersOnly": "Only letters are allowed.",
+      "houseNumber": "Enter the house number using letters and/or numbers."
     }
   }
 }

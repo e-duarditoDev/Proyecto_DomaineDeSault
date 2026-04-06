@@ -38,8 +38,8 @@ const BookingForm = ({ onSearch }) => {
   const [guests, setGuests] = useState(1);
   // Estado que guarda el número de huéspedes seleccionados.
 
-  const [children, setChildren] = useState(0);
-  // Estado que guarda el número de niños seleccionados.
+/*   const [children, setChildren] = useState(0);
+  // Estado que guarda el número de niños seleccionados. */
 
   const [rooms, setRooms] = useState(1);
   // Estado que guarda el número de habitaciones seleccionadas.
@@ -130,11 +130,6 @@ const BookingForm = ({ onSearch }) => {
     return new Date(d + "T00:00:00");
   };
 
-  // Convierte fecha del backend (array [a,m,d] o string "YYYY-MM-DD") a Date
-  const parseBackendDate = (d) => {
-    if (Array.isArray(d)) return new Date(d[0], d[1] - 1, d[2]);
-    return new Date(d + "T00:00:00");
-  };
 
   const isDateAvailable = (date) => {
     // No permitir fechas pasadas

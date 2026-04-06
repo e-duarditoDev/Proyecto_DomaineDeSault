@@ -14,6 +14,14 @@ const RoomReservation = () => {
   const { idHabitacion } = useParams();//lo coge de la url, se referencia en el app.jsx
   const navigate = useNavigate();
 
+  //Convertirdor a fecha local
+  const formatearFechaLocal = (fecha) => {
+    const year = fecha.getFullYear();
+    const month = String(fecha.getMonth() + 1).padStart(2, "0");
+    const day = String(fecha.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   // ESTADOS
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
@@ -58,10 +66,16 @@ const RoomReservation = () => {
   const currentLang = i18n.language.split("-")[0];
   const currentLocale = localesMap[currentLang] || enGB;
   const roomsObj = t("rooms.list", { returnObjects: true }) || {};
-  const roomKeys = Object.keys(roomsObj);
-  const roomIndex = Number(idHabitacion) - 1;
-  const roomKey = roomKeys[roomIndex];
-  const room = roomsObj[roomKey] || {};
+  const room = Object.values(roomsObj).find(
+    (r) =>
+      r?.name?.trim()?.toLowerCase() ===
+      habitacionData?.nombre?.trim()?.toLowerCase()
+  ) || {};
+
+  /*   const roomKeys = Object.keys(roomsObj);
+    const roomIndex = Number(idHabitacion) - 1;
+    const roomKey = roomKeys[roomIndex];
+    const room = roomsObj[roomKey] || {}; */
 
   //FUNCIONES
   useEffect(() => {
@@ -185,7 +199,7 @@ const RoomReservation = () => {
   }, [nights, pricePerNight]);
 
 
-  //Funcion para simualar el procesamiento de pago
+  //Funcion para PAGAR reserva, simuala el proceso de pago
   const confirmarPago = async () => {
     const token = localStorage.getItem("token");
 
@@ -218,7 +232,7 @@ const RoomReservation = () => {
     if (!paymentMethod) {
       setPopup({
         show: true,
-        message: "Selecciona un método de pago.",
+        message: t("roomReservation.popup.selectPaymentMethod"),
         isError: true,
         redirectTo: null,
         logoutOnClose: false
@@ -227,39 +241,39 @@ const RoomReservation = () => {
       return;
     }
 
-    /*     //Si falta algun campo de la tarjeta y se pulsa aceptar
-        if (paymentMethod === "TARJETA") {//kk
-    
-          if (
-                  !paymentCardForm.cardNumber.trim() ||
-                  !paymentCardForm.cardName.trim() ||
-                  !paymentCardForm.cardExpiry.trim() ||
-                  !paymentCardForm.cardCvv.trim()
-          
-                ) {
-                  setShowPaymentPanel(false);
-                  setPopup({
-                    show: true,
-                    message: "Completa todos los datos de la tarjeta.",
-                    isError: true,
-                    redirectTo: null,
-                    logoutOnClose: false,
-                  });
-                  return;
-                } 
-        } */
-
+    /*         //Si falta algun campo de la tarjeta y se pulsa aceptar
+            if (paymentMethod === "TARJETA") {//kk
+        
+              if (
+                      !paymentCardForm.cardNumber.trim() ||
+                      !paymentCardForm.cardName.trim() ||
+                      !paymentCardForm.cardExpiry.trim() ||
+                      !paymentCardForm.cardCvv.trim()
+              
+                    ) {
+                      setShowPaymentPanel(false);
+                      setPopup({
+                        show: true,
+                        message: "Completa todos los datos de la tarjeta.",
+                        isError: true,
+                        redirectTo: null,
+                        logoutOnClose: false,
+                      });
+                      return;
+                    } 
+            } */
     try {
       // Activa mensaje visual de procesamiento
       setProcessingPayment(true);
+
 
       //Construccion del DTO ReservaPagoRequestDto recibe el endPoint pagar-reserva
       //Deben coincidir los campos con el DTO que espera recibir el endPoint pagar-reserva
       const payLoad = {
         reservaDto: { //campo dentro del ReservaPagoRequestDto en al back, mismo nombre
           idHabitacion: Number(habitacionData?.idHabitacion), //campos dentro del reservaDto en el back, mismo nombre
-          fechaEntrada: startDate.toISOString().split("T")[0],
-          fechaSalida: endDate.toISOString().split("T")[0],
+          fechaEntrada: formatearFechaLocal(startDate),
+          fechaSalida: formatearFechaLocal(endDate),
           numHuespedes: guests,
           accion: "PAGAR"
         },
@@ -318,7 +332,7 @@ const RoomReservation = () => {
 
         setPopup({
           show: true,
-          message: "Pago realizado con éxito.",
+          message: t("roomReservation.popup.paymentSuccess"),
           isError: false,
           redirectTo: "/",
           logoutOnClose: false
@@ -383,7 +397,7 @@ const RoomReservation = () => {
       setShowPaymentPanel(false);
       setPopup({
         show: true,
-        message: `Error al procesar el pago: ${error.message}`,//Captura el mensajes del back
+        message: `${t("roomReservation.popup.paymentProcessError")} ${error.message}`,//Captura el mensajes del back
         isError: true,
         redirectTo: null,
         logoutOnClose: false
@@ -396,7 +410,7 @@ const RoomReservation = () => {
   };
 
 
-  // FUNCIONES DE ACCION (ZONA HANDLER)
+  // FUNCIONES DE ACCION (HANDLER)
 
   //Modifica los datos por defecto del paymentCardForm
   const handlePaymentFormChange = (e) => {
@@ -417,7 +431,7 @@ const RoomReservation = () => {
       if (!value || !/^\d{16}$/.test(value)) {
         setAlertData({
           show: true,
-          message: "Numero de tarjeta no valido."
+          message: t("roomReservation.cardAlert.invalidCardNumber")
         });
       } else {
         setAlertData({
@@ -431,7 +445,7 @@ const RoomReservation = () => {
       if (!value || !/^[A-Za-zÀ-ÿ\s]{2,}$/.test(value)) {
         setAlertData({
           show: true,
-          message: "El nombre del titular incorrecto."
+          message: t("roomReservation.cardAlert.invalidCardName")
         });
       } else {
         setAlertData({
@@ -452,7 +466,7 @@ const RoomReservation = () => {
       if (!value || !/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
         setAlertData({
           show: true,
-          message: "Fecha incorrecta."
+          message: t("roomReservation.cardAlert.invalidExpiry")
         });
       } else if (
         agnoForm < agnoActual ||
@@ -460,7 +474,7 @@ const RoomReservation = () => {
       ) {
         setAlertData({
           show: true,
-          message: "Tarjeta caducada. Pruebe con otra tarjeta."
+          message: t("roomReservation.cardAlert.expiredCard")
         });
       } else {
         setAlertData({
@@ -474,7 +488,7 @@ const RoomReservation = () => {
       if (!value || !/^\d{3}/.test(value)) {
         setAlertData({
           show: true,
-          message: "CVV no válido."
+          message: t("roomReservation.cardAlert.invalidCvv")
         })
       } else {
         setAlertData({
@@ -486,11 +500,7 @@ const RoomReservation = () => {
 
   };
 
-  /*  
-    cardCvv: ""
- */
-
-  // Función para enviar la reserva, construye el DTO y llama a la API guardar-reserva
+  // Función para GUARDAR la reserva, construye el DTO y llama a la API guardar-reserva
   const enviarReserva = async (accion) => {
     const token = localStorage.getItem("token");
 
@@ -523,8 +533,8 @@ const RoomReservation = () => {
     const reservaRequestDto = {
       idHabitacion: Number(habitacionData?.idHabitacion),
       numHuespedes: guests,
-      fechaEntrada: startDate.toISOString().split('T')[0],
-      fechaSalida: endDate.toISOString().split('T')[0],
+      fechaEntrada: formatearFechaLocal(startDate),
+      fechaSalida: formatearFechaLocal(endDate),
       accion: accion
     };
 
@@ -688,7 +698,7 @@ const RoomReservation = () => {
               /> */}
             </div>
             <div className="text-center p-3 bg-body-tertiary w-100">
-              <h3>{popup.isError ? 'Atención' : 'Confirmación'}</h3>
+              <h3>{popup.isError ? t("roomReservation.popup.warningTitle") : t("roomReservation.popup.confirmationTitle")}</h3>
               <p>{popup.message}</p>
               <button className="btn btn-outline-dark" onClick={handlePopupClose}>
                 {t("roomReservation.continue")}
@@ -815,7 +825,7 @@ const RoomReservation = () => {
           <button
             id="boton-cancelar"
             type="button"
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-danger"
             onClick={() => navigate(`/room/${idHabitacion}`)}
           >
             {t("roomReservation.cancel")}
@@ -878,22 +888,27 @@ const RoomReservation = () => {
                   </div>
                   <div className="modal-body">
                     <div className="mb-3 ">
-                      <h5 className="text-black mb-3">Selecciona un método de pago</h5>
+                      <h5 className="text-black mb-3">{t("roomReservation.payment.title")}</h5>
                       <select
                         id="selector-metodo-pago"
                         className="form-select w-50"
                         value={paymentMethod}
                         onChange={(e) => setPaymentMethod(e.target.value)}
                       >
-                        <option value="">-- Selecciona una opción --</option>
+                        <option value="">{t("roomReservation.payment.selectOption")}</option>
                         <option value="BIZUM">Bizum</option>
-                        <option value="TARJETA">Tarjeta</option>
-                        <option value="EFECTIVO">Al contado</option>
+                        <option value="TARJETA">{t("roomReservation.payment.card")}</option>
+                        <option value="EFECTIVO">{t("roomReservation.payment.cash")}</option>
                       </select>
                     </div>
                     {paymentMethod === "BIZUM" && (
                       <div className="alert alert-info text-center rounded-2 pb-0">
-                        <p>Realize un bizum al número <strong>{paymentCardForm.telefonoBizum}</strong>. <br /> Cuando termine, pulse "Aceptar"</p>
+                        <p>
+                          {t("roomReservation.payment.bizumMessageBefore")}{" "}
+                          <strong>{paymentCardForm.telefonoBizum}</strong>.
+                          <br />
+                          {t("roomReservation.payment.bizumMessageAfter")}
+                        </p>
                       </div>
                     )}
 
@@ -909,7 +924,7 @@ const RoomReservation = () => {
                           <label
                             htmlFor="numero-tarjeta" //si hace clic en el texto de la label hace foco al input id="numero-tarjeta"
                             className="form-label">
-                            Número de tarjeta
+                            {t("roomReservation.payment.cardNumber")}
                           </label>
                           <input
                             type="text"
@@ -924,7 +939,7 @@ const RoomReservation = () => {
                         </div>
 
                         <div className="col-12">
-                          <label htmlFor="titular" className="form-label">Titular de la tarjeta</label>
+                          <label htmlFor="titular" className="form-label">{t("roomReservation.payment.cardHolder")}</label>
                           <input
                             type="text"
                             minLength={2}
@@ -938,7 +953,7 @@ const RoomReservation = () => {
                         </div>
 
                         <div className="col-6 mb-3">
-                          <label htmlFor="fecha-vencimiento" className="form-label">Fecha de validez</label>
+                          <label htmlFor="fecha-vencimiento" className="form-label">{t("roomReservation.payment.expiryDate")}</label>
                           <input
                             type="text"
                             minLength={5}
@@ -946,13 +961,13 @@ const RoomReservation = () => {
                             className="form-control"
                             name="cardExpiry"
                             id="fecha-vencimiento"
-                            placeholder="MM/AA"
+                            placeholder={t("roomReservation.payment.expiryPlaceholder")}
                             value={paymentCardForm.cardExpiry}
                             onChange={handlePaymentFormChange}
                           />
                         </div>
 
-                        <div className="col-6">
+                        <div className="col-6 bg">
                           <label htmlFor="cvv" className="form-label">CVV</label>
                           <input
                             type="text"
@@ -970,8 +985,7 @@ const RoomReservation = () => {
 
                     {paymentMethod === "EFECTIVO" && (
                       <div className="alert alert-warning rounded-2">
-                        Ha elegido pagar en mostrador. Al no dejar la reserva pagada, la reserva queda sujeta a disponibilidad.
-                        Podrá confirmar su reserva como máximo 24 horas antes del check-in.
+                        {t("roomReservation.payment.cashWarning")}
                       </div>
                     )}
                   </div>
@@ -980,10 +994,10 @@ const RoomReservation = () => {
                   <div className="modal-footer rounded-0 gap-2">
                     <button
                       type="button"
-                      className="btn btn-outline-secondary"
+                      className="btn btn-outline-danger"
                       onClick={() => setShowPaymentPanel(false)} //cierra el formulario
                     >
-                      Cancelar
+                      {t("roomReservation.payment.cancel")}
                     </button>
 
                     <button
@@ -995,8 +1009,16 @@ const RoomReservation = () => {
                       {/*Esto es un IF-ELSE en React */}
                       {
                         paymentMethod === "TARJETA"
-                          ? (processingPayment ? "Procesando el pago. Por favor espere." : "Aceptar")
-                          : (processingPayment ? "Cargando. Espere." : "Aceptar")
+                          ? (
+                            processingPayment
+                              ? t("roomReservation.payment.processingCard")
+                              : t("roomReservation.payment.accept")
+                          )
+                          : (
+                            processingPayment
+                              ? t("roomReservation.payment.loading")
+                              : t("roomReservation.payment.accept")
+                          )
                       }
                     </button>
                   </div>

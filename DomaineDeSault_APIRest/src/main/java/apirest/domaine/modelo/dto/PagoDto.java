@@ -20,7 +20,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class PagoDto {
-
+	
+	//No ponerle validacion porque lo genera el back, da error si es una reserva nueva
 	private Long idReserva;
 	
 	@NotBlank (message = "No se ha recuperado el metodo de pago.")
