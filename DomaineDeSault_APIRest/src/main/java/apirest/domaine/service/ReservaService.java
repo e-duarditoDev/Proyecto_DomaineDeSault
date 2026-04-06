@@ -7,6 +7,7 @@ import java.util.List;
 
 import apirest.domaine.modelo.dto.ActualizarHuespedesDto;
 import apirest.domaine.modelo.dto.EliminarHabitacionReservaDto;
+import apirest.domaine.modelo.dto.ReservaIdHabitacionFechasDto;
 import apirest.domaine.modelo.dto.ReservaRequestDto;
 import apirest.domaine.modelo.entities.Reserva;
 
@@ -19,6 +20,10 @@ public interface ReservaService extends IntCrudGenerico <Reserva, Long>{
 	Boolean eliminarHabitacion (EliminarHabitacionReservaDto habitacionDto);
 	
 	Boolean actualizarHuespedes (ActualizarHuespedesDto datosDto);
+
+	List <ReservaIdHabitacionFechasDto> getFechasOcupadasPorHabitacion (Long idHabitacion);
+
+	List <ReservaIdHabitacionFechasDto> getTodasFechasOcupadas ();
 		
 	
 }
