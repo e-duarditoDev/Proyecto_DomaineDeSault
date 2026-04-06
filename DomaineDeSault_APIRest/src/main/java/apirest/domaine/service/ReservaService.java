@@ -20,4 +20,5 @@ public interface ReservaService extends IntCrudGenerico <Reserva, Long>{
 	
 	Boolean actualizarHuespedes (ActualizarHuespedesDto datosDto);
 		
+	
 }
