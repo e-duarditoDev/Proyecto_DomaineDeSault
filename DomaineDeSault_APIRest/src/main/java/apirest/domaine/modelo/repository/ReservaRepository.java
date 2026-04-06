@@ -48,5 +48,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long>{
 		List <ReservaIdHabitacionFechasDto> findTodasFechasOcupadas ();
 
 		List <Reserva> findByClienteIdUsuario (Long idUsuario);
+		
 	
 }

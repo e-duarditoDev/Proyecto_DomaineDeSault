@@ -309,7 +309,7 @@ const Navbar = () => {
                   navigate("/mis-reservas");
                 }}
               >
-                Mis reservas
+                {t("nav.myBookings")}
               </a>
             </li>
             <li>
@@ -322,7 +322,7 @@ const Navbar = () => {
                   navigate("/mis-datos");
                 }}
               >
-                Mis datos
+               {t("nav.myDetails")}
               </a>
             </li>
           </>)}
@@ -357,14 +357,14 @@ const Navbar = () => {
                 className="btn btn-outline-dark btn-sm"
                 onClick={() => navigate("/login")}
               >
-                Iniciar Sesión
+                {t("nav.signIn")}
               </button>
 
               <button
                 className="btn btn-outline-dark btn-sm"
                 onClick={() => navigate("/register")}
               >
-                No tengo cuenta
+                {t("nav.noAccount")}
               </button>
             </>
           ) : (
@@ -383,7 +383,7 @@ const Navbar = () => {
                 className="btn btn-dark btn-sm"
                 onClick={handleLogout}
               >
-                Cerrar sesión
+                {t("nav.signOut")}
               </button>
             </>
           )}

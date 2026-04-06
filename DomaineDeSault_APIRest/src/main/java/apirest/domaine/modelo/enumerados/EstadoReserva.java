@@ -1,7 +1,8 @@
 package apirest.domaine.modelo.enumerados;
 
 public enum EstadoReserva {
-	PENDIENTE,
+	COMPROMETIDA,
 	CONFIRMADA,
-	CANCELADA
+	CANCELADA,
+	GUARDADA
 }

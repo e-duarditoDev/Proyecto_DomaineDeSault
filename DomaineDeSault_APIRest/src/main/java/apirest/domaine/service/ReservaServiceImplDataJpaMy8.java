@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import apirest.domaine.modelo.dto.ActualizarHuespedesDto;
+import apirest.domaine.modelo.dto.EliminarHabitacionReservaDto;
 import apirest.domaine.modelo.dto.ReservaIdHabitacionFechasDto;
 import apirest.domaine.modelo.dto.ReservaRequestDto;
 import apirest.domaine.modelo.entities.Cliente;
@@ -56,18 +58,22 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 	@Override
 	public Reserva updateOne(Reserva entidad) {
 		if (!reservaRepo.existsById(entidad.getIdReserva())) {
-			return null;
-		}
+			throw new RuntimeException("Reserva no encontrada.");
+		}		
+	    
 		return reservaRepo.save(entidad);
 	}
 
 	@Override
 	public int deleteOne(Long atributoId) {
-		if (reservaRepo.existsById(atributoId)) {
-			reservaRepo.deleteById(atributoId);
-			return 1;
+		if (!reservaRepo.existsById(atributoId)) {
+			return 0;
 		}
-		return 0;
+		
+		
+		reservaRepo.deleteById(atributoId);
+
+		return 1;
 	}
 
 
@@ -116,18 +122,18 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 			estadoReserva = EstadoReserva.CONFIRMADA;
 			estadoHabitacion = EstadoHabitacion.OCUPADA;
 		} else {
-			estadoReserva = EstadoReserva.PENDIENTE;
+			estadoReserva = EstadoReserva.GUARDADA;
 			estadoHabitacion = EstadoHabitacion.PRERESERVA;
 		}
 		
 		
-		//Busca las reservas no esten en estado PENDIENTE, regla negocio: si esta pagada no se puede modificar
-		//No buscamos por el idReserva porque el dto del front no conoce el idReserva
+		//Busca las reservas esten en estado PENDIENTE, regla negocio: si esta pagada no se puede modificar
+		//No buscamos por el idReserva porque el dto del front no conoce el idReserva, puede que ni exista la reserva
 		Reserva reserva = reservaRepo.findByClienteIdUsuarioAndFechaEntradaAndFechaSalidaAndEstado(
 				idCliente,
 				reservaRequestDto.getFechaEntrada(),
 				reservaRequestDto.getFechaSalida(),
-				EstadoReserva.PENDIENTE
+				EstadoReserva.GUARDADA
 				).orElse(null);
 		
 		
@@ -135,7 +141,7 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 		long noches = ChronoUnit.DAYS.between(reservaRequestDto.getFechaEntrada(), reservaRequestDto.getFechaSalida()); //obtiene numero de dias entre fechas
         BigDecimal precioTotal = habitacion.getPrecioNoche().multiply(BigDecimal.valueOf(noches)); //getPrecioNoche devuelve BigDecimal, multiply es metodo de BigDecimal, valueOf convierte noches a BigDecimal		
 				
-		if (reserva == null) {
+		if (reserva == null) { //O no existe reserva, o esta en estado CONFIRMADA por lo que pasaria a ser una reserva nueva
 			
 			
 			//Comprobar si hay conflicto de fechas con otras reservas
@@ -161,30 +167,31 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 			
 			reserva = reservaRepo.save(reservaNueva);
 			habitacionRepo.save(habitacion);
-		} else {
+		} else {// se ha encontrado una reserva en estado PENDIENTE, se puede agnadir habitaciones.
 			
-			//Si ya tienes una resserva-habitacion en estado PENDIENTE
+			//Comprobar si ya tiene la habitacion reservada para las mismas fechas
 		    boolean existe = reservaHabitacionRepo.existsByReservaHabitacionIdIdReservaAndReservaHabitacionIdIdHabitacion(
                     reserva.getIdReserva(),
                     habitacion.getIdHabitacion()
 		    		);
 
 		    if (existe) {
-		    	throw new RuntimeException("Ya ha realizado esta reserva.");
+		    	throw new RuntimeException("Ya ha realizado esta reserva. Consulte sus reservas.");
 		    }
 		    
 		    
-		    //Verificar si se supera la capacidad de la habitacion
+		    //Sumar los huespedes nuevos a la reserva
 		    int huespedesActuales = reserva.getNumHuespedes();
 		    int huespedesNuevos = reservaRequestDto.getNumHuespedes();
 		    int totalHuespedes = huespedesActuales + huespedesNuevos;
-		    	
-
-		    	
+		    
+		    
 		    //Asignacion de nuevos valores valores
 		    reserva.setNumHuespedes(totalHuespedes);
 		    reserva.setPrecioTotal(reserva.getPrecioTotal().add(precioTotal));//add es un metodo de BigDecimal
 		    reserva.setEstado(estadoReserva);
+			reserva.setFechaEntrada(reservaRequestDto.getFechaEntrada());
+			reserva.setFechaSalida(reservaRequestDto.getFechaSalida());
 		    habitacion.setEstado(estadoHabitacion);
 
 
@@ -231,6 +238,71 @@ public class ReservaServiceImplDataJpaMy8 implements ReservaService{
 			
 		return listaReservas;
 	}
+
+
+	@Override
+	public Boolean eliminarHabitacion(EliminarHabitacionReservaDto habitacionDto) {
+		
+		if (habitacionDto == null) {
+			throw new RuntimeException("Ha ocurrido un error. La habitacion es null.");
+		}
+		
+		ReservaHabitacionId id = new ReservaHabitacionId(
+				habitacionDto.getIdReserva(),//mismo orden estan en el ReservaHabitacionId
+				habitacionDto.getIdHabitacion()
+				);
+		
+		//testing
+		//System.out.println("RESULTADO: "+habitacionDto.getIdHabitacion()+"\n"+habitacionDto.getIdReserva());
+		
+		reservaHabitacionRepo.deleteById(id);
+		
+		//Obtenermos las reservas para recuperar las noches
+		Reserva reserva = reservaRepo.findById(habitacionDto.getIdReserva()).orElse(null);
+		
+		//Obtener le numero de noches
+		long noches = ChronoUnit.DAYS.between(reserva.getFechaEntrada(), reserva.getFechaSalida());
+		BigDecimal precioTotal = BigDecimal.ZERO; //inicializar 	
+		
+		//Recuperamos la lista de habitaciones asociados a la reserva
+		List <ReservaHabitacion> listaReservaHabitacion = reservaHabitacionRepo.findByReservaIdReserva(habitacionDto.getIdReserva());
+				
+		for (ReservaHabitacion rh : listaReservaHabitacion) {
+			Habitacion habitacion = habitacionRepo.findById(rh.getHabitacion().getIdHabitacion()).orElse(null);
+			
+			if (habitacion == null) {
+				throw new RuntimeException("No se han recuperado datos de la habitacion.");
+			}
+			
+			//Sumarotio del precio de las habitaciones existentes en la reserva
+			precioTotal = precioTotal.add(habitacion.getPrecioNoche().multiply(BigDecimal.valueOf(noches)));
+			
+		}
+		
+		//Asignar el nuevo precio
+		reserva.setPrecioTotal(precioTotal);
+		reserva.setNumHuespedes(habitacionDto.getNumHuespedes());
+		
+		reservaRepo.save(reserva);
+		
+		return true;
+	}
+
+	@Override
+	public Boolean actualizarHuespedes(ActualizarHuespedesDto datosDto) {
+		Reserva reserva = reservaRepo.findById(datosDto.getIdReserva()).orElse(null);
+		
+		if (reserva == null)
+			throw new RuntimeException("No se encuentra reserva.");
+		
+		reserva.setNumHuespedes(datosDto.getNumHuespedes());
+		
+		reservaRepo.save(reserva);
+		
+		return true;
+	}
+	
+	
 	
 	@Override
 	public List<ReservaIdHabitacionFechasDto> getFechasOcupadasPorHabitacion(Long idHabitacion) {

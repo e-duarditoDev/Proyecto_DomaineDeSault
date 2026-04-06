@@ -14,13 +14,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class MisReservasDto {
+public class MiReservaDto {
 	
-	private LocalDate fechaEntrada;
+	private LocalDate fechaEntrada; //mismo orden estan en la @Query de ClienteRepository por usar @AllArgsConstructor
 	private LocalDate fechaSalida;
 	private BigDecimal precioTotal;
 	private Long idReserva;
 	private EstadoReserva estadoReserva;
+	private int numHuespedes;
 	private String nombreHabitacion;
 	private TipoHabitacion tipoHabitacion;
+	private Long idHabitacion;
+	private int capacidad;
 }
+

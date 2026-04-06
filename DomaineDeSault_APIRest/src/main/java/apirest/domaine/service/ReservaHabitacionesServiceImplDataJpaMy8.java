@@ -56,13 +56,12 @@ public class ReservaHabitacionesServiceImplDataJpaMy8 implements ReservaHabitaci
 
 	@Override
 	public int deleteOne(ReservaHabitacionId atributoId) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public List <ReservaHabitacion> findByReservaIdReserva(Long idReserva) {
-	
 		return resHabitacionesRepo.findByReservaIdReserva(idReserva);
 	}
 
