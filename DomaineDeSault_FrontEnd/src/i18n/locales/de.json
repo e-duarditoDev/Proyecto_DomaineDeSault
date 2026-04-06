@@ -8,9 +8,13 @@
     "accommodation": "Unterkunft",
     "review": "Bewertungen",
     "location": "Lage",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "myBookings": "Meine Reservierungen",
+    "myDetails": "Meine Daten",
+    "signIn": "Anmelden",
+    "noAccount": "kein Konto",
+    "signOut": "Abmelden"
   },
-
   "accommodation": {
     "menu": {
       "commonAreas": "Gemeinschaftsbereiche",
@@ -18,25 +22,30 @@
       "whatToDo": "Aktivitäten",
       "reviews": "Bewertungen"
     },
-
     "sections": [
       {
         "slug": "common-areas",
         "title": "Gemeinschaftsbereiche",
         "description": "Unsere Gemeinschaftsbereiche wurden gestaltet, um Komfort, Ruhe und Momente der Naturverbundenheit zu bieten. Entspannen Sie sich mit einem Buch in den gemütlichen Ecken des Anwesens, genießen Sie einen Kaffee in der Sommerküche oder bewundern Sie die Gärten vom Balkon des Maison des Oiseaux. Jede Ecke lädt zur Ruhe ein und lässt Sie die Schönheit der Auvergne in vollkommener Harmonie genießen.",
-        "images": ["/photos/Common Areas/esperaHorizontal_2.avif"]
+        "images": [
+          "/photos/Common Areas/esperaHorizontal_2.avif"
+        ]
       },
       {
         "slug": "services",
         "title": "Serviceleistungen",
         "description": "Damit Ihr Aufenthalt komfortabel und unvergesslich wird, bieten wir hochwertige Services: WLAN, Gourmet-Frühstück, tägliche Reinigung und persönliche Betreuung. Unser Wellnessbereich umfasst eine Sauna, Lese- und Spielbereiche sowie einen Massageraum mit professionellen Therapeuten. Die Behandlungen helfen, Spannungen zu lösen, die Muskulatur zu entspannen, die Durchblutung zu fördern und einen erholsamen Schlaf zu unterstützen, einschließlich Gesichts-, Rücken-, Bein- und Fußmassagen.",
-        "images": ["/photos/Breakfast/desayunoC.png"]
+        "images": [
+          "/photos/Breakfast/desayunoC.png"
+        ]
       },
       {
         "slug": "what-to-do",
         "title": "Aktivitäten",
         "description": "Entdecken Sie die Vielfalt der Region Auvergne mit Angeboten für jeden Geschmack. Unternehmen Sie Wanderungen durch Wälder und grüne Landschaften, erkunden Sie die lokale Kultur, unternehmen Sie Radtouren oder nehmen Sie an sportlichen Aktivitäten teil. Nahegelegene Ausflugsziele, wie La Chaise-Dieu und die romanischen Kirchen, lassen Sie in die Geschichte und architektonische Schönheit der Region eintauchen.",
-        "images": ["/photos/Activities/LePuy.webp"]
+        "images": [
+          "/photos/Activities/LePuy.webp"
+        ]
       }
     ]
   },
@@ -62,12 +71,10 @@
   "book.checkOutLabel": "Abreise",
   "book.titleh2": "Buchen Sie Ihren Aufenthalt im Domaine de Sault",
   "roomDetail.back": "Zurück",
-
   "rooms": {
     "title": "Entdecken Sie unsere Zimmer",
     "button": "Jetzt buchen",
     "price": "Preis:",
-
     "list": {
       "gite": {
         "name": "Gîte Valentin",
@@ -77,9 +84,18 @@
         "reviewsCount": 57,
         "summary": "Der Gîte Valentin ist eine intime, eigenständige Unterkunft, perfekt dafür, den Hof wie zu Hause zu genießen. Der großzügige Wohnbereich umfasst eine komplett ausgestattete Küche – vom Toaster bis zum Korkenzieher – sowie ein gemütliches Wohnzimmer rund um den Pelletofen. Das Schlafzimmer befindet sich in einem warmen Dachstudio mit einem 160 cm Bett. Die Unterkunft bietet außerdem ein Bad mit Dusche, separate Toilette, ausgestatteten Hauswirtschaftsraum und einen privaten, blickgeschützten Garten, ideal zum Entspannen in der Natur. Bettwäsche wird gestellt, Babybett auf Anfrage.",
         "features": [
-          { "icon": "/icons/cama-doble.svg", "text": "Doppelbett" },
-          { "icon": "/icons/cocina.svg", "text": "Voll ausgestattete Küche" },
-          { "icon": "/icons/banio.svg", "text": "Privates Bad" },
+          {
+            "icon": "/icons/cama-doble.svg",
+            "text": "Doppelbett"
+          },
+          {
+            "icon": "/icons/cocina.svg",
+            "text": "Voll ausgestattete Küche"
+          },
+          {
+            "icon": "/icons/banio.svg",
+            "text": "Privates Bad"
+          },
           {
             "icon": "/icons/jardin-independiente.svg",
             "text": "Privater Garten"
@@ -93,7 +109,10 @@
           "Waschbecken",
           "Natürliches Licht"
         ],
-        "views": ["Blick auf den privaten Garten", "Blick in die Natur"],
+        "views": [
+          "Blick auf den privaten Garten",
+          "Blick in die Natur"
+        ],
         "amenities": [
           "160 cm Bett im Dachstudio",
           "Babybett verfügbar",
@@ -139,7 +158,6 @@
           "/photos/rooms/gite_valentin/puerta.avif"
         ]
       },
-
       "autrefois": {
         "name": "Autrefois",
         "description": "Traditionelles Auvergner Zimmer mit originalem Kamin, Steinboden, separatem Eingang und kleinem Balkon. Ein Rückzugsort voller Charme und Charakter.",
@@ -148,8 +166,14 @@
         "reviewsCount": 38,
         "summary": "Das Zimmer Autrefois bewahrt das traditionelle Auvergner Ambiente mit Steinboden, alten Holzwänden, großem Steinkamin mit Holzbalken und Küchengarten unter dem Fenster. Das gemütliche Holzbett (Lit clos) von 140 cm ist ein perfektes Nest im Sommer – wenn der Raum hell und angenehm kühl ist – wie im Winter, wenn der Holzofen eine weiche und einhüllende Atmosphäre schenkt. Das Bad verbindet alte Elemente mit moderner Ausstattung: traditionelles Waschbecken, Dusche, Toilette und elektrischer Heizkörper. Mit separatem Eingang und kleinem Balkon ist Autrefois ein intimer und authentischer Raum für Gäste, die Geschichte und Ruhe suchen.",
         "features": [
-          { "icon": "/icons/cama-doble.svg", "text": "Doppelbett" },
-          { "icon": "/icons/jardin.svg", "text": "Gartenblick" }
+          {
+            "icon": "/icons/cama-doble.svg",
+            "text": "Doppelbett"
+          },
+          {
+            "icon": "/icons/jardin.svg",
+            "text": "Gartenblick"
+          }
         ],
         "bathroom": [
           "Altes Waschbecken",
@@ -159,7 +183,10 @@
           "Kostenlose Pflegeprodukte",
           "Handtücher inklusive"
         ],
-        "views": ["Gartenblick", "Balkonblick"],
+        "views": [
+          "Gartenblick",
+          "Balkonblick"
+        ],
         "amenities": [
           "Holzbett (Lit clos) 140 cm",
           "Großer Steinkamin",
@@ -195,7 +222,6 @@
           "/photos/rooms/autrefois/vater_resultado2.avif"
         ]
       },
-
       "hubert": {
         "name": "Le Grenier d'Hubert",
         "description": "Die Suite des Domaine, lichtdurchflutet mit herrlichem Blick auf die Lichtung und die Monts du Forez. Großzügiger Ruhebereich, Leseecke und großes helles Bad.",
@@ -204,9 +230,18 @@
         "reviewsCount": 41,
         "summary": "Le Grenier d’Hubert ist die größte und hellste Suite des Domaine. Sie nimmt die gesamte erste Etage ein und bietet eine außergewöhnliche Aussicht auf die Lichtung, den Garten und die Monts du Forez. Das Zimmer verfügt über einen großzügigen Ruhebereich mit Kingsize-Bett, eine gemütliche Leseecke und eine kleine Lounge mit Blick auf das Schwimmbecken. Das große, helle und komfortable Bad rundet den Raum perfekt ab und lädt zu einem ruhigen und warmen Aufenthalt ein.",
         "features": [
-          { "icon": "/icons/cama-king.svg", "text": "Kingsize-Bett" },
-          { "icon": "/icons/banio.svg", "text": "Privates Bad" },
-          { "icon": "/icons/campo.svg", "text": "Blick aufs Land" }
+          {
+            "icon": "/icons/cama-king.svg",
+            "text": "Kingsize-Bett"
+          },
+          {
+            "icon": "/icons/banio.svg",
+            "text": "Privates Bad"
+          },
+          {
+            "icon": "/icons/campo.svg",
+            "text": "Blick aufs Land"
+          }
         ],
         "bathroom": [
           "Großes privates Bad",
@@ -253,7 +288,6 @@
           "/photos/rooms/hubert/banio_2.avif"
         ]
       },
-
       "salome": {
         "name": "Salomé",
         "description": "Bohème-Wohnwagen im Stil der 70er Jahre, umgeben von Natur mit Holzterrasse. Komfortabel für einen ruhigen und besonderen Aufenthalt.",
@@ -262,9 +296,18 @@
         "reviewsCount": 29,
         "summary": "Salomé ist unser seventies-bohème-Wohnwagen, im Herzen eines natürlichen Gartens mit Blick auf die Lichtung. Abgelegen in einer der ruhigsten Ecken des Domaine, bietet er ein intimes und authentisches Naturerlebnis, ohne auf den Komfort eines Gästezimmers zu verzichten. Verfügt über eine kleine Holzterrasse, Hängematte zum Entspannen, bequemes Doppelbett und alle notwendigen Annehmlichkeiten für einen entschleunigten und einzigartigen Aufenthalt.",
         "features": [
-          { "icon": "/icons/cama-doble.svg", "text": "Doppelbett" },
-          { "icon": "/icons/banio.svg", "text": "Privates Bad" },
-          { "icon": "/icons/wifi.svg", "text": "WLAN" }
+          {
+            "icon": "/icons/cama-doble.svg",
+            "text": "Doppelbett"
+          },
+          {
+            "icon": "/icons/banio.svg",
+            "text": "Privates Bad"
+          },
+          {
+            "icon": "/icons/wifi.svg",
+            "text": "WLAN"
+          }
         ],
         "bathroom": [
           "Privates Bad",
@@ -273,7 +316,10 @@
           "Kostenlose Pflegeprodukte",
           "Handtücher inklusive"
         ],
-        "views": ["Blick auf die Lichtung", "Blick in den Naturgarten"],
+        "views": [
+          "Blick auf die Lichtung",
+          "Blick in den Naturgarten"
+        ],
         "amenities": [
           "Doppelbett",
           "Holzterrasse",
@@ -303,7 +349,6 @@
           "/photos/rooms/salome/terraza2_resultado.avif"
         ]
       },
-
       "adelaide": {
         "name": "Adélaïde",
         "description": "Lichtdurchflutetes Zimmer mit kleinem Salon, Kamin und dezent verstecktem Bad. Bietet einen außergewöhnlichen Blick auf die Monts du Forez.",
@@ -312,9 +357,18 @@
         "reviewsCount": 43,
         "summary": "Das Zimmer Adélaïde ist ein gemütlicher und eleganter Raum, der klassischen Charme mit modernem Komfort verbindet. Es verfügt über ein großes 180 cm Bett – auf Wunsch auch zwei Einzelbetten – einen kleinen Sitzbereich zum Entspannen und einen dekorativen Kamin, der für Wärme sorgt. Das private Bad, lichtdurchflutet, ist mit einer italienischen Dusche und einem alten Waschbecken mit Gartenblick ausgestattet. Vom Fenster aus genießen Gäste einen herrlichen Ausblick auf die Berge und den Garten – ideal zum Abschalten und Entspannen.",
         "features": [
-          { "icon": "/icons/cama-doble.svg", "text": "Doppelbett" },
-          { "icon": "/icons/salon.svg", "text": "Salon" },
-          { "icon": "/icons/banio.svg", "text": "Privates Bad" }
+          {
+            "icon": "/icons/cama-doble.svg",
+            "text": "Doppelbett"
+          },
+          {
+            "icon": "/icons/salon.svg",
+            "text": "Salon"
+          },
+          {
+            "icon": "/icons/banio.svg",
+            "text": "Privates Bad"
+          }
         ],
         "bathroom": [
           "Kostenlose Pflegeprodukte",
@@ -325,7 +379,11 @@
           "Toilettenpapier",
           "Altes Waschbecken mit Gartenblick"
         ],
-        "views": ["Gartenblick", "Blick auf die Monts du Forez", "Bergblick"],
+        "views": [
+          "Gartenblick",
+          "Blick auf die Monts du Forez",
+          "Bergblick"
+        ],
         "amenities": [
           "180 cm Bett oder zwei Einzelbetten",
           "Kleiner Sitzbereich",
@@ -361,14 +419,22 @@
           "/photos/rooms/adelaide/bano.avif"
         ]
       },
-
       "oiseaux": {
         "name": "Maison des Oiseaux",
         "description": "Kleines Refugium mit unglaublichem Blick auf die Monts du Forez, Balkon zum Beobachten der Natur und Sterne.",
         "features": [
-          { "icon": "/icons/cama-doble.svg", "text": "Doppelbett" },
-          { "icon": "/icons/balcon.svg", "text": "Balkon" },
-          { "icon": "/icons/wifi.svg", "text": "WLAN" }
+          {
+            "icon": "/icons/cama-doble.svg",
+            "text": "Doppelbett"
+          },
+          {
+            "icon": "/icons/balcon.svg",
+            "text": "Balkon"
+          },
+          {
+            "icon": "/icons/wifi.svg",
+            "text": "WLAN"
+          }
         ],
         "price": "91€/Nacht",
         "image": "/photos/rooms/oiseaux/cama_oiseaux_resultado.avif",
@@ -385,7 +451,11 @@
           "Fön",
           "Toilettenpapier"
         ],
-        "views": ["Balkon", "Gartenblick", "Bergblick"],
+        "views": [
+          "Balkon",
+          "Gartenblick",
+          "Bergblick"
+        ],
         "amenities": [
           "Schreibtisch",
           "Holz- oder Parkettboden",
@@ -425,7 +495,6 @@
       }
     }
   },
-
   "reviews.title": "Was unsere Gäste sagen",
   "location.title": "Wo Sie uns finden",
   "location.description": "Das Domaine de Sault liegt mitten in der Natur im Herzen der Auvergne, mit guter Anbindung für Autofahrer und nur wenige Kilometer von Dore-l'Église entfernt.",
@@ -465,7 +534,6 @@
     "namePlaceholder": "Max Mustermann",
     "send": "Senden"
   },
-
   "roomReservation": {
     "title": "Konfigurieren Sie Ihre Reservierung",
     "checkIn": "Anreisedatum",
@@ -473,7 +541,7 @@
     "selectDate": "Datum auswählen",
     "guests": "Gast/Gäste",
     "nights": "Nächte",
-    "maxCapacity": "Maximale Kapazität:",
+    "maxCapacity": "Kapazität:",
     "pricePerNight": "Preis/Nacht:",
     "total": "Gesamt",
     "cancel": "Abbrechen",
@@ -485,14 +553,132 @@
     "confirmation": "Bestätigung",
     "continue": "Fortfahren",
     "popup": {
-      "roomNotFound": "Das Zimmer konnte nicht abgerufen werden.",
-      "selectDates": "Bitte wählen Sie An- und Abreisedaten aus.",
-      "loadRoomError": "Fehler beim Laden der Zimmerinformationen.",
-      "connectionError": "Verbindungsfehler:",
-      "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten.",
-      "sessionExpired": "Die Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
-      "saveSuccess": "Reservierung erfolgreich gespeichert.",
-      "paySuccess": "Reservierung erfolgreich bezahlt."
+      "selectPaymentMethod": "Wählen Sie eine Zahlungsmethode aus.",
+      "paymentSuccess": "Zahlung erfolgreich abgeschlossen.",
+      "paymentProcessError": "Fehler bei der Zahlungsabwicklung:",
+      "warningTitle": "Achtung",
+      "confirmationTitle": "Bestätigung"
+    },
+    "cardAlert": {
+      "invalidCardNumber": "Ungültige Kartennummer.",
+      "invalidCardName": "Der Name des Karteninhabers ist ungültig.",
+      "invalidExpiry": "Ungültiges Ablaufdatum.",
+      "expiredCard": "Karte abgelaufen. Bitte versuchen Sie es mit einer anderen Karte.",
+      "invalidCvv": "Ungültiger CVV."
+    },
+    "payment": {
+      "title": "Wählen Sie eine Zahlungsmethode aus",
+      "selectOption": "-- Wählen Sie eine Option --",
+      "card": "Karte",
+      "cash": "Zahlung vor Ort",
+      "bizumMessageBefore": "Senden Sie ein Bizum an die Nummer",
+      "bizumMessageAfter": "Wenn Sie fertig sind, klicken Sie auf „Akzeptieren“",
+      "cardNumber": "Kartennummer",
+      "cardHolder": "Name des Karteninhabers",
+      "expiryDate": "Gültigkeitsdatum",
+      "expiryPlaceholder": "MM/JJ",
+      "cashWarning": "Sie haben sich für die Zahlung an der Rezeption entschieden. Da die Reservierung noch nicht bezahlt ist, bleibt sie von der Verfügbarkeit abhängig. Sie können Ihre Reservierung bis spätestens 24 Stunden vor dem Check-in bestätigen.",
+      "cancel": "Abbrechen",
+      "accept": "Akzeptieren",
+      "processingCard": "Zahlung wird verarbeitet. Bitte warten.",
+      "loading": "Wird geladen. Bitte warten."
+    }
+  },
+  "misReservas": {
+    "estadoReserva": {
+      "confirmada": "BESTÄTIGT",
+      "comprometida": "VERBINDLICH",
+      "cancelada": "STORNIERT",
+      "guardada": "GESPEICHERT"
+    },
+    "header": {
+      "title": "Meine Reservierungen",
+      "subtitle": "Prüfen Sie den Status und die Details Ihrer reservierten Zimmer",
+      "backHome": "Zur Startseite"
+    },
+    "card": {
+      "bookingNumber": "Reservierung",
+      "rooms": "Zimmer.",
+      "guestsLabel": "Gäste:",
+      "roomFallback": "Zimmer",
+      "type": "Typ:",
+      "capacity": "Kapazität:",
+      "deleteRoom": "Zimmer entfernen",
+      "bookingId": "Reservierungs-ID",
+      "totalPrice": "Gesamtpreis",
+      "cancelBooking": "Reservierung stornieren",
+      "pay": "Bezahlen"
+    },
+    "updateGuestsModal": {
+      "title": "Gäste aktualisieren",
+      "removeRoomMessageBefore": "Wenn Sie das Zimmer entfernen",
+      "removeRoomMessageMiddle": "beträgt die maximale Reservierungskapazität nun",
+      "removeRoomMessageAfter": "Gäste.",
+      "selectNewGuests": "Wählen Sie die neue Anzahl der Gäste aus.",
+      "cancel": "Abbrechen",
+      "accept": "Akzeptieren"
+    },
+    "paymentPanel": {
+      "title": "Wählen Sie eine Zahlungsmethode aus",
+      "selectOption": "-- Wählen Sie eine Option --",
+      "card": "Karte",
+      "cash": "Zahlung vor Ort",
+      "bizumMessageBefore": "Senden Sie ein Bizum an die Nummer",
+      "bizumMessageAfter": "Wenn Sie fertig sind, klicken Sie auf „Akzeptieren“",
+      "cardNumber": "Kartennummer",
+      "cardHolder": "Name des Karteninhabers",
+      "expiryDate": "Gültigkeitsdatum",
+      "expiryPlaceholder": "MM/JJ",
+      "cashWarning": "Sie haben sich für die Zahlung an der Rezeption entschieden. Da die Reservierung noch nicht bezahlt ist, bleibt sie von der Verfügbarkeit abhängig. Sie können Ihre Reservierung bis spätestens 24 Stunden vor dem Check-in bestätigen.",
+      "cancel": "Abbrechen",
+      "accept": "Akzeptieren",
+      "processingCard": "Zahlung wird verarbeitet. Bitte warten.",
+      "loading": "Wird geladen. Bitte warten."
+    },
+    "popup": {
+      "warningTitle": "Achtung",
+      "confirmationTitle": "Bestätigung",
+      "continue": "Weiter"
+    }
+  },
+  "misDatos": {
+    "loading": "Ihre Daten werden geladen...",
+    "title": "Meine Daten",
+    "messages": {
+      "sessionExpired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+      "loadError": "Ihre Daten konnten nicht geladen werden.",
+      "firstAccess": "Willkommen. Vervollständigen Sie Ihre Daten, um eine Reservierung vorzunehmen.",
+      "completeToContinue": "Willkommen. Vervollständigen Sie Ihre Daten, um fortzufahren.",
+      "loadCatchError": "Fehler beim Laden der Daten.",
+      "reviewFields": "Bitte überprüfen Sie die Formularfelder.",
+      "saveError": "Ihre Daten konnten nicht gespeichert werden.",
+      "saveSuccess": "Ihre Daten wurden erfolgreich gespeichert."
+    },
+    "form": {
+      "name": "Vorname",
+      "firstSurname": "Erster Nachname",
+      "secondSurname": "Zweiter Nachname",
+      "identityDocument": "Ausweisdokument",
+      "phone": "Telefon"
+    },
+    "address": {
+      "title": "Adresse",
+      "street": "Straße",
+      "number": "Nummer",
+      "postalCode": "Postleitzahl",
+      "province": "Provinz",
+      "city": "Ort"
+    },
+    "actions": {
+      "exit": "Beenden",
+      "saving": "Wird gespeichert...",
+      "save": "Speichern"
+    },
+    "validation": {
+      "onlyLetters": "Dieses Feld darf nur Buchstaben enthalten.",
+      "validPhone": "Geben Sie eine gültige Telefonnummer ein. Falls sie eine internationale Vorwahl hat, setzen Sie + und die Ländervorwahl vor die Telefonnummer.",
+      "lettersOnly": "Nur Buchstaben sind erlaubt.",
+      "houseNumber": "Geben Sie die Hausnummer mit Buchstaben und/oder Zahlen an."
     }
   }
 }

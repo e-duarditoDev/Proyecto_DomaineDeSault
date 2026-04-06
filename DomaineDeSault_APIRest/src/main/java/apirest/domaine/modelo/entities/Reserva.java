@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import apirest.domaine.modelo.enumerados.EstadoReserva;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -48,7 +49,7 @@ public class Reserva implements Serializable{
 	@JoinColumn(name="id_cliente", nullable = false)
 	private Cliente cliente;
 	
-	@OneToOne(mappedBy = "reserva")
+	@OneToOne(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true) //cascade y ophan necesarios para que al borrar el pago no de errores
 	private Pago pago;
 	
 	@Column(name="fecha_entrada", nullable = false)
@@ -66,7 +67,7 @@ public class Reserva implements Serializable{
 	@Builder.Default
 	@Enumerated(EnumType.STRING)
 	@Column(name="estado_reserva", nullable = false)
-	private EstadoReserva estado = EstadoReserva.PENDIENTE;
+	private EstadoReserva estado = EstadoReserva.COMPROMETIDA;
 	
 	
 }

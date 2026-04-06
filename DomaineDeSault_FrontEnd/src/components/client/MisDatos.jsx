@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const MisDatos = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     documentoIdentidad: "",
@@ -43,12 +45,12 @@ const MisDatos = () => {
         });
 
         if (response.status === 401) {
-          throw new Error("Tu sesión ha expirado. Vuelve a iniciar sesión.");
+          throw new Error(t("misDatos.messages.sessionExpired"));
         }
 
         if (!response.ok) {
           const errorText = await response.text();
-          throw new Error(errorText || "No se pudieron cargar tus datos.");
+          throw new Error(errorText || t("misDatos.messages.loadError"));
         }
 
         const responseText = await response.text();//return ResponseEntity.ok().body(null); fecth lo trata como cuerpo vacio no como null
@@ -56,7 +58,7 @@ const MisDatos = () => {
 
         // Caso 1: primer acceso, backend devuelve null
         if (data == null) {
-          setInfoMessage("Bienvenido/a. Completa tus datos para para realizar una reserva.");
+          setInfoMessage(t("misDatos.messages.firstAccess"));
           return;
         }
 
@@ -91,7 +93,7 @@ const MisDatos = () => {
           !newFormData.direccionDto.localidad;
 
         if (formularioVacio) {
-          setInfoMessage("Bienvenido. Completa tus datos para continuar.");
+          setInfoMessage(t("misDatos.messages.completeToContinue"));
         }
 
         /*     // Si backend devuelve null, dejamos el formulario vacío
@@ -112,11 +114,11 @@ const MisDatos = () => {
               });
             } */
 
-            
+
 
 
       } catch (err) {
-        setError(err.message || "Error al cargar los datos.");
+        setError(err.message || t("misDatos.messages.loadCatchError"));
       } finally {
         setLoading(false);
       }
@@ -178,7 +180,7 @@ const MisDatos = () => {
       });
 
       if (response.status === 401) {
-        throw new Error("Tu sesión ha expirado. Vuelve a iniciar sesión.");
+        throw new Error(t("misDatos.messages.sessionExpired"));
       }
 
       if (!response.ok) {
@@ -189,15 +191,15 @@ const MisDatos = () => {
 
           if (typeof errorData === "object" && errorData !== null) {
             const firstError = Object.values(errorData)[0];
-            throw new Error(firstError || "Revisa los campos del formulario.");
+            throw new Error(firstError || t("misDatos.messages.reviewFields"));
           }
         }
 
         const errorText = await response.text();
-        throw new Error(errorText || "No se pudieron guardar tus datos.");
+        throw new Error(errorText || t("misDatos.messages.saveError"));
       }
 
-      setSuccess("Tus datos se han guardado correctamente.");
+      setSuccess(t("misDatos.messages.saveSuccess"));
 
       // Redirección opcional
       setTimeout(() => {
@@ -214,7 +216,7 @@ const MisDatos = () => {
   if (loading) {
     return (
       <div className="container" style={{ marginTop: "120px" }}>
-        <p>Cargando tus datos...</p>
+        <p>{t("misDatos.loading")}</p>
       </div>
     );
   }
@@ -222,7 +224,7 @@ const MisDatos = () => {
   return (
     <div className="container w-50 pb-4 pt-5 mb-2">
       <div className="card shadow-sm p-4">
-        <h2 className="mb-4">Mis datos</h2>
+        <h2 className="mb-4">{t("misDatos.title")}</h2>
 
         {infoMessage && (
           <div className="alert alert-primary text-center fs-5 fw-semibold">
@@ -241,7 +243,7 @@ const MisDatos = () => {
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-md-6 mb-3">
-              <label className="form-label">Nombre</label>
+              <label className="form-label">{t("misDatos.form.name")}</label>
               <input
                 type="text"
                 name="nombre"
@@ -250,13 +252,13 @@ const MisDatos = () => {
                 onChange={handleChange}
                 maxLength={30}
                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                title="El nombre solo puede contener letras."
+                title={t("misDatos.validation.onlyLetters")}
                 required
               />
             </div>
 
             <div className="col-md-6 mb-3">
-              <label className="form-label">Primer apellido</label>
+              <label className="form-label">{t("misDatos.form.firstSurname")}</label>
               <input
                 type="text"
                 name="primerApellido"
@@ -265,7 +267,7 @@ const MisDatos = () => {
                 onChange={handleChange}
                 maxLength={50}
                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                title="El nombre solo puede contener letras."
+                title={t("misDatos.validation.onlyLetters")}
                 required
               />
             </div>
@@ -280,12 +282,12 @@ const MisDatos = () => {
                 onChange={handleChange}
                 maxLength={50}
                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                title="El nombre solo puede contener letras."
+                title={t("misDatos.validation.onlyLetters")}
               />
             </div>
 
             <div className="col-md-6 mb-3">
-              <label className="form-label">Documento de identidad</label>
+              <label className="form-label">{t("misDatos.form.identityDocument")}</label>
               <input
                 type="text"
                 name="documentoIdentidad"
@@ -299,7 +301,7 @@ const MisDatos = () => {
             </div>
 
             <div className="col-md-6 mb-3">
-              <label className="form-label">Teléfono</label>
+              <label className="form-label">{t("misDatos.form.phone")}</label>
               <input
                 type="text"
                 name="telefono"
@@ -309,7 +311,7 @@ const MisDatos = () => {
                 maxLength={18}
                 minLength={9}
                 pattern="^\+?\d+$"
-                title="Introduzca un telefono valido. Si tiene prefijo internacional, anteponga + y el prefijo nacional antes del numero de telefono."
+                title={t("misDatos.validation.validPhone")}
                 required
               />
             </div>
@@ -317,11 +319,11 @@ const MisDatos = () => {
 
           <hr className="my-4" />
 
-          <h4 className="mb-3">Dirección</h4>
+          <h4 className="mb-3">{t("misDatos.address.title")}</h4>
 
           <div className="row">
             <div className="col-md-6 mb-3">
-              <label className="form-label">Calle</label>
+              <label className="form-label">{t("misDatos.address.street")}</label>
               <input
                 type="text"
                 name="calle"
@@ -331,13 +333,13 @@ const MisDatos = () => {
                 maxLength={80}
                 minLength={2}
                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                title="Solo se permiten letras."
+                title={t("misDatos.validation.lettersOnly")}
                 required
               />
             </div>
 
             <div className="col-md-3 mb-3">
-              <label className="form-label">Número</label>
+              <label className="form-label">{t("misDatos.address.number")}</label>
               <input
                 type="text"
                 name="numero"
@@ -346,13 +348,13 @@ const MisDatos = () => {
                 onChange={handleDireccionChange}
                 maxLength={10}
                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s]+$"
-                title="Indique el numero de vivienda con letras y/o numeros."
+                title={t("misDatos.validation.houseNumber")}
                 required
               />
             </div>
 
             <div className="col-md-3 mb-3">
-              <label className="form-label">Código postal</label>
+              <label className="form-label">{t("misDatos.address.postalCode")}</label>
               <input
                 type="text"
                 name="codigoPostal"
@@ -367,7 +369,7 @@ const MisDatos = () => {
             </div>
 
             <div className="col-md-6 mb-3">
-              <label className="form-label">Provincia</label>
+              <label className="form-label">{t("misDatos.address.province")}</label>
               <input
                 type="text"
                 name="provincia"
@@ -381,7 +383,7 @@ const MisDatos = () => {
             </div>
 
             <div className="col-md-6 mb-3">
-              <label className="form-label">Localidad</label>
+              <label className="form-label">{t("misDatos.address.city")}</label>
               <input
                 type="text"
                 name="localidad"
@@ -401,7 +403,7 @@ const MisDatos = () => {
               className="btn btn-outline-dark px-4"
               onClick={() => navigate("/")}
             >
-              Salir
+              {t("misDatos.actions.exit")}
             </button>
 
             <button
@@ -409,7 +411,7 @@ const MisDatos = () => {
               className="btn btn-outline-dark px-3"
               disabled={saving}
             >
-              {saving ? "Guardando..." : "Guardar"}
+              {saving ? t("misDatos.actions.saving") : t("misDatos.actions.save")}
             </button>
           </div>
 

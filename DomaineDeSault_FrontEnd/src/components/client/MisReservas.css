@@ -1,0 +1,10 @@
+.mis-reservas-img {
+  min-height: 280px;
+  max-height: 300px;
+}
+
+@media (max-width: 767.98px) {
+  .mis-reservas-img {
+    min-height: 220px;
+  }
+}

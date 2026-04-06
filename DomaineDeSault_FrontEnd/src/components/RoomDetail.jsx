@@ -15,7 +15,8 @@ const RoomDetail = () => {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   // Estado para el popup (Añádelo al principio del componente)
   const [popup, setPopup] = useState({ show: false, message: "", isError: false, redirectTo: null, logoutOnClose: false });
-
+  // Estado para controlar el hover del botón de retroceso
+  const [isHovered, setIsHovered] = useState(false);
   //Obtener el array list de habitaciones de traducciones
   const roomsObj =
     t("rooms.list",
@@ -144,7 +145,7 @@ const RoomDetail = () => {
               </div>
               <div className="p-4 text-center">
                 <p>{popup.message}</p>
-                <button className="btn btn-dark" onClick={manejarCierrePopup}>
+                <button className="btn btn-outline-dark" onClick={manejarCierrePopup}>
                   {t("roomReservation.continue")}
                 </button>
               </div>
@@ -157,8 +158,23 @@ const RoomDetail = () => {
   return (
     <div className="room-detail-container">
       {/* Botón atrás */}
-      <button className="back-btn" onClick={() => navigate("/")}>
-        ← {t("roomDetail.back")}
+      <button
+        id="boton-atras"
+        className="reservation-back-btn d-flex flex-row align-items-center gap-2 mb-3"
+        onClick={() => navigate("/")}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="icon-container">
+          <img src="/icons/lean-left-arrow-grey.svg"
+            className={`back-icon ${isHovered ? 'hidden' : 'visible'}`}
+            alt="flecha atras gris" />
+
+          <img src="/icons/lean-left-arrow-black.svg"
+            className={`back-icon ${isHovered ? 'visible' : 'hidden'}`}
+            alt="flecha atras negra" />
+        </div>
+        <span className="text-grey fs-5">{t("roomReservation.back")}</span>
       </button>
 
       {/* Título */}
@@ -322,12 +338,15 @@ const RoomDetail = () => {
       </div>
 
       {/* Botón de reserva */}
-      <button
-        className="reserve-btn"
-        onClick={() => navigate(`/room/${roomId}/reserva`)}
-      >
-        {t("rooms.button")}
-      </button>
+      <div className="d-flex justify-content-center">
+        <button
+          className="btn btn-outline-dark fs-5 py-2 px-5"
+          onClick={() => navigate(`/room/${roomId}/reserva`)}
+        >
+          {t("rooms.button")}
+        </button>
+      </div>
+
 
       {/* LIGHTBOX */}
       {lightboxIndex !== null && (
