@@ -95,11 +95,11 @@
 		  	<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		  </dependency>
 		  
-		<!--Dependencia para documentar con Swagger-->
+		<!--Dependencia para documentar con Swagger (v3.x para Spring Boot 4)-->
 		  <dependency>
     		<groupId>org.springdoc</groupId>
     		<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-   			<version>2.5.0</version>
+   			<version>3.0.2</version>
 		  </dependency>
 		  
         <!--Dependencia para validar datos en el dto y resto con @Valid-->
