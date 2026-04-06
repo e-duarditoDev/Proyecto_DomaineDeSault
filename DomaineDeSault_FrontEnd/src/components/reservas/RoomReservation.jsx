@@ -30,6 +30,8 @@ const RoomReservation = () => {
   const [loadingHabitacion, setLoadingHabitacion] = useState(true);
   // Estado para mensaje de error sin salir del formulario
   const [alertData, setAlertData] = useState({ show: false, message: "" });//kk
+  // Fechas ocupadas de esta habitación (para bloquear días en el calendario)
+  const [fechasOcupadas, setFechasOcupadas] = useState([]);
 
   // Ref para detectar clicks fuera del calendario y cerrarlo
   const formRef = useRef(null);
@@ -119,6 +121,12 @@ const RoomReservation = () => {
     // Solo intentar cargar la información si se tiene un idHabitacion válido
     if (idHabitacion) {
       fetchHabitacionInfo();
+
+      // Cargar fechas ocupadas de esta habitación (endpoint público, sin token)
+      fetch(`/api/habitacion/disponibilidad/${idHabitacion}`)
+        .then((res) => res.ok ? res.json() : [])
+        .then((data) => setFechasOcupadas(Array.isArray(data) ? data : []))
+        .catch(() => setFechasOcupadas([]));
     } else {
       setPopup({
         show: true,
@@ -143,8 +151,27 @@ const RoomReservation = () => {
   }, [idHabitacion]);// La funcion se ejecuta solo cuando cambia el idHabitacion, evitando recargas innecesarias de la información de la habitación
 
 
-  const capacity = Number(habitacionData?.capacidad) || 1;// Asegura que la capacidad sea un número válido, capacidad mismo nombre que el backend
-  const pricePerNight = Number(habitacionData?.precioNoche) || 0;// Asegura que el precio por noche sea un número válido, precioNoche mismo nombre que el backend
+  const capacity = Number(habitacionData?.capacidad) || 1;
+  const pricePerNight = Number(habitacionData?.precioNoche) || 0;
+
+  // Convierte fecha del backend (array [a,m,d] o string "YYYY-MM-DD") a Date
+  const parseBackendDate = (d) => {
+    if (Array.isArray(d)) return new Date(d[0], d[1] - 1, d[2]);
+    return new Date(d + "T00:00:00");
+  };
+
+  // Devuelve false si la fecha está ocupada en esta habitación
+  const isDateDisponible = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (date < today) return false;
+    for (const slot of fechasOcupadas) {
+      const entrada = parseBackendDate(slot.fechaEntrada);
+      const salida = parseBackendDate(slot.fechaSalida);
+      if (date >= entrada && date < salida) return false;
+    }
+    return true;
+  };
 
   // Calcular noches y precio total usando useMemo para optimizar rendimiento
   const nights = useMemo(() => {
@@ -764,6 +791,7 @@ const RoomReservation = () => {
                 if (update[1]) setShowCalendar(false);
               }}
               minDate={new Date()}
+              filterDate={isDateDisponible}
               inline
             />
           </div>
