@@ -20,3 +20,8 @@ public interface ReservaService extends IntCrudGenerico <Reserva, Long>{
 	
 	Boolean actualizarHuespedes (ActualizarHuespedesDto datosDto);
 		
+<<<<<<< HEAD
+=======
+}
+
+>>>>>>> 4b18ec1 (Wip: guardar cambios antes del rebase)
