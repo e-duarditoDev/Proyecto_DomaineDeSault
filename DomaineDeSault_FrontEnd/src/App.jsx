@@ -41,6 +41,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 function AppContent() {
   const { i18n } = useTranslation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [searchState, setSearchState] = useState({ active: false, unavailableIds: [] });
 
   /* Ruta donde ocultar Navbar*/
   const location = useLocation();
@@ -94,9 +95,9 @@ function AppContent() {
           path="/"
           element={
             <>
-              <HeroSlider />
-              {isMobile && <BookingForm />}
-              <RoomsSection />
+              <HeroSlider onSearch={setSearchState} />
+              {isMobile && <BookingForm onSearch={setSearchState} />}
+              <RoomsSection searchState={searchState} />
               <Accommodation />
               <LocationSection />
               <ContactSection />
