@@ -34,7 +34,19 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long>{
 				where rh.habitacion.idHabitacion = ?1
 				""")
 		List <ReservaIdHabitacionFechasDto> findByHabitacionConFechas (Long idHabitacion);
-		
+
+		// Devuelve las fechas ocupadas de TODAS las habitaciones
+		@Query("""
+				select new apirest.domaine.modelo.dto.ReservaIdHabitacionFechasDto (
+						rh.habitacion.idHabitacion,
+						r.fechaEntrada,
+						r.fechaSalida
+				)
+				from ReservaHabitacion rh
+				join rh.reserva r
+				""")
+		List <ReservaIdHabitacionFechasDto> findTodasFechasOcupadas ();
+
 		List <Reserva> findByClienteIdUsuario (Long idUsuario);
 		
 	

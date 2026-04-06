@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import apirest.domaine.modelo.dto.HabitacionDto;
+import apirest.domaine.modelo.dto.ReservaIdHabitacionFechasDto;
 import apirest.domaine.modelo.entities.Habitacion;
 import apirest.domaine.service.HabitacionService;
+import apirest.domaine.service.ReservaService;
 
 @RestController
 @RequestMapping("/api/habitacion")
@@ -20,6 +22,9 @@ public class HabitacionRestController {
 
     @Autowired
     private HabitacionService habitacionServ;
+
+    @Autowired
+    private ReservaService reservaServ;
     
     @GetMapping ("/todas")
     public ResponseEntity<?> findAll (){
@@ -46,6 +51,20 @@ public class HabitacionRestController {
            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentran datos con con el Id "+idHabitacion+".");
         
         return ResponseEntity.status(HttpStatus.OK).body(HabitacionDto.convertToDto(habitacion));
+    }
+
+    // Fechas ocupadas de una habitación concreta (para bloquear en el calendario)
+    @GetMapping("/disponibilidad/{idHabitacion}")
+    public ResponseEntity<?> getFechasOcupadasPorHabitacion(@PathVariable Long idHabitacion) {
+    	List<ReservaIdHabitacionFechasDto> fechas = reservaServ.getFechasOcupadasPorHabitacion(idHabitacion);
+    	return ResponseEntity.ok(fechas);
+    }
+
+    // Fechas ocupadas de TODAS las habitaciones (para disponibilidad general)
+    @GetMapping("/disponibilidad/todas")
+    public ResponseEntity<?> getTodasFechasOcupadas() {
+    	List<ReservaIdHabitacionFechasDto> fechas = reservaServ.getTodasFechasOcupadas();
+    	return ResponseEntity.ok(fechas);
     }
 
 }

@@ -15,7 +15,7 @@ const images = [
 ];
 
 // Componente principal del slider
-const HeroSlider = () => {
+const HeroSlider = ({ onSearch }) => {
   // Obtenemos la función de traducción
   const { t } = useTranslation();
 
@@ -53,7 +53,7 @@ return (
     />
 
     <div className="hero-booking-form">
-      <BookingForm />
+      <BookingForm onSearch={onSearch} />
     </div>
 
     <div className="hero-text">
